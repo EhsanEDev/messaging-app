@@ -2,6 +2,7 @@
 
 import { socket } from "@/lib/socket";
 import { useEffect, useState } from "react";
+import SigninForm from "./signin/page";
 // import { SOCKET_EVENTS } from "../../";
 const SOCKET_EVENTS = {
   REGISTER_USER: "register_user",
@@ -65,10 +66,7 @@ export default function Home() {
 
   if (userName === "") {
     return (
-      <form onSubmit={registerUser}>
-        <input type="text" name="username" placeholder="Enter your username" />
-        <button type="submit">Submit</button>
-      </form>
+      <SigninForm />
     );
   }
 

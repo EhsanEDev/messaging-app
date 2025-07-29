@@ -1,9 +1,16 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import registerUser from "./socket/events/registerUser.js"
-import sendPrivateMsg from "./socket/events/sendPrivateMsg.js"
-import sendGroupMsg from "./socket/events/sendGroupMsg.js"
+import dotenv from "dotenv";
+import registerUser from "./socket/events/registerUser.js";
+import sendPrivateMsg from "./socket/events/sendPrivateMsg.js";
+import sendGroupMsg from "./socket/events/sendGroupMsg.js";
+import authorization from "./routes/auth.js";
+import authExpress from "./middlewares/authExpress.js";
+import authSocket from "./middlewares/authSocket.js";
+
+// Loads .env file contents into process.env
+dotenv.config();
 
 // const { SOCKET_EVENTS } = require("@shared/constants/events");
 const SOCKET_EVENTS = {
@@ -23,9 +30,18 @@ const io = new Server(server, {
   cors: { origin: "http://localhost:3000" },
 });
 
+app.use(express.urlencoded({ extended: true }));
+// Express public routes
+app.use("/api/auth", authorization);
+// Auth for everything after this
+app.use(authExpress);
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+// attach socket middleware globally
+io.use(authSocket);
 
 io.on("connection", (socket) => {
   console.log("A user connected");
