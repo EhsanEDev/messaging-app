@@ -53,14 +53,14 @@ io("http://localhost:4000", {
 
 ## 🧠 Responsibilities
 
-### 📦 Server (apps/server)
+### 📦 Server
 
 * Handles API endpoints (e.g., `/api/auth/signin`)
 * Manages WebSocket connections and events
 * Authenticates requests using JWT (via Express and Socket.IO middleware)
 * Responsible for persisting and broadcasting data
 
-### 🖥️ Client (apps/web)
+### 🖥️ Client
 
 * Renders all pages and components
 * Handles form submissions and API calls
