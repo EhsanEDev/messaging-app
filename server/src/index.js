@@ -1,13 +1,14 @@
+import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import dotenv from "dotenv";
-import registerUser from "./socket/events/registerUser.js";
-import sendPrivateMsg from "./socket/events/sendPrivateMsg.js";
-import sendGroupMsg from "./socket/events/sendGroupMsg.js";
-import authorization from "./routes/auth.js";
 import authExpress from "./middlewares/authExpress.js";
 import authSocket from "./middlewares/authSocket.js";
+import authorization from "./routes/auth.js";
+import registerUser from "./socket/events/registerUser.js";
+import sendGroupMsg from "./socket/events/sendGroupMsg.js";
+import sendPrivateMsg from "./socket/events/sendPrivateMsg.js";
 
 // Loads .env file contents into process.env
 dotenv.config();
@@ -30,6 +31,11 @@ const io = new Server(server, {
   cors: { origin: "http://localhost:3000" },
 });
 
+// Enable CORS
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// Enable parsing of JSON bodies
+app.use(express.json());
+// Enable parsing of URL-encoded bodies (for form submissions)
 app.use(express.urlencoded({ extended: true }));
 // Express public routes
 app.use("/api/auth", authorization);

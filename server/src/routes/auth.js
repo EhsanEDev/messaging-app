@@ -21,7 +21,6 @@ router.get("/signin", (req, res) => {
 router.post("/signin", (req, res) => {
   const { username, password } = req.body;
   const user = findUserByCredentials(username, password);
-  console.log(user);
 
   if (!user) return res.status(401).json({ message: "Invalid credentials" });
 

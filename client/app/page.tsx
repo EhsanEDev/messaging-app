@@ -3,6 +3,7 @@
 import { socket } from "@/lib/socket";
 import { useEffect, useState } from "react";
 import SigninForm from "./signin/page";
+import SigninPage from "./signin/page";
 // import { SOCKET_EVENTS } from "../../";
 const SOCKET_EVENTS = {
   REGISTER_USER: "register_user",
@@ -64,11 +65,11 @@ export default function Home() {
     socket.emit(SOCKET_EVENTS.REGISTER_USER, { userId: name });
   };
 
-  if (userName === "") {
-    return (
-      <SigninForm />
-    );
-  }
+  // if (userName === "") {
+  //   return (
+  //     <SigninPage />
+  //   );
+  // }
 
   return (
     <div className="">
