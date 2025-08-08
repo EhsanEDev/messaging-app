@@ -25,7 +25,7 @@ const SigninForm: React.FC<IProps> = () => {
     ).password as string;
 
     try {
-      const res = await fetch("http://localhost:4000/api/auth/signin", {
+      const res = await fetch("http://localhost:4000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -55,16 +55,13 @@ const SigninForm: React.FC<IProps> = () => {
   return (
     // <Card className="w-full max-w-sm md:max-w-xl overflow-hidden p-0">
     <Card className="w-full max-w-sm overflow-hidden p-0">
-      {/* <CardContent className="grid p-0 md:grid-cols-2"> */}
-      <form className="p-6 md:p-8" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col items-center text-center gap-2">
-            <h1 className="text-2xl font-bold">Sign In to your account</h1>
-            {/* <p className="text-muted-foreground text-balance">
-                Enter your email below to login to your account
-              </p> */}
-          </div>
-          {/* <div className="grid gap-3">
+      <CardContent className="grid p-0 md:grid-cols-1">
+        <form className="p-6 md:p-8" onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col items-center text-center gap-2">
+              <h1 className="text-2xl font-bold">Create your account</h1>
+            </div>
+            <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -73,48 +70,55 @@ const SigninForm: React.FC<IProps> = () => {
                 placeholder="email@example.com"
                 required
               />
-            </div> */}
-          <div className="grid gap-3">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="username"
-              required
-              className={cn("border-2", { "border-red-500": error.username })}
-            />
-            {error.username && (
-              <p className="text-xs text-red-500">{error.username}</p>
-            )}
-          </div>
-          <div className="grid gap-3">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-              <a
-                href="#"
-                className="ml-auto text-sm underline-offset-2 hover:underline"
-              >
-                Forgot your password?
-              </a>
             </div>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              required
-              className={cn("border-2", { "border-red-500": error.password })}
-            />
-            {error.password && (
-              <p className="text-xs text-red-500">{error.password}</p>
-            )}
-          </div>
-          <div>
-            <Button variant={"default"} type="submit" className="w-full">
-              Sign In
-            </Button>
-          </div>
-          {/* <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
+            <div className="grid gap-3">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                name="username"
+                type="text"
+                placeholder="username"
+                required
+              />
+              {error.username && (
+                <p className="text-sm text-red-500">{error.username}</p>
+              )}
+            </div>
+            <div className="grid gap-3">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+              </div>
+              <Input id="password" name="password" type="password" required />
+              {error.password && (
+                <p className="text-sm text-red-500">{error.password}</p>
+              )}
+            </div>
+            <div className="grid gap-3">
+              <div className="flex items-center">
+                <Label htmlFor="confirm-password">Confirm Password</Label>
+              </div>
+              <Input
+                id="confirm-password"
+                name="confirm-password"
+                type="password"
+                required
+              />
+              {error.password && (
+                <p className="text-sm text-red-500">{error.password}</p>
+              )}
+            </div>
+            <div>
+              <Button variant={"default"} type="submit" className="w-full">
+                Sign Up
+              </Button>
+              <p
+                className={cn(
+                  "mt-3 text-sm text-center text-red-500",
+                  error ? "visible" : "invisible"
+                )}
+              ></p>
+            </div>
+            <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
               <span className="bg-card text-muted-foreground relative z-10 px-2">
                 Or continue with
               </span>
@@ -147,23 +151,23 @@ const SigninForm: React.FC<IProps> = () => {
                 </svg>
                 <span className="sr-only">Login with Meta</span>
               </Button>
-            </div> */}
-          <div className="text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <a href="/signup" className="underline underline-offset-4">
-              Sign up
-            </a>
+            </div>
+            <div className="text-center text-sm">
+              Already have an account?{" "}
+              <a href="/signin" className="underline underline-offset-4">
+                Sign in
+              </a>
+            </div>
           </div>
-        </div>
-      </form>
-      {/* <div className="bg-muted relative hidden md:block p-0">
+        </form>
+        {/* <div className="bg-muted relative hidden md:block p-0">
           <img
             src="logo.png"
             alt="Image"
             className="scale-75 absolute inset-0 h-full w-full object-contain"
           />
         </div> */}
-      {/* </CardContent> */}
+      </CardContent>
     </Card>
   );
 };

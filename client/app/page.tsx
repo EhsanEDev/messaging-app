@@ -15,8 +15,8 @@ export default function Home() {
   }, [router]);
 
   return (
-    <main className="flex h-screen items-center justify-center flex-col gap-4">
-      <img src="/logo.svg" alt="Logo" className="w-24 h-24 animate-pulse" />
+    <main className="flex h-screen items-center justify-center flex-col gap-4 animate-pulse">
+      <img src="/logo.png" alt="Logo" className="w-24 h-24 " />
       <p className="text-xl font-medium">Loading...</p>
     </main>
   );
