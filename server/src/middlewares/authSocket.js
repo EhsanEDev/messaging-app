@@ -1,18 +1,14 @@
-import verifyToken from "../utils/verifyToken.js";
+import getUserFromCookie from "../utils/getUserFromCookie.js";
 
 export default function authSocket(socket, next) {
-  const token = socket.handshake.auth?.token;
-
-  if (!token) {
-    return next(new Error("No token provided"));
-  }
-
-  const payload = verifyToken(token);
+  const req = socket.request;
+  const payload = getUserFromCookie(req);
 
   if (!payload) {
-    return next(new Error("Invalid or expired token"));
+    return next(new Error("Unauthorized: Invalid or missing token"));
   }
 
-  socket.user = payload; // attach to socket
+  console.log(payload);
+  socket.user = payload;
   next();
 }
