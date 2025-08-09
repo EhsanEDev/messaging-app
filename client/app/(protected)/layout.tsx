@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 export default function ProtectedLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
-      <main className="flex flex-row bg-amber-200 w-full">
+      <main className="flex flex-row w-full">
         <SidebarMenu />
         {children}
       </main>

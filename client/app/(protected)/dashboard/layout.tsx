@@ -5,7 +5,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <ChatListPanel />
-      <section className="w-2/3 bg-violet-100">{children}</section>
+      <section className="w-2/3">{children}</section>
     </>
   );
 }

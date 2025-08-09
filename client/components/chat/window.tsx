@@ -12,7 +12,7 @@ interface IProps {}
 const ChatWindow: React.FC<IProps> = () => {
   return (
     <>
-      <header className="p-4 border-b border-gray-600 flex items-center justify-between">
+      <header className="p-4 flex items-center justify-between">
         <h1 className="text-lg font-semibold">Chat Title</h1>
         <DropdownMenu>
           <DropdownMenuTrigger>more</DropdownMenuTrigger>
