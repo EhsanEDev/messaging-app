@@ -38,7 +38,11 @@ const ChatPage: React.FC<IProps> = async ({ params }: IProps) => {
       />
       <div className="xl:max-w-6xl mx-auto h-full w-full flex flex-col items-center">
         <ChatConversation />
-        <ChatFooter />
+        <ChatFooter
+          onTypingStart={() => {}}
+          onTypingStop={() => {}}
+          onSendMessage={() => {}}
+        />
       </div>
     </>
   );
