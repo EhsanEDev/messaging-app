@@ -6,9 +6,11 @@ import { Server } from "socket.io";
 import authExpress from "./middlewares/authExpress.js";
 import authSocket from "./middlewares/authSocket.js";
 import authorization from "./routes/auth.js";
+import chat from "./routes/chat.js";
 import registerUser from "./socket/events/registerUser.js";
 import sendGroupMsg from "./socket/events/sendGroupMsg.js";
 import sendPrivateMsg from "./socket/events/sendPrivateMsg.js";
+import cookieParser from "cookie-parser";
 
 // Loads .env file contents into process.env
 dotenv.config();
@@ -28,11 +30,13 @@ const app = express();
 const server = http.createServer(app);
 //Create a Socket.IO server on top of the HTTP server
 const io = new Server(server, {
-  cors: { origin: "http://localhost:3000" },
+  cors: { origin: process.env.BASE_URL },
 });
 
+// Enable cookie parsing
+app.use(cookieParser());
 // Enable CORS
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: process.env.BASE_URL, credentials: true }));
 // Enable parsing of JSON bodies
 app.use(express.json());
 // Enable parsing of URL-encoded bodies (for form submissions)
@@ -41,10 +45,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authorization);
 // Auth for everything after this
 app.use(authExpress);
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+// Express Protected routes
+app.use("/api/chats", chat);
 
 // attach socket middleware globally
 io.use(authSocket);

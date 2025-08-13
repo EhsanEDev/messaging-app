@@ -32,8 +32,10 @@ router.post("/signin", (req, res) => {
   res
     .cookie("authToken", token, {
       httpOnly: true, // 🔐 can't access via JS (protects from XSS)
-      secure: true, // 🔒 only over HTTPS
-      sameSite: "strict",
+      secure: true, // ONLY FOR DEV
+      sameSite: "none", // ONLY FOR DEV
+      // secure: true, // 🔒 only over HTTPS
+      // sameSite: "strict",
       path: "/",
       maxAge: 1000 * 60 * 60 * 2, // 2 hours
     })

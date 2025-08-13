@@ -9,7 +9,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <ChatListPanel />
       </nav>
       {/* Chat window */}
-      <section className="w-2/3">
+      <section className="bg-muted w-2/3 h-screen flex flex-col">
         {children}
       </section>
     </>

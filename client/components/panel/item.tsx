@@ -26,22 +26,22 @@ const ChatListItem: React.FC<IProps> = ({
   return (
     <Link
       href={`/dashboard/${id}`}
-      className="flex items-center gap-3 p-3 hover:bg-muted rounded-2xl"
+      className="flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl"
     >
       {/* Avatar */}
       <figure className="shrink-0 relative">
-        <Avatar className="size-15">
+        <Avatar className="size-14">
           <AvatarImage src={avatarUrl} alt={title} />
           <AvatarFallback>{title.charAt(0)}</AvatarFallback>
         </Avatar>
         {/* Online badge */}
         {isOnline && (
-          <span className="absolute bottom-0 right-0 block size-4 rounded-full bg-green-500 border-2 border-white"></span>
+          <span className="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 border-2 border-white"></span>
         )}
       </figure>
 
       {/* Chat info */}
-      <article className="flex flex-col flex-1 justify-between gap-1">
+      <article className="flex flex-col flex-1 justify-between gap-0.5">
         {/* Title + date */}
         <header className="flex justify-between items-center">
           <h2 className="font-medium text-base">{title}</h2>

@@ -3,7 +3,7 @@ interface IProps {}
 const ChatConversation: React.FC<IProps> = () => {
   return (
 
-      <article>bubbles, conversations</article>
+      <article className="w-full flex-1">bubbles, conversations</article>
       
   );
 };

@@ -25,7 +25,7 @@ const SigninForm: React.FC<IProps> = () => {
     ).password as string;
 
     try {
-      const res = await fetch("http://localhost:4000/api/auth/signin", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

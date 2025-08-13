@@ -1,29 +1,36 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import MoreActions from "./header/actions";
+import ChatAvatar from "./header/avatar";
+import Call from "./header/call";
+import ChatInfo from "./header/info";
+import SearchInChat from "./header/search";
 
-interface IProps {}
+interface IProps {
+  chatId: string;
+  avatarUrl?: string;
+  title: string;
+  membersCount: string;
+}
 
-const ChatHeader: React.FC<IProps> = () => {
+const ChatHeader: React.FC<IProps> = ({
+  chatId,
+  avatarUrl,
+  title,
+  membersCount,
+}) => {
   return (
-    <header className="h-16 px-5 flex items-center justify-between gap-4 border-b-border border-b-1">
-      <h1 className="text-xl font-semibold">Chat Title</h1>
-      <DropdownMenu>
-        <DropdownMenuTrigger>more</DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+    <header className="bg-background h-16 px-5 flex items-center justify-between gap-4 border-b-border border-b-1">
+      {/* Left section */}
+      <section className="flex items-center gap-3 flex-1 cursor-pointer">
+        <ChatAvatar avatarUrl={avatarUrl} title={title} />
+        <ChatInfo title={title} info={membersCount} />
+      </section>
+
+      {/* Right section */}
+      <section className="flex justify-between items-center gap-1">
+        <SearchInChat />
+        <Call />
+        <MoreActions />
+      </section>
     </header>
   );
 };
