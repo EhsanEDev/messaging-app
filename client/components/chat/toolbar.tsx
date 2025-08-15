@@ -11,12 +11,7 @@ interface IProps {
   info: string;
 }
 
-const ChatToolbar: React.FC<IProps> = ({
-  chatId,
-  avatarUrl,
-  title,
-  info,
-}) => {
+const ChatToolbar: React.FC<IProps> = ({ chatId, avatarUrl, title, info }) => {
   return (
     <header className="bg-background h-16 px-5 flex items-center justify-between gap-4 border-b-border border-b-1">
       {/* Left section */}

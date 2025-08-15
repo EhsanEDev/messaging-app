@@ -4,22 +4,14 @@ import { useChatSocket } from "@/hooks/useChatSocket";
 import ChatToolbar from "./toolbar";
 import ChatThread from "./conversation";
 import ChatComposer from "./composer";
+import { ChatMetadata, Message } from "@/constants/types";
 
 // import { useAuth } from "@/hooks/useAuth";
 
 interface ChatWindowProps {
   chatId: string;
-  initialMetadata: {
-    title: string;
-    avatarUrl: string;
-    membersCount: number;
-  };
-  initialMessages: Array<{
-    id: string;
-    sender: string;
-    text: string;
-    timestamp: string;
-  }>;
+  initialMetadata: ChatMetadata;
+  initialMessages: Array<Message>;
 }
 
 export default function ChatWindow({
@@ -42,7 +34,7 @@ export default function ChatWindow({
         chatId={chatId}
         title={initialMetadata.title}
         avatarUrl={initialMetadata.avatarUrl}
-        info={initialMetadata.membersCount.toString()}
+        info={initialMetadata.participants.length.toString()}
         // typingUsers={typingUsers}
       />
       <ChatThread messages={messages} />
