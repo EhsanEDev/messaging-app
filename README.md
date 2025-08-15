@@ -1,71 +1,69 @@
 # 🏗️ Project Architecture Overview
 
-This document outlines the key architectural decisions, structure, and flow for a messaging app project based on a **Next.js** frontend and a **Node.js (Express + Socket.IO)** backend.
+This document outlines the updated architectural decisions, structure, and flow for our messaging app project based on **Next.js** (frontend) and **Node.js (Express + Socket.IO)** (backend).
 
 ---
 
-## 🔐 Login & Token Flow
+## 🧩 Project Structure
 
-### 1. **User submits login form**
-
-* Frontend: Sends `POST` request to `http://localhost:4000/api/auth/signin` with `{ username, password }`.
-
-### 2. **Backend validates user**
-
-* If credentials are valid, returns a JWT signed with a secret.
-* Token includes user info (e.g., `id`, `username`).
-
-### 3. **Frontend stores token**
-
-```ts
-sessionStorage.setItem("auth_token", token);
+```bash
+telegraph-app/
+├── client/            # Next.js (React) frontend
+│── server/            # Node.js + Express + Socket.IO backend
 ```
-
-### 4. **Token usage**
-
-* **HTTP requests**: Attach token in `Authorization` header:
-
-```ts
-fetch("/api/messages", {
-  headers: { Authorization: `Bearer ${token}` }
-});
-```
-
-* **WebSocket**: Attach token when connecting:
-
-```ts
-io("http://localhost:4000", {
-  auth: { token }
-});
-```
-
-### 🧠 Key Concept:
-
-> JWT **is not for page-level access**, it’s for **data-level access**.
-
-**What it means:**
-
-* Pages/components in Next.js are accessible and renderable regardless of authentication.
-* But actual **data** (e.g., messages, user info) is protected and fetched conditionally using the token.
-* This decouples routing/UI from sensitive data access.
 
 ---
 
-## 🧠 Responsibilities
+## 🔐 Authentication & Data Flow (Shared)
 
-### 📦 Server
+* **JWT token** is stored in a **secure, HTTP-only cookie**.
+* Token is **automatically sent** in the `Cookie` header on every request.
+* **Consumers** of the token:
 
-* Handles API endpoints (e.g., `/api/auth/signin`)
-* Manages WebSocket connections and events
-* Authenticates requests using JWT (via Express and Socket.IO middleware)
-* Responsible for persisting and broadcasting data
-
-### 🖥️ Client
-
-* Renders all pages and components
-* Handles form submissions and API calls
-* Maintains token in `sessionStorage`
-* Initiates WebSocket connection with token
-* Shows/hides UI conditionally based on login state (via context or state)
+  * **Frontend (Client)** — for page access checks and protecting routes.
+  * **Backend (Server)** — for API request authentication and user validation.
+* Server components can read the token from cookies for SSR data fetching.
+* Socket connections read the token from cookies during handshake.
 
 ---
+
+## 💻 Client-Side Details
+
+* Built with **Next.js** App Router.
+* Uses **server components** for initial data fetching and SSR.
+* **Client components** handle:
+
+  * Real-time socket events via `useChatSocket`.
+  * UI state management for messages, typing indicators, and chat actions.
+* UI is broken down into reusable parts (Toolbar, Thread, Composer).
+* No direct socket logic inside UI components; all handled in hooks.
+
+---
+
+## 🖥️ Server-Side Details
+
+* Built with **Express.js** + **Socket.IO**.
+* Middleware stack includes:
+
+  * Cookie parsing.
+  * JWT verification.
+* Socket.IO namespaces/rooms for chats.
+* API endpoints for:
+
+  * Fetching chat history.
+  * Managing participants.
+  * Authentication.
+* Emits and listens for real-time events: `message:new`, `typing:start`, `typing:stop`.
+
+---
+
+## 🧠 Key Design Decisions
+
+1. **Separation of Concerns** — Shared responsibilities are clearly defined between client and server.
+2. **Central Socket Layer** — All real-time logic is contained in one place for maintainability.
+3. **Composable UI** — Reusable, isolated UI components.
+4. **Unified Auth Strategy** — Both client and server use the same token source via cookies.
+
+---
+
+Next steps: document **socket event sequence diagrams** and **database schema** for messages and typing users.
