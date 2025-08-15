@@ -1,7 +1,7 @@
 import ChatListPanel from "@/components/panel/panel";
 import { ReactNode } from "react";
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+export default function ChatLayout({ children }: { children: ReactNode }) {
   return (
     <>
       {/* Chat list panel */}

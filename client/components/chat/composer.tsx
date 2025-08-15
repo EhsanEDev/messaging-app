@@ -1,21 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import AttachMenu from "./footer/attach";
-import EmojiPicker from "./footer/emoji";
-import SendText from "./footer/sendText";
-import TextInput from "./footer/text";
-import VoiceInput from "./footer/voice";
+import { useEffect, useState } from "react";
+import AttachMenu from "./composer/attach";
+import EmojiPicker from "./composer/emoji";
+import SendText from "./composer/sendText";
+import TextInput from "./composer/text";
+import VoiceInput from "./composer/voice";
 
 interface IProps {
-  onTypingStart: () => void;
-  onTypingStop: () => void;
+  onStartTyping: () => void;
+  onStopTyping: () => void;
   onSendMessage: (message: string, ack: () => void) => void;
 }
 
-const ChatFooter: React.FC<IProps> = ({
-  onTypingStart,
-  onTypingStop,
+const ChatComposer: React.FC<IProps> = ({
+  onStartTyping,
+  onStopTyping,
   onSendMessage,
 }) => {
   const [textMessage, setTextMessage] = useState("");
@@ -27,18 +27,18 @@ const ChatFooter: React.FC<IProps> = ({
     if (textMessage.trim()) {
       if (!isTyping) {
         setIsTyping(true);
-        onTypingStart();
+        onStartTyping();
       }
 
       // Reset timer each time the message changes
       timeoutId = setTimeout(() => {
         setIsTyping(false);
-        onTypingStop();
+        onStopTyping();
       }, 1500);
     } else {
       if (isTyping) {
         setIsTyping(false);
-        onTypingStop();
+        onStopTyping();
       }
     }
 
@@ -70,4 +70,4 @@ const ChatFooter: React.FC<IProps> = ({
   );
 };
 
-export default ChatFooter;
+export default ChatComposer;

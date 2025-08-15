@@ -1,6 +1,6 @@
 interface IProps {}
 
-const DashboardPage: React.FC<IProps> = () => {
+const ChatPage: React.FC<IProps> = () => {
   return (
     <>
       Select a chat to start conversation
@@ -8,4 +8,4 @@ const DashboardPage: React.FC<IProps> = () => {
   );
 };
 
-export default DashboardPage;
+export default ChatPage;

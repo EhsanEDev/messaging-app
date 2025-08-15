@@ -25,7 +25,7 @@ const ChatListItem: React.FC<IProps> = ({
 }) => {
   return (
     <Link
-      href={`/dashboard/${id}`}
+      href={`/chat/${id}`}
       className="flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl"
     >
       {/* Avatar */}
