@@ -5,11 +5,11 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
   return (
     <>
       {/* Chat list panel */}
-      <nav className="bg-background w-1/3 h-screen border-r-border border-r-1">
+      <nav className="bg-background w-1/3 h-svh border-r-border border-r-1">
         <ChatListPanel />
       </nav>
       {/* Chat window */}
-      <section className="bg-muted w-2/3 h-screen flex flex-col">
+      <section className="relative bg-muted w-2/3 h-svh flex flex-col">
         {children}
       </section>
     </>

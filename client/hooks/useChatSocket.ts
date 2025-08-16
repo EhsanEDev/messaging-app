@@ -1,19 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { Message, TypingUser } from "@/constants/types";
+import { useCallback, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
-
-interface Message {
-  id: string;
-  chatId: string;
-  senderId: string;
-  text: string;
-  createdAt: string;
-}
-
-interface TypingUser {
-  userId: string;
-}
 
 interface UseChatSocketOptions {
   chatId: string;
@@ -37,18 +26,20 @@ export function useChatSocket({ chatId, userId }: UseChatSocketOptions) {
     socketInstance.emit("join-chat", { chatId, userId });
 
     socketInstance.on("chat:message", (message: Message) => {
-      setMessages(prev => [...prev, message]);
+      setMessages((prev) => [...prev, message]);
     });
 
     socketInstance.on("chat:typing-started", (typingUser: TypingUser) => {
-      setTypingUsers(prev => {
-        if (prev.some(u => u.userId === typingUser.userId)) return prev;
+      setTypingUsers((prev) => {
+        if (prev.some((u) => u.userId === typingUser.userId)) return prev;
         return [...prev, typingUser];
       });
     });
 
     socketInstance.on("chat:typing-stopped", (typingUser: TypingUser) => {
-      setTypingUsers(prev => prev.filter(u => u.userId !== typingUser.userId));
+      setTypingUsers((prev) =>
+        prev.filter((u) => u.userId !== typingUser.userId)
+      );
     });
 
     return () => {

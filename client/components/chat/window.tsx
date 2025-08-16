@@ -2,7 +2,7 @@
 
 import { useChatSocket } from "@/hooks/useChatSocket";
 import ChatToolbar from "./toolbar";
-import ChatThread from "./conversation";
+import ChatThread from "./thread";
 import ChatComposer from "./composer";
 import { ChatMetadata, Message } from "@/constants/types";
 
@@ -37,7 +37,7 @@ export default function ChatWindow({
         info={initialMetadata.participants.length.toString()}
         // typingUsers={typingUsers}
       />
-      <ChatThread messages={messages} />
+      <ChatThread initialMessages={initialMessages} messages={messages} />
       <ChatComposer
         onSendMessage={sendMessage}
         onStartTyping={startTyping}

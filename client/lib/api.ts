@@ -91,16 +91,31 @@ export const getChatMessages = (chatId: string): Message[] => {
     {
       id: "1",
       chatId: "chat1",
-      senderId: "user1",
+      senderId: "0",
       content: "Hello!",
       createdAt: new Date().toISOString(),
     },
     {
       id: "2",
       chatId: "chat1",
-      senderId: "user2",
+      senderId: "1",
       content: "Hi there!",
       createdAt: new Date().toISOString(),
     },
+    {
+      id: "3",
+      chatId: "chat1",
+      senderId: "0",
+      content: "How are you?",
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "4",
+      chatId: "chat1",
+      senderId: "1",
+      content: "I'm good, thanks!",
+      createdAt: new Date().toISOString(),
+    
+    }
   ];
 };

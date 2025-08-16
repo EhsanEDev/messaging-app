@@ -1,9 +1,9 @@
-import { ThemeProvider } from "@/components/themeProvider";
+import { ThemeProvider } from "@/contexts/theme";
 import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Telegraph",
+  title: "Chapar",
   description: "Messaging app",
 };
 
