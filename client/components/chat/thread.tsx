@@ -10,14 +10,14 @@ interface IProps {
 const ChatThread: React.FC<IProps> = ({ initialMessages, messages }) => {
   const user = useAuth();
   return (
-    <article className="h-full w-full max-w-6xl mx-auto">
-      <ul className="h-full flex flex-col-reverse gap-1 p-5">
+    <main className="h-full w-full max-w-6xl mx-auto">
+      <ul className="h-full flex flex-col-reverse gap-1 p-10">
         {initialMessages.map((msg) => {
-          const isOwn = msg.senderId === user?.id;
+          const isOwn = msg.sender.id === user?.id;
           return <MessageBubble key={msg.id} message={msg} isOwn={isOwn} />;
         })}
       </ul>
-    </article>
+    </main>
   );
 };
 

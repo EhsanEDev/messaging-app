@@ -8,11 +8,26 @@ export interface User {
 export interface Message {
   id: string;
   chatId: string;
-  senderId: string;
+  sender: User;
   content: string;
   createdAt: string; // ISO timestamp
+  updatedAt?: string; // in case of edits
+  seenBy?: SeenByEntry[]; // Seen status in private and group chat
+  replyToMessageId?: string; // optional if supporting replies
+  attachments?: Attachment[]; // optional for images/files
 }
-
+export interface Attachment {
+  id: string;
+  type: "image" | "video" | "file" | "audio";
+  url: string;
+  thumbnailUrl?: string; // optional for images/videos
+  fileName?: string; // for documents
+  size?: number; // in bytes
+}
+export interface SeenByEntry {
+  userId: string;
+  seenAt: string; // ISO timestamp
+}
 /** ===== Chat Metadata (Static) ===== **/
 
 export interface ChatMetadata {

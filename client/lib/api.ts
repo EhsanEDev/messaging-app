@@ -22,7 +22,11 @@ export const getChatList = (): ChatMetadata[] => {
         id: "100",
         chatId: "user1",
         content: "goodbye!",
-        senderId: "user1",
+        sender: {
+          id: "user1",
+          name: "User One",
+          avatarUrl: `https://i.pravatar.cc/150?img=1`,
+        },
         createdAt: new Date().toISOString(),
       },
     },
@@ -46,7 +50,11 @@ export const getChatList = (): ChatMetadata[] => {
         id: "100",
         chatId: "user1",
         content: "goodbye!",
-        senderId: "user1",
+        sender: {
+          id: "user1",
+          name: "User One",
+          avatarUrl: `https://i.pravatar.cc/150?img=1`,
+        },
         createdAt: new Date().toISOString(),
       },
     },
@@ -81,7 +89,11 @@ export const getChatMetadata = (chatId: string): ChatMetadata => {
       id: "100",
       chatId: chatId,
       content: "goodbye!",
-      senderId: "user1",
+      sender: {
+        id: "user1",
+        name: "User One",
+        avatarUrl: `https://i.pravatar.cc/150?img=1`,
+      },
       createdAt: new Date().toISOString(),
     },
   };
@@ -91,28 +103,44 @@ export const getChatMessages = (chatId: string): Message[] => {
     {
       id: "1",
       chatId: "chat1",
-      senderId: "0",
+      sender: {
+        id: "0",
+        name: "User 0",
+        avatarUrl: `https://i.pravatar.cc/150?img=0`,
+      },
       content: "Hello!",
       createdAt: new Date().toISOString(),
     },
     {
       id: "2",
       chatId: "chat1",
-      senderId: "1",
+      sender: {
+        id: "1",
+        name: "User 1",
+        avatarUrl: `https://i.pravatar.cc/150?img=1`,
+      },
       content: "Hi there!",
       createdAt: new Date().toISOString(),
     },
     {
       id: "3",
       chatId: "chat1",
-      senderId: "0",
+      sender: {
+        id: "0",
+        name: "User 0",
+        avatarUrl: `https://i.pravatar.cc/150?img=0`,
+      },
       content: "How are you?",
       createdAt: new Date().toISOString(),
     },
     {
       id: "4",
       chatId: "chat1",
-      senderId: "1",
+      sender: {
+        id: "1",
+        name: "User 1",
+        avatarUrl: `https://i.pravatar.cc/150?img=1`,
+      },
       content: "I'm good, thanks!",
       createdAt: new Date().toISOString(),
     
