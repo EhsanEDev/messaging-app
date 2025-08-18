@@ -7,7 +7,7 @@ This document outlines the updated architectural decisions, structure, and flow 
 ## 🧩 Project Structure
 
 ```bash
-telegraph-app/
+chapar-app/
 ├── client/            # Next.js (React) frontend
 │── server/            # Node.js + Express + Socket.IO backend
 ```
@@ -66,4 +66,5 @@ telegraph-app/
 
 ---
 
-Next steps: document **socket event sequence diagrams** and **database schema** for messages and typing users.
+## License  
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.  
