@@ -1,5 +1,4 @@
 /** ===== Base User & Message Types ===== **/
-
 export interface User {
   id: string;
   name: string;
@@ -13,8 +12,17 @@ export interface Message {
   createdAt: string; // ISO timestamp
   updatedAt?: string; // in case of edits
   seenBy?: SeenByEntry[]; // Seen status in private and group chat
+  reactedBy?: ReactedByEntry[]; // optional for message reactions
   replyToMessageId?: string; // optional if supporting replies
   attachments?: Attachment[]; // optional for images/files
+}
+export interface SeenByEntry {
+  userId: string;
+  seenAt: string; // ISO timestamp
+}
+export interface ReactedByEntry extends User {
+  emoji: string;
+  reactedAt: string; // ISO timestamp
 }
 export interface Attachment {
   id: string;
@@ -24,12 +32,7 @@ export interface Attachment {
   fileName?: string; // for documents
   size?: number; // in bytes
 }
-export interface SeenByEntry {
-  userId: string;
-  seenAt: string; // ISO timestamp
-}
 /** ===== Chat Metadata (Static) ===== **/
-
 export interface ChatMetadata {
   id: string;
   title: string;
@@ -39,7 +42,6 @@ export interface ChatMetadata {
 }
 
 /** ===== Chat Real-Time State (Dynamic) ===== **/
-
 export interface TypingUser {
   userId: string;
   name: string;
@@ -51,7 +53,6 @@ export interface ChatRealtimeState {
 }
 
 /** ===== Global User Status ===== **/
-
 export interface UserStatus {
   userId: string;
   isOnline: boolean;

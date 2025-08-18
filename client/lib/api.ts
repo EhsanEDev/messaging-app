@@ -121,6 +121,15 @@ export const getChatMessages = (chatId: string): Message[] => {
       },
       content: "Hi there!",
       createdAt: new Date().toISOString(),
+      reactedBy: [
+        {
+          id: "0",
+          name: "User 0",
+          avatarUrl: `https://i.pravatar.cc/150?img=0`,
+          emoji: "👍",
+          reactedAt: new Date().toISOString(),
+        },
+      ],
     },
     {
       id: "3",
