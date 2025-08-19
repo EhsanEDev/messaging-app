@@ -1,15 +1,21 @@
 import { Message } from "@/constants/types";
 
 interface IProps {
-    message: Message;
+  message: Message;
 }
 
 const BubbleHeader: React.FC<IProps> = ({ message }) => {
   return (
-    <header>
-      <h2 className="chat-sender text-sm font-bold text-primary">
+    <header className="flex justify-between">
+      <h2 className="chat-sender text-sm font-bold text-blue-500">
         {message.sender.name}
       </h2>
+      <time className="text-xs text-muted-foreground">
+        {new Date(message.createdAt).toLocaleString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+        })}
+      </time>
     </header>
   );
 };

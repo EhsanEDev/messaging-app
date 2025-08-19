@@ -9,7 +9,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         <ChatListPanel />
       </nav>
       {/* Chat window */}
-      <section className="relative bg-muted w-2/3 h-svh flex flex-col">
+      <section className="relative bg-gray-300 w-2/3 h-svh flex flex-col">
         {children}
       </section>
     </>

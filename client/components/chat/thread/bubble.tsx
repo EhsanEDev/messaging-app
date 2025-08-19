@@ -25,15 +25,15 @@ const MessageBubble: React.FC<IProps> = ({ message, isOwn }) => {
       <BubbleCorner isOwn={isOwn} />
       <article
         className={cn(
-          "bg-background rounded-2xl p-2 pt-1 flex flex-col min-w-40",
+          " rounded-2xl p-2 pt-1 flex flex-col min-w-40 shadow-lg",
           {
-            "rounded-br-none": isOwn,
-            "rounded-bl-none": !isOwn,
+            "rounded-br-none bg-green-50": isOwn,
+            "rounded-bl-none bg-background": !isOwn,
           }
         )}
       >
         <BubbleHeader message={message} />
-        <p className="chat-text text-md pb-2">{message.content}</p>
+        <p className="chat-text text-md">{message.content}</p>
         <BubbleFooter message={message} />
       </article>
     </li>

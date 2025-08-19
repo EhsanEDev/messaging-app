@@ -10,12 +10,12 @@ const BubbleFooter: React.FC<IProps> = ({ message }) => {
   return (
     <footer className="flex flex-row-reverse justify-between gap-2 items-baseline-last">
       {/* <div className="flex gap-2"> */}
-        <time className="text-xs text-muted-foreground">
+        {/* <time className="text-xs text-muted-foreground">
           {new Date(message.createdAt).toLocaleString("en-US", {
             hour: "numeric",
             minute: "numeric",
           })}
-        </time>
+        </time> */}
         {/* <span className="text-xs text-muted-foreground">//</span> */}
       {/* </div> */}
       {message.reactedBy?.length ? (
