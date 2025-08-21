@@ -1,7 +1,7 @@
 import { getChatList } from "@/lib/api";
 import Search from "../common/search";
 import { SidebarTrigger } from "../ui/sidebar";
-import ChatListItem from "./chats/item";
+import ChatItem from "./chats/item";
 import Panel from "./panel";
 
 interface IProps {}
@@ -12,7 +12,7 @@ const ChatsPanel: React.FC<IProps> = () => {
     <Panel
       header={{ btn: <SidebarTrigger />, input: <Search /> }}
       list={chatList}
-      renderItem={(item) => <ChatListItem chat={item} />}
+      renderItem={(item) => <ChatItem chat={item} />}
       emptyMessage="No chats available"
     />
   );

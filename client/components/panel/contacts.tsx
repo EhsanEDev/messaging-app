@@ -2,7 +2,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { getContactList } from "@/lib/api";
 import Search from "../common/search";
 import BackButton from "./contacts/backButton";
-import ContactListItem from "./contacts/item";
+import ContactItem from "./contacts/item";
 import Panel from "./panel";
 
 interface IProps {
@@ -14,9 +14,9 @@ const ContactsPanel: React.FC<IProps> = ({ onBack }) => {
   const contactList = getContactList(user.id);
   return (
     <Panel
-      header={{ btn: <BackButton onClick={onBack} />, input: <Search /> }}
+      header={{ btn: <BackButton onClick={onBack} />, input: <Search placeholder="Search contacts..." /> }}
       list={contactList}
-      renderItem={(item) => <ContactListItem user={item} />}
+      renderItem={(item) => <ContactItem user={item} />}
       emptyMessage="No contacts available"
     />
   );

@@ -8,7 +8,7 @@ interface IProps {
   onClick?: (id: string) => void; // handler when item clicked
 }
 
-const ContactListItem: React.FC<IProps> = ({ user, onClick }) => {
+const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
   return (
     <Link
       href={`/chat/${user.id}`}
@@ -38,4 +38,4 @@ const ContactListItem: React.FC<IProps> = ({ user, onClick }) => {
   );
 };
 
-export default ContactListItem;
+export default ContactItem;
