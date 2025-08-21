@@ -1,14 +1,9 @@
-const USERS = [
-  { id: "1", username: "ehsan", password: "123456" },
-  { id: "2", username: "narges", password: "123456" },
-  { id: "3", username: "admin", password: "123456" },
-  { id: "4", username: "abbas", password: "123456" },
-];
+import { UserList } from "../constants/users.js";
 
 export default function findUserByCredentials(username, password) {
   const normalizedUsername = username.trim().toLowerCase();
 
-  const user = USERS.find(
+  const user = UserList.find(
     (u) => u.username.toLowerCase() === normalizedUsername
   );
 

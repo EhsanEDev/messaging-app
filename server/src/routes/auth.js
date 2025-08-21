@@ -26,7 +26,7 @@ router.post("/signin", (req, res) => {
   const token = jwt.sign(
     { id: user.id, username: user.username },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "12h" }
   );
 
   res
@@ -37,7 +37,7 @@ router.post("/signin", (req, res) => {
       // secure: true, // 🔒 only over HTTPS
       // sameSite: "strict",
       path: "/",
-      maxAge: 1000 * 60 * 60 * 2, // 2 hours
+      maxAge: 1000 * 60 * 60 * 12, // 12 hours
     })
     .json({ message: "Signed in successfully" });
 });

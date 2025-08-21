@@ -8,10 +8,7 @@ interface IProps {
   onClick?: (id: string) => void; // handler when item clicked
 }
 
-const ChatListItem: React.FC<IProps> = ({
-  chat,
-  onClick,
-}) => {
+const ChatListItem: React.FC<IProps> = ({ chat, onClick }) => {
   return (
     <Link
       href={`/chat/${chat.id}`}
@@ -25,7 +22,7 @@ const ChatListItem: React.FC<IProps> = ({
         </Avatar>
         {/* Online badge */}
         {/* {chat.isOnline && ( */}
-          <span className="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 border-2 border-white"></span>
+        <span className="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 border-2 border-white"></span>
         {/* )} */}
       </figure>
 
@@ -38,7 +35,11 @@ const ChatListItem: React.FC<IProps> = ({
             dateTime={chat.lastMessage?.createdAt.toString()}
             className="text-xs text-muted-foreground"
           >
-            {chat.lastMessage?.createdAt}
+            {chat.lastMessage?.createdAt &&
+              new Date(chat.lastMessage.createdAt).toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+              })}
           </time>
         </header>
 

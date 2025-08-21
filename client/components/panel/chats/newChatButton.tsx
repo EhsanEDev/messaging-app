@@ -1,0 +1,19 @@
+import { Button } from "@/components/ui/button";
+import { PencilIcon } from "lucide-react";
+
+interface IProps {
+  onClick: () => void;
+}
+
+const NewChatButton: React.FC<IProps> = ({ onClick }) => {
+  return (
+    <Button
+      className="absolute bottom-5 right-5 size-14 rounded-full cursor-pointer"
+      onClick={onClick}
+    >
+      <PencilIcon className="size-6" />
+    </Button>
+  );
+};
+
+export default NewChatButton;
