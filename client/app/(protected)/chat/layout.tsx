@@ -11,7 +11,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
   return (
     <>
       {/* Panel */}
-      <nav className="relative bg-background w-1/3 h-svh border-r-border border-r-1">
+      <nav className="relative bg-background w-1/3 border-r-border border-r-1 flex flex-col">
         {isNewChatOpen ? (
           <ContactsPanel onBack={() => setIsNewChatOpen(false)} />
         ) : (
@@ -22,7 +22,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         )}
       </nav>
       {/* Chat window */}
-      <section className="relative bg-gray-300 w-2/3 h-svh flex flex-col">
+      <section className="relative bg-gray-300 w-2/3 flex flex-col">
         {children}
       </section>
     </>

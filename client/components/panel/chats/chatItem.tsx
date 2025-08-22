@@ -12,7 +12,7 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
   return (
     <Link
       href={`/chat/${chat.id}`}
-      className="flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl"
+      className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl"
     >
       {/* Avatar */}
       <figure className="shrink-0 relative">

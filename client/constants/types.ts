@@ -1,7 +1,7 @@
 /** ===== Base User & Message Types ===== **/
 export interface User {
   id: string;
-  name: string;
+  username: string;
   avatarUrl?: string;
 }
 export interface Message {

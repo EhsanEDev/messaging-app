@@ -17,8 +17,8 @@ const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
       {/* Avatar */}
       <figure className="shrink-0 relative">
         <Avatar className="size-14">
-          <AvatarImage src={user.avatarUrl} alt={user.name} />
-          <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+          <AvatarImage src={user.avatarUrl} alt={user.username} />
+          <AvatarFallback>{user.username?.charAt(0)}</AvatarFallback>
         </Avatar>
         {/* Online badge */}
         {/* {user.isOnline && ( */}
@@ -30,7 +30,7 @@ const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
       <article className="flex flex-col flex-1 justify-between gap-0.5">
         {/* Title + date */}
         <header className="flex flex-col">
-          <h2 className="font-medium text-base">{user.name}</h2>
+          <h2 className="font-medium text-base">{user.username}</h2>
           <p className="text-xs text-muted-foreground">last seen recently</p>
         </header>
       </article>

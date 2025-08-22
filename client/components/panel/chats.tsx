@@ -1,7 +1,7 @@
 import { getChatList } from "@/lib/api";
 import Search from "../common/search";
 import { SidebarTrigger } from "../ui/sidebar";
-import ChatItem from "./chats/item";
+import ChatItem from "./chats/chatItem";
 import Panel from "./panel";
 
 interface IProps {}
