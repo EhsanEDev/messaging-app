@@ -11,6 +11,8 @@ const ChatPage: React.FC<IProps> = async ({ params }) => {
   // Fetch from server (could be your REST API or DB)
   const metadata = await getChatMetadata(chatId);
   const messages = await getChatMessages(chatId);
+  console.log(metadata);
+  console.log(messages);
 
   return (
     <>
