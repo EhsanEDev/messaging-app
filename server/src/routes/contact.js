@@ -2,8 +2,8 @@ import express from "express";
 import { UserList } from "../constants/users.js";
 const router = express.Router();
 
-// users route
-router.get("/", (req, res) => {
+// contact list
+router.get("/list", (req, res) => {
   // console.log(`Fetching chat with ID: ${chatId}`);
   setTimeout(() => {
     res.status(200).json(

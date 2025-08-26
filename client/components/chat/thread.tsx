@@ -8,6 +8,7 @@ interface IProps {
 }
 
 const ChatThread: React.FC<IProps> = ({ initialMessages, messages }) => {
+
   const user = useAuth();
   return (
     <main className="h-full w-full max-w-6xl mx-auto">

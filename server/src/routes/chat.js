@@ -1,9 +1,10 @@
 import express from "express";
+// import { ChatRepo } from "../db/fake/db";
 
 const router = express.Router();
 
 // return list of chats
-router.get("/", (req, res) => {
+router.get("/list", (req, res) => {
   // Fetch and return the list of chats
   res.status(200).json([
     {
@@ -65,6 +66,13 @@ router.get("/", (req, res) => {
   ]);
 });
 
+router.post("/create", (req, res) => {
+  console.log(req.body.participants);
+
+  // const newChat = ChatRepo.create(req.body.participants);
+  // res.status(201).json(newChat);
+});
+
 // return metadata of a particular chat
 router.get("/:chatId", (req, res) => {
   const { chatId } = req.params;
@@ -109,61 +117,63 @@ router.get("/:chatId/messages", (req, res) => {
   // const { page = 1, perPage = 10, fromId } = req.query;
 
   // Simulate fetching messages from a database
-  const messages = [
-    {
-      id: "1",
-      chatId: "chat1",
-      sender: {
-        id: "0",
-        username: "User 0",
-        avatarUrl: `https://i.pravatar.cc/150?img=0`,
-      },
-      content: "Hello!",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "2",
-      chatId: "chat1",
-      sender: {
+  res.status(200).json(
+    [
+      {
         id: "1",
-        username: "User 1",
-        avatarUrl: `https://i.pravatar.cc/150?img=1`,
-      },
-      content: "Hi there!",
-      createdAt: new Date().toISOString(),
-      reactedBy: [
-        {
+        chatId: "chat1",
+        sender: {
           id: "0",
           username: "User 0",
           avatarUrl: `https://i.pravatar.cc/150?img=0`,
-          emoji: "👍",
-          reactedAt: new Date().toISOString(),
         },
-      ],
-    },
-    {
-      id: "3",
-      chatId: "chat1",
-      sender: {
-        id: "0",
-        username: "User 0",
-        avatarUrl: `https://i.pravatar.cc/150?img=0`,
+        content: "Hello!",
+        createdAt: new Date().toISOString(),
       },
-      content: "How are you?",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "4",
-      chatId: "chat1",
-      sender: {
-        id: "1",
-        username: "User 1",
-        avatarUrl: `https://i.pravatar.cc/150?img=1`,
+      {
+        id: "2",
+        chatId: "chat1",
+        sender: {
+          id: "1",
+          username: "User 1",
+          avatarUrl: `https://i.pravatar.cc/150?img=1`,
+        },
+        content: "Hi there!",
+        createdAt: new Date().toISOString(),
+        reactedBy: [
+          {
+            id: "0",
+            username: "User 0",
+            avatarUrl: `https://i.pravatar.cc/150?img=0`,
+            emoji: "👍",
+            reactedAt: new Date().toISOString(),
+          },
+        ],
       },
-      content: "I'm good, thanks!",
-      createdAt: new Date().toISOString(),
-    },
-  ];
+      {
+        id: "3",
+        chatId: "chat1",
+        sender: {
+          id: "0",
+          username: "User 0",
+          avatarUrl: `https://i.pravatar.cc/150?img=0`,
+        },
+        content: "How are you?",
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: "4",
+        chatId: "chat1",
+        sender: {
+          id: "1",
+          username: "User 1",
+          avatarUrl: `https://i.pravatar.cc/150?img=1`,
+        },
+        content: "I'm good, thanks!",
+        createdAt: new Date().toISOString(),
+      },
+    ].reverse()
+  );
 });
 
 export default router;

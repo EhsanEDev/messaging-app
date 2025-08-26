@@ -24,10 +24,10 @@ const BubbleFooter: React.FC<IProps> = ({ message }) => {
           <Avatar className="size-6">
             <AvatarImage
               src={message.sender.avatarUrl}
-              alt={message.sender.name}
+              alt={message.sender.username}
             />
             <AvatarFallback className="bg-primary text-primary-foreground font-bold">
-              {message.sender.name.charAt(0).toUpperCase()}
+              {message.sender.username.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </Badge>

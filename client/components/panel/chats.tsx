@@ -1,10 +1,10 @@
-import { getChatList } from "@/lib/api";
+import { ChatMetadata } from "@/constants/types";
+import { fetcher } from "@/lib/fetcher";
+import { useEffect, useState, useTransition } from "react";
 import Search from "../common/search";
 import { SidebarTrigger } from "../ui/sidebar";
 import ChatItem from "./chats/chatItem";
 import Panel from "./panel";
-import { ChatMetadata } from "@/constants/types";
-import { useEffect, useState, useTransition } from "react";
 
 interface IProps {}
 
@@ -14,7 +14,7 @@ const ChatsPanel: React.FC<IProps> = () => {
 
   useEffect(() => {
     startTransition(async () => {
-      const chatList = await getChatList();
+      const chatList = await fetcher<ChatMetadata[]>("/api/chat/list");
       setChatList(chatList);
     });
   }, []);

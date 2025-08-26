@@ -2,6 +2,7 @@ import verifyToken from "./verifyToken.js";
 
 export default function getUserFromCookie(req) {
   const cookies = req.cookies;
+  // console.log(cookies);
 
   if (!cookies) return null;
 

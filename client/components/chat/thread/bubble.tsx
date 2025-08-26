@@ -19,8 +19,8 @@ const MessageBubble: React.FC<IProps> = ({ message, isOwn }) => {
       })}
     >
       <Avatar className="size-9">
-        <AvatarImage src={message.sender.avatarUrl} alt={message.sender.name} />
-        <AvatarFallback className="bg-primary text-primary-foreground font-bold">{message.sender.name.charAt(0).toUpperCase()}</AvatarFallback>
+        <AvatarImage src={message.sender.avatarUrl} alt={message.sender.username} />
+        <AvatarFallback className="bg-primary text-primary-foreground font-bold">{message.sender.username.charAt(0).toUpperCase()}</AvatarFallback>
       </Avatar>
       <BubbleCorner isOwn={isOwn} />
       <article

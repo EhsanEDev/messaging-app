@@ -9,7 +9,7 @@ const ChatAvatar: React.FC<IProps> = ({ avatarUrl, title }) => {
   return (
     <Avatar className="size-11">
       <AvatarImage src={avatarUrl} alt={title} />
-      <AvatarFallback>{title.charAt(0)}</AvatarFallback>
+      <AvatarFallback>{title?.charAt(0)}</AvatarFallback>
     </Avatar>
   );
 };

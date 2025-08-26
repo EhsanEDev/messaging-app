@@ -8,7 +8,7 @@ const BubbleHeader: React.FC<IProps> = ({ message }) => {
   return (
     <header className="flex justify-between">
       <h2 className="chat-sender text-sm font-bold text-blue-500">
-        {message.sender.name}
+        {message.sender.username}
       </h2>
       <time className="text-xs text-muted-foreground">
         {new Date(message.createdAt).toLocaleString("en-US", {

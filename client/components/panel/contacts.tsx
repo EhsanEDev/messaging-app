@@ -1,11 +1,11 @@
+import { User } from "@/constants/types";
 import { useAuth } from "@/hooks/useAuth";
-import { getContactList } from "@/lib/api";
+import { fetcher } from "@/lib/fetcher";
+import { useEffect, useState, useTransition } from "react";
 import Search from "../common/search";
 import BackButton from "./contacts/backButton";
 import ContactItem from "./contacts/contactItem";
 import Panel from "./panel";
-import { useEffect, useState, useTransition } from "react";
-import { User } from "@/constants/types";
 
 interface IProps {
   onBack: () => void;
@@ -14,14 +14,15 @@ interface IProps {
 const ContactsPanel: React.FC<IProps> = ({ onBack }) => {
   const [isPending, startTransition] = useTransition();
   const [contactList, setContactList] = useState<User[]>([]);
-  const user = useAuth();
+  const currentUser = useAuth();
 
   useEffect(() => {
     startTransition(async () => {
-      const contactList = await getContactList(user.id);
-      setContactList(contactList);
+      const data = await fetcher<User[]>("/api/contact/list");
+      const list = data.filter((user) => user.id !== currentUser.id);
+      setContactList(list);
     });
-  }, [user.id]);
+  }, [currentUser.id]);
 
   return (
     <Panel

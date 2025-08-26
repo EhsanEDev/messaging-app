@@ -7,7 +7,7 @@ import authExpress from "./middlewares/authExpress.js";
 import authSocket from "./middlewares/authSocket.js";
 import authorization from "./routes/auth.js";
 import chat from "./routes/chat.js";
-import users from "./routes/users.js";
+import contact from "./routes/contact.js";
 import registerUser from "./socket/events/registerUser.js";
 import sendGroupMsg from "./socket/events/sendGroupMsg.js";
 import sendPrivateMsg from "./socket/events/sendPrivateMsg.js";
@@ -47,8 +47,8 @@ app.use("/api/auth", authorization);
 // Auth for everything after this
 app.use(authExpress);
 // Express Protected routes
-app.use("/api/chats", chat);
-app.use("/api/users", users);
+app.use("/api/chat", chat);
+app.use("/api/contact", contact);
 
 // attach socket middleware globally
 io.use(authSocket);

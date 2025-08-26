@@ -34,7 +34,7 @@ export default function ChatWindow({
         chatId={chatId}
         title={initialMetadata.title}
         avatarUrl={initialMetadata.avatarUrl}
-        info={initialMetadata.participants.length.toString()}
+        info={initialMetadata.participants?.length.toString()}
         // typingUsers={typingUsers}
       />
       <ChatThread initialMessages={initialMessages} messages={messages} />
