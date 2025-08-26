@@ -1,6 +1,10 @@
-import { v4 as uuid } from "uuid";
+import { UserList } from "./users.js";
 
-let contacts = [];
+let contacts = UserList.map(({ id, username, avatarUrl }) => ({
+  id,
+  username,
+  avatarUrl,
+}));
 
 export const ContactRepo = {
   findAll() {
@@ -11,13 +15,13 @@ export const ContactRepo = {
     return contacts.find((u) => u.id === id) || null;
   },
 
-  create(name, avatar) {
-    const user = {
-      id: uuid(),
-      name,
-      avatar,
+  create(username, avatarUrl) {
+    const contact = {
+      id: String(Date.now()),
+      username,
+      avatarUrl,
     };
-    contacts.push(user);
-    return user;
+    contacts.push(contact);
+    return contact;
   },
 };

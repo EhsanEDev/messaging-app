@@ -5,14 +5,14 @@ import Link from "next/link";
 
 interface IProps {
   user: User;
-  onClick?: (id: string) => void; // handler when item clicked
+  onClick?: () => void; // handler when item clicked
 }
 
 const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
   return (
-    <Link
-      href={`/chat/${user.id}`}
-      className="flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl"
+    <li
+      onClick={onClick}
+      className="flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl cursor-pointer"
     >
       {/* Avatar */}
       <figure className="shrink-0 relative">
@@ -34,7 +34,7 @@ const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
           <p className="text-xs text-muted-foreground">last seen recently</p>
         </header>
       </article>
-    </Link>
+    </li>
   );
 };
 

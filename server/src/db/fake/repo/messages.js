@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid";
-
 let messages = [];
 
 export const MessageRepo = {
@@ -9,7 +7,7 @@ export const MessageRepo = {
 
   create(chatId, senderId, content) {
     const message = {
-      id: uuid(),
+      id: String(Date.now()),
       chatId,
       senderId,
       content,

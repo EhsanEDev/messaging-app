@@ -1,76 +1,26 @@
 import express from "express";
-// import { ChatRepo } from "../db/fake/db";
+import { ChatRepo } from "../db/fake/repo/chats.js";
 
 const router = express.Router();
 
 // return list of chats
 router.get("/list", (req, res) => {
   // Fetch and return the list of chats
-  res.status(200).json([
-    {
-      id: "1",
-      title: `User 1`,
-      avatarUrl: `https://i.pravatar.cc/150?img=1`,
-      participants: [
-        {
-          id: "user1",
-          name: "User One",
-          avatarUrl: `https://i.pravatar.cc/150?img=1`,
-        },
-        {
-          id: "user2",
-          name: "User Two",
-          avatarUrl: `https://i.pravatar.cc/150?img=2`,
-        },
-      ],
-      lastMessage: {
-        id: "100",
-        chatId: "user1",
-        content: "goodbye!",
-        sender: {
-          id: "user1",
-          name: "User One",
-          avatarUrl: `https://i.pravatar.cc/150?img=1`,
-        },
-        createdAt: new Date().toISOString(),
-      },
-    },
-    {
-      id: "2",
-      title: `User 2`,
-      avatarUrl: `https://i.pravatar.cc/150?img=2`,
-      participants: [
-        {
-          id: "user1",
-          name: "User One",
-          avatarUrl: `https://i.pravatar.cc/150?img=1`,
-        },
-        {
-          id: "user2",
-          name: "User Two",
-          avatarUrl: `https://i.pravatar.cc/150?img=2`,
-        },
-      ],
-      lastMessage: {
-        id: "100",
-        chatId: "user1",
-        content: "goodbye!",
-        sender: {
-          id: "user1",
-          name: "User One",
-          avatarUrl: `https://i.pravatar.cc/150?img=1`,
-        },
-        createdAt: new Date().toISOString(),
-      },
-    },
-  ]);
+  const list = ChatRepo.findAll();
+  res.status(201).json(list);
 });
 
 router.post("/create", (req, res) => {
-  console.log(req.body.participants);
-
-  // const newChat = ChatRepo.create(req.body.participants);
-  // res.status(201).json(newChat);
+  const participantIds = req.body.participantIds;
+  if (!Array.isArray(participantIds) || participantIds.length === 0) {
+    return res.status(400).json({ error: "Invalid participant IDs" });
+  }
+  if (participantIds.length === 1) {
+    const newChat = ChatRepo.createPrivate(participantIds[0]);
+    return res.status(201).json(newChat);
+  }
+  const newChat = ChatRepo.createGroup(req.user.id, participantIds);
+  return res.status(201).json(newChat);
 });
 
 // return metadata of a particular chat

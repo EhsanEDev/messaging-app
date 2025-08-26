@@ -27,7 +27,7 @@ function Panel<T>({
     content = (
       <ul className="p-2">
         {list.map((item, index) => (
-          <li key={index}>{renderItem(item)}</li>
+          <React.Fragment key={index}>{renderItem(item)}</React.Fragment>
         ))}
       </ul>
     );

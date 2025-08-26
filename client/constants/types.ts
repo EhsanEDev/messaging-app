@@ -35,10 +35,12 @@ export interface Attachment {
 /** ===== Chat Metadata (Static) ===== **/
 export interface ChatMetadata {
   id: string;
+  type: "private" | "group";
   title: string;
   avatarUrl?: string;
   participants: User[];
   lastMessage?: Message;
+  createdAt: string;
 }
 
 /** ===== Chat Real-Time State (Dynamic) ===== **/
