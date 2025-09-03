@@ -7,7 +7,7 @@ This document outlines the updated architectural decisions, structure, and flow 
 ## 🧩 Project Structure
 
 ```bash
-chapar-app/
+messaging-app/
 ├── client/            # Next.js (React) frontend
 │── server/            # Node.js + Express + Socket.IO backend
 ```
