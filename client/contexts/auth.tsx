@@ -1,13 +1,23 @@
 "use client";
 
 import { User } from "@/constants/types";
-import { createContext } from "react";
+import { createContext, useState, useContext } from "react";
 
-export const AuthContext = createContext<User | null>(null);
+type AuthContextType = {
+  user: User | null;
+  setUser: (user: User | null) => void;
+};
 
-export const AuthProvider: React.FC<{
-  children: React.ReactNode;
-  user: User;
-}> = ({ children, user }) => (
-  <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
-);
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

@@ -5,10 +5,10 @@ export const MessageRepo = {
     return messages.filter((m) => m.chatId === chatId);
   },
 
-  create(chatId, senderId, content) {
+  store(receiverId, senderId, content) {
     const message = {
-      id: String(Date.now()),
-      chatId,
+      id: messages.length + 1,
+      receiverId,
       senderId,
       content,
       createdAt: new Date().toISOString(),

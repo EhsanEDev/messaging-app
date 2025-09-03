@@ -1,13 +1,19 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import findUserByCredentials from "../utils/findUserByCredentials.js";
+import { UserRepo } from "../db/fake/repo/users.js";
 
 const router = express.Router();
 
 // Signup route
 router.post("/signup", (req, res) => {
   const { username, password } = req.body;
-  // Here you would typically hash the password and save the user to the database
+
+  const result = UserRepo.register(username, password);
+
+  if (result.error) {
+    return res.status(result.status).json({ message: result.error });
+  }
+
   res.status(201).json({ message: "User registered successfully" });
 });
 
@@ -15,7 +21,7 @@ router.post("/signup", (req, res) => {
 router.post("/signin", (req, res) => {
   const { username, password } = req.body;
 
-  const result = findUserByCredentials(username, password);
+  const result = UserRepo.findByCredentials(username, password);
 
   if (result.error) {
     return res.status(result.status).json({ message: result.error });
@@ -37,7 +43,10 @@ router.post("/signin", (req, res) => {
       path: "/",
       maxAge: 1000 * 60 * 60 * 12, // 12 hours
     })
-    .json({ message: "Signed in successfully" });
+    .json({
+      message: "Signed in successfully",
+      user: { id: user.id, username: user.username, avatarUrl: user.avatarUrl },
+    });
 });
 
 // Signout route

@@ -12,7 +12,7 @@ const ChatPage: React.FC<IProps> = async ({ params }) => {
   const cookieStore = cookies(); // read incoming request cookies
   const token = (await cookieStore).get("authToken")?.value;
 
-  // Fetch from server (could be your REST API or DB)
+  // Current is a server component, so we have to pass cookies manually
   const metadata = await fetcher<ChatMetadata>(`/api/chat/${chatId}`, {
     headers: { Cookie: `authToken=${token}` },
     cache: "no-store",
@@ -26,8 +26,8 @@ const ChatPage: React.FC<IProps> = async ({ params }) => {
     <>
       <ChatWindow
         chatId={chatId}
-        initialMetadata={metadata}
-        initialMessages={messages}
+        initialMetadata={metadata.data}
+        initialMessages={messages.data}
       />
     </>
   );

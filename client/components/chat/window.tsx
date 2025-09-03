@@ -1,12 +1,11 @@
 "use client";
 
-import { useChatSocket } from "@/hooks/useChatSocket";
-import ChatToolbar from "./toolbar";
-import ChatThread from "./thread";
+import { ChatMetadata, ChatReceiveMsg, Message } from "@/constants/types";
+import { useSocket } from "@/hooks/useSocket";
 import ChatComposer from "./composer";
-import { ChatMetadata, Message } from "@/constants/types";
-
-// import { useAuth } from "@/hooks/useAuth";
+import ChatThread from "./thread";
+import ChatToolbar from "./toolbar";
+import { WS, socket } from "@/lib/socket";
 
 interface ChatWindowProps {
   chatId: string;
@@ -19,14 +18,13 @@ export default function ChatWindow({
   initialMetadata,
   initialMessages,
 }: ChatWindowProps) {
-  const user = "useAuth()";
-
-  const { messages, typingUsers, sendMessage, startTyping, stopTyping } =
-    useChatSocket({
-      chatId,
-      userId: user,
-      // initialMessages,
-    });
+  const socketio = useSocket();
+  // socket.onMessage((message) => {
+  //   console.log("New message received:", message);
+  // });
+  socket?.on("chat:receive-message", (message: ChatReceiveMsg) => {
+    console.log("New message received:", message);
+  });
 
   return (
     <>
@@ -34,14 +32,19 @@ export default function ChatWindow({
         chatId={chatId}
         title={initialMetadata.title}
         avatarUrl={initialMetadata.avatarUrl}
-        info={initialMetadata.participants?.length.toString()}
+        info={
+          initialMetadata.type === "group"
+            ? `${initialMetadata.participants.length} participants`
+            : "last seen recently"
+        }
         // typingUsers={typingUsers}
       />
-      <ChatThread initialMessages={initialMessages} messages={messages} />
+      <ChatThread initialMessages={initialMessages} />
       <ChatComposer
-        onSendMessage={sendMessage}
-        onStartTyping={startTyping}
-        onStopTyping={stopTyping}
+        chatId={chatId}
+        onSendMessage={socketio.sendMessage}
+        // onStartTyping={startTyping}
+        // onStopTyping={stopTyping}
       />
     </>
   );

@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Environment Settings
+    "target": "ES2022", // modern stable JS, works in Node 18/20
+    "module": "nodenext", // ESM support
+    "moduleResolution": "nodenext", // required for ESM resolution
+    "types": ["node"], // enable Node.js type definitions
+    "lib": ["esnext"],
+
+    // Path Aliases
+    // "baseUrl": "./",
+    // "paths": {
+    //   "@/*": ["src/*"]
+    // },
+
+    // Output Helpers
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Recommended Defaults
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
+}

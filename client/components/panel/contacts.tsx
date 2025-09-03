@@ -17,21 +17,25 @@ interface IProps {
 const ContactsPanel: React.FC<IProps> = ({ onBack }) => {
   const [isPending, startTransition] = useTransition();
   const [contactList, setContactList] = useState<User[]>([]);
-  const currentUser = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     startTransition(async () => {
-      const data = await fetcher<User[]>("/api/contact/list");
-      const list = data.filter((user) => user.id !== currentUser.id);
-      setContactList(list);
+      try {
+        const res = await fetcher<User[]>("/api/contact/list");
+        const list = res.data.filter((u) => u.id !== user?.id);
+        setContactList(list);
+      } catch (error) {
+        console.error("Error fetching contacts:", error);
+      }
     });
-  }, [currentUser.id]);
+  }, [user?.id]);
 
   const handleItemOnClick = async (id: string) => {
     // Create/Open chat by id
     try {
-      const data = await fetcher<ChatMetadata>("/api/chat/create", {
+      const res = await fetcher<ChatMetadata>("/api/chat/create", {
         method: "POST",
         body: JSON.stringify({ participantIds: [id] }),
         headers: {
@@ -39,9 +43,9 @@ const ContactsPanel: React.FC<IProps> = ({ onBack }) => {
         },
       });
       // Close contacts panel and back to chat list
-      onBack();
+      // onBack();
       // Open the newly created chat
-      router.push(`/chat/${data.id}`);
+      router.push(`/chat/${res.data.id}`);
     } catch (error) {
       console.error("Error creating chat:", error);
     }

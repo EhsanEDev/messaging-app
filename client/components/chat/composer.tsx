@@ -6,16 +6,19 @@ import EmojiPicker from "./composer/emoji";
 import SendText from "./composer/sendText";
 import TextInput from "./composer/text";
 import VoiceInput from "./composer/voice";
+import { ChatSendMsg } from "@/constants/types";
 
 interface IProps {
-  onStartTyping: () => void;
-  onStopTyping: () => void;
-  onSendMessage: (message: string, ack: () => void) => void;
+  chatId: string;
+  // onStartTyping: () => void;
+  // onStopTyping: () => void;
+  onSendMessage: (data: ChatSendMsg, ack: () => void) => void;
 }
 
 const ChatComposer: React.FC<IProps> = ({
-  onStartTyping,
-  onStopTyping,
+  chatId,
+  // onStartTyping,
+  // onStopTyping,
   onSendMessage,
 }) => {
   const [textMessage, setTextMessage] = useState("");
@@ -27,18 +30,18 @@ const ChatComposer: React.FC<IProps> = ({
     if (textMessage.trim()) {
       if (!isTyping) {
         setIsTyping(true);
-        onStartTyping();
+        // onStartTyping();
       }
 
       // Reset timer each time the message changes
       timeoutId = setTimeout(() => {
         setIsTyping(false);
-        onStopTyping();
+        // onStopTyping();
       }, 1500);
     } else {
       if (isTyping) {
         setIsTyping(false);
-        onStopTyping();
+        // onStopTyping();
       }
     }
 
@@ -54,7 +57,7 @@ const ChatComposer: React.FC<IProps> = ({
 
   const handleSendMessage = () => {
     if (textMessage.trim()) {
-      onSendMessage(textMessage, handleClearInput);
+      onSendMessage({ chatId, content: textMessage }, handleClearInput);
     }
   };
 

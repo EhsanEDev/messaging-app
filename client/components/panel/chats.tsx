@@ -14,10 +14,16 @@ const ChatsPanel: React.FC<IProps> = () => {
 
   useEffect(() => {
     startTransition(async () => {
-      const chatList = await fetcher<ChatMetadata[]>("/api/chat/list");
-      setChatList(chatList);
+      try {
+        const res = await fetcher<ChatMetadata[]>("/api/chat/list");
+        setChatList(res.data);
+      } catch (error) {
+        console.error("Error fetching chat list:", error);
+      }
     });
   }, []);
+  console.log(chatList);
+
   return (
     <Panel
       header={{ btn: <SidebarTrigger />, input: <Search /> }}

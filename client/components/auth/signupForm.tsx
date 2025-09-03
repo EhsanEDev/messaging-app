@@ -50,7 +50,7 @@ const SigninForm: React.FC<IProps> = () => {
       console.error(err);
     }
   };
-  console.log(error);
+  // console.log(error);
 
   return (
     // <Card className="w-full max-w-sm md:max-w-xl overflow-hidden p-0">

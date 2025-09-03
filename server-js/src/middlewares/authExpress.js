@@ -1,7 +1,8 @@
-import getUserFromCookie from "../utils/getUserFromCookie.js";
+import Auth from "../utils/auth.js";
 
 export default function authExpress(req, res, next) {
-  const payload = getUserFromCookie(req);
+  const payload = Auth.getUserFromCookie(req);
+  // console.log(payload);
 
   if (!payload) {
     return res

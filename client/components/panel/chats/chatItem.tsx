@@ -9,6 +9,8 @@ interface IProps {
 }
 
 const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
+  console.log(chat);
+
   return (
     <Link href={`/chat/${chat.id}`}>
       <li className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl">

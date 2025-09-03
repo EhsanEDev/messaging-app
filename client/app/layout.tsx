@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/contexts/theme";
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/auth";
 
 export const metadata: Metadata = {
   title: "Chapar",
@@ -21,7 +22,7 @@ export default function RootLayout({
           // enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,4 +1,3 @@
-import { type } from "os";
 import { ContactRepo } from "./contacts.js";
 
 let chats = [];
@@ -7,16 +6,18 @@ export const ChatRepo = {
   findAll() {
     return chats;
   },
-
   findById(id) {
     return chats.find((c) => c.id === id) || null;
   },
+  findByOwnerId(id) {
+    return chats.find((c) => c.ownerId === id) || null;
+  },
 
-  createPrivate(participantId) {
+  createPrivate(ownerId, participantId) {
     const participant = ContactRepo.findById(participantId);
-    const id = String(Date.now());
     const chat = {
-      id,
+      id: String(Date.now()),
+      ownerId,
       type: "private",
       title: participant.username,
       avatarUrl: participant.avatarUrl,
@@ -25,9 +26,11 @@ export const ChatRepo = {
       createdAt: new Date().toISOString(),
     };
     chats.push(chat);
+    console.log("New private chat created:", chat);
+
     return chat;
   },
-  
+
   createGroup(currentId, participantIds) {
     const id = String(Date.now());
     const chat = {

@@ -1,17 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { User } from "@/constants/types";
+import { useAuth } from "@/hooks/useAuth";
+import { fetcher } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+interface SigninResult {
+  message: string;
+  user?: User;
+}
 
 interface IProps {}
 
 const SigninForm: React.FC<IProps> = () => {
   const [error, setError] = useState({ username: "", password: "" });
+  const { setUser } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,32 +34,45 @@ const SigninForm: React.FC<IProps> = () => {
     ).password as string;
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/signin`, {
+      const res = await fetcher<SigninResult>("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await res.json();
-      const msg = data.message;
+      const msg = res.data.message;
 
-      if (!res.ok) {
-        if (msg.toLowerCase().includes("username")) {
-          setError({ password: "", username: msg });
-        } else if (msg.toLowerCase().includes("password")) {
-          setError({ password: msg, username: "" });
+      if (res.status === 401) {
+        // message:
+        // 1. Username and password are required
+        // 2. Incorrect password
+        // 3. Username not found
+        if (msg.includes("Username not found")) {
+          setError({ username: msg, password: "" });
+        } else if (msg.includes("Incorrect password")) {
+          setError({ username: "", password: msg });
+        } else if (msg.includes("Username and password are required")) {
+          setError({ username: msg, password: msg }); // @TODO: This error should improve in the future
         }
-      } else setError({ username: "", password: "" });
-
-      // ✅ Redirect on success
-      router.push("/");
+        return;
+      } else if (res.status === 200) {
+        // Signed in successfully, clear errors
+        setError({ username: "", password: "" });
+      } else {
+        // Unknown error
+        throw Error("Something went wrong");
+      }
+      if (!res.data.user) {
+        // Unexpected response
+        throw Error("Something went wrong");
+      }
+      setUser(res.data.user); // Store user locally
+      router.push("/"); // Redirect on success
     } catch (err) {
-      // alert("Login failed");
       console.error(err);
     }
   };
-  console.log(error);
+  // console.log(error);
 
   return (
     // <Card className="w-full max-w-sm md:max-w-xl overflow-hidden p-0">

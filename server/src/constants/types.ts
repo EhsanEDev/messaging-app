@@ -2,12 +2,17 @@
 export interface User {
   id: string;
   username: string;
-  avatarUrl?: string;
+  avatarUrl: string | null;
+  password: string;
+}
+export type Contact = Omit<User, "password">;
+export interface Participant extends Contact {
+  role: "owner" | "admin" | "member";
 }
 export interface Message {
   id: string;
   chatId: string;
-  sender: User;
+  senderId: string;
   content: string;
   createdAt: string; // ISO timestamp
   updatedAt?: string; // in case of edits
@@ -36,10 +41,10 @@ export interface Attachment {
 export interface ChatMetadata {
   id: string;
   type: "private" | "group";
-  title: string;
-  avatarUrl?: string;
-  participants: User[];
-  lastMessage?: Message;
+  title?: string;
+  avatarUrl?: string | null;
+  participants: Participant[];
+  lastMessage: Message | null;
   createdAt: string;
 }
 
