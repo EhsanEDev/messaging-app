@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { User } from "@/constants/types";
-import { useAuth } from "@/hooks/useAuth";
 import { fetcher } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -20,7 +19,6 @@ interface IProps {}
 
 const SigninForm: React.FC<IProps> = () => {
   const [error, setError] = useState({ username: "", password: "" });
-  const { setUser } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +64,7 @@ const SigninForm: React.FC<IProps> = () => {
         // Unexpected response
         throw Error("Something went wrong");
       }
-      setUser(res.data.user); // Store user locally
+      // setUser(res.data.user); // Store user locally
       router.push("/"); // Redirect on success
     } catch (err) {
       console.error(err);

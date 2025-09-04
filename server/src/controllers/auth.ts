@@ -3,6 +3,15 @@ import AuthService from "../services/auth.js";
 import jwt from "jsonwebtoken";
 
 const AuthController = {
+  me: async (req: Request, res: Response) => {
+    try {      
+      const user = await AuthService.me(req.user.id);
+      res.status(200).json({ message: "User found", user });
+    } catch (error) {
+      res.status(401).json({ message: "User not found" });
+    }
+  },
+
   signup: async (req: Request, res: Response) => {
     // const { username, password } = req.body;
     // const result = UserRepo.register(username, password);

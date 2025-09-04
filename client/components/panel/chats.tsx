@@ -22,7 +22,7 @@ const ChatsPanel: React.FC<IProps> = () => {
       }
     });
   }, []);
-  console.log(chatList);
+  // console.log(chatList);
 
   return (
     <Panel

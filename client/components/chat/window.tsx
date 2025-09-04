@@ -30,13 +30,14 @@ export default function ChatWindow({
     <>
       <ChatToolbar
         chatId={chatId}
-        title={initialMetadata.title}
-        avatarUrl={initialMetadata.avatarUrl}
-        info={
-          initialMetadata.type === "group"
-            ? `${initialMetadata.participants.length} participants`
-            : "last seen recently"
-        }
+        metaData={initialMetadata}
+        // title={initialMetadata.title}
+        // avatarUrl={initialMetadata.avatarUrl}
+        // info={
+        //   initialMetadata.type === "group"
+        //     ? `${initialMetadata.participants.length} participants`
+        //     : "last seen recently"
+        // }
         // typingUsers={typingUsers}
       />
       <ChatThread initialMessages={initialMessages} />

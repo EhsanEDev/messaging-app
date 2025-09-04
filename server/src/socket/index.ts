@@ -5,7 +5,7 @@ import { MessageRepo } from "../db/fake/repo/messages.js";
 
 //Create a Socket.IO server
 const io = new Server(server, {
-  cors: { origin: process.env.BASE_URL },
+  cors: { origin: process.env.CLIENT_BASE_URL },
 });
 
 // attach socket middleware globally

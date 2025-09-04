@@ -14,7 +14,7 @@ const app = express();
 export const server = http.createServer(app);
 
 app.use(cookieParser());
-app.use(cors({ origin: process.env.BASE_URL, credentials: true }));
+app.use(cors({ origin: process.env.CLIENT_BASE_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authorization);

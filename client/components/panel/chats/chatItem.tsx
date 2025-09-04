@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ChatMetadata } from "@/constants/types";
+import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 
 interface IProps {
@@ -9,7 +10,22 @@ interface IProps {
 }
 
 const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
-  console.log(chat);
+  const { user } = useAuth();
+  // console.log(chat);
+  if (!chat) return null;
+
+  let chatTitle;
+  let chatAvatarUrl;
+  if (chat.type === "group") {
+    // Render group chat item
+    chatTitle = chat.title;
+    chatAvatarUrl = chat.avatarUrl;
+  } else {
+    // Render individual chat item
+    const participant = chat.participants.find((p) => p.id !== user?.id);
+    chatTitle = participant?.username || chat.title;
+    chatAvatarUrl = participant?.avatarUrl || chat.avatarUrl;
+  }
 
   return (
     <Link href={`/chat/${chat.id}`}>
@@ -17,8 +33,8 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
         {/* Avatar */}
         <figure className="shrink-0 relative">
           <Avatar className="size-14">
-            <AvatarImage src={chat.avatarUrl} alt={chat.title} />
-            <AvatarFallback>{chat.title.charAt(0)}</AvatarFallback>
+            <AvatarImage src={chatAvatarUrl} alt={chatTitle} />
+            <AvatarFallback>{chatTitle?.charAt(0)}</AvatarFallback>
           </Avatar>
           {/* Online badge */}
           {/* {chat.isOnline && ( */}
@@ -30,7 +46,7 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
         <article className="flex flex-col flex-1 justify-between gap-0.5">
           {/* Title + date */}
           <header className="flex justify-between items-center">
-            <h2 className="font-medium text-base">{chat.title}</h2>
+            <h2 className="font-medium text-base">{chatTitle}</h2>
             <time
               dateTime={chat.lastMessage?.createdAt.toString()}
               className="text-xs text-muted-foreground"
