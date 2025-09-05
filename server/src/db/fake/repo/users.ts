@@ -9,20 +9,38 @@ export const UserList: User[] = [
   },
   {
     id: "1756280717140",
-    username: "Ethan",
+    username: "Leo",
     avatarUrl: "https://i.pravatar.cc/150?img=2",
     password: "123456"
   },
   {
     id: "1756280717150",
-    username: "Narges",
+    username: "Chandler",
     avatarUrl: "https://i.pravatar.cc/150?img=3",
     password: "123456"
   },
   {
     id: "1756280717160",
-    username: "Narsis",
+    username: "Clare",
     avatarUrl: "https://i.pravatar.cc/150?img=4",
+    password: "123456"
+  },
+  {
+    id: "1756280717160",
+    username: "Clare",
+    avatarUrl: "https://i.pravatar.cc/150?img=5",
+    password: "123456"
+  },
+  {
+    id: "1756280717160",
+    username: "Melanie",
+    avatarUrl: "https://i.pravatar.cc/150?img=6",
+    password: "123456"
+  },
+  {
+    id: "1756280717160",
+    username: "Luis",
+    avatarUrl: "https://i.pravatar.cc/150?img=7",
     password: "123456"
   },
 ];

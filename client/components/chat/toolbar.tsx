@@ -28,7 +28,7 @@ const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {
   }
   
   return (
-    <header className="sticky top-0 bg-background h-18 px-5 flex items-center justify-between gap-4 border-b-border border-b-1">
+    <header className="fixed top-0 bg-background w-full h-18 px-5 flex items-center justify-between gap-4 border-b-border border-b-1">
       {/* Left section */}
       <section className="flex items-center gap-3 flex-1 cursor-pointer">
         <ChatAvatar avatarUrl={chatAvatarUrl} title={chatTitle} />
