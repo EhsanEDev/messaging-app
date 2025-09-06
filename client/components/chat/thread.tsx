@@ -1,6 +1,9 @@
 import { Message } from "@/constants/types";
 import MessageBubble from "./thread/bubble";
 import { useAuth } from "@/hooks/useAuth";
+import ScrollToBottom from "./thread/scrollToBottom";
+import { Button } from "../ui/button";
+import { ArrowDownIcon } from "lucide-react";
 
 interface IProps {
   initialMessages: Array<Message>;
@@ -9,82 +12,304 @@ interface IProps {
 
 const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
   const { user } = useAuth();
-  
+
+  const fakeMessages: Array<Message> = [
+    {
+      id: "1",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "2",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "3",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "4",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "5",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "6",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "7",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "8",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "9",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "10",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "11",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "12",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "13",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "14",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "15",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "16",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "17",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "18",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "19",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "20",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "21",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "22",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "23",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "24",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+    {
+      id: "25",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677130",
+        username: "Ehsan",
+        avatarUrl: "https://i.pravatar.cc/150?img=1",
+      },
+    },
+    {
+      id: "26",
+      chatId: "1",
+      createdAt: String(new Date()),
+      content: "Hello",
+      sender: {
+        id: "1756280677140",
+        username: "Clare",
+        avatarUrl: "https://i.pravatar.cc/150?img=4",
+      },
+    },
+  ];
   return (
-    <main className="h-full w-full max-w-6xl mx-auto">
-      <ul className="h-full flex flex-col-reverse gap-5 p-5">
-        {initialMessages.map((msg) => {
+    <main className="relative h-full overflow-y-scroll flex-1">
+      <ul className="max-w-6xl mx-auto flex flex-col-reverse gap-5 p-5">
+        {fakeMessages.map((msg) => {
           const isOwn = msg.sender.id === user?.id;
           return <MessageBubble key={msg.id} message={msg} isOwn={isOwn} />;
         })}
-        {/* <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li>
-        <li>Hello</li> */}
-        {/* <MessageBubble message={{}} isOwn={isOwn} */}
       </ul>
+      <ScrollToBottom />
     </main>
   );
 };
