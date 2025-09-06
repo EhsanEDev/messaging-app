@@ -1,9 +1,9 @@
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Message } from "@/constants/types";
-import MessageBubble from "./thread/bubble";
 import { useAuth } from "@/hooks/useAuth";
+import { useRef } from "react";
+import MessageBubble from "./thread/bubble";
 import ScrollToBottom from "./thread/scrollToBottom";
-import { Button } from "../ui/button";
-import { ArrowDownIcon } from "lucide-react";
 
 interface IProps {
   initialMessages: Array<Message>;
@@ -12,6 +12,7 @@ interface IProps {
 
 const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
   const { user } = useAuth();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const fakeMessages: Array<Message> = [
     {
@@ -302,14 +303,18 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
     },
   ];
   return (
-    <main className="relative h-full overflow-y-scroll flex-1">
-      <ul className="max-w-6xl mx-auto flex flex-col-reverse gap-5 p-5">
-        {fakeMessages.map((msg) => {
-          const isOwn = msg.sender.id === user?.id;
-          return <MessageBubble key={msg.id} message={msg} isOwn={isOwn} />;
-        })}
-      </ul>
-      <ScrollToBottom />
+    <main className="relative overflow-y-hidden h-full flex-1">
+      <ScrollArea ref={scrollRef} className="h-full">
+        <ul className="max-w-6xl mx-auto flex flex-col-reverse gap-5 p-5">
+          {fakeMessages.map((msg) => {
+            const isOwn = msg.sender.id === user?.id;
+            return <MessageBubble key={msg.id} message={msg} isOwn={isOwn} />;
+          })}
+        </ul>
+      </ScrollArea>
+      <ScrollToBottom
+        scrollRef={scrollRef as React.RefObject<HTMLDivElement>}
+      />
     </main>
   );
 };
