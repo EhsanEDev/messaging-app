@@ -1,15 +1,3 @@
-// import { io } from "socket.io-client";
-
-// export const socket = io(process.env.NEXT_PUBLIC_BASE_URL, {
-//   withCredentials: true, // Enable sending cookies with requests automatically
-//   autoConnect: false,
-//   transports: ["websocket"],
-// });
-
-// const sendMessage = (chatId, userId, text, ack) => {
-//   socket.emit("chat:send-message", { chatId, userId, text }, ack);
-// };
-// src/lib/socketClient.ts
 "use client";
 
 import { ChatJoin, ChatReceiveMsg, ChatSendMsg } from "@/shared/types";

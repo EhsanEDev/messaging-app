@@ -1,36 +1,12 @@
-import cookieParser from "cookie-parser";
-import cors from "cors";
 import dotenv from "dotenv";
-import express from "express";
-import http from "http";
-import { UserRepo } from "./db/fake/repo/users.js";
-import authExpress from "./middlewares/authExpress.js";
-import authRoute from "./routes/auth.js";
-import chatRoute from "./routes/chat.js";
-import contactRoute from "./routes/contact.js";
-import userRoute from "./routes/user.js";
-
 dotenv.config();
 
-//Create an Express application
-export const app = express();
-//Create an HTTP server with the Express app
-export const server = http.createServer(app);
+// Initialize Modules in order (Express app, HTTP server, Socket server)
+import "./servers/express.js";
+import { server } from "./servers/http.js";
+import "./servers/socket.js";
 
-app.use(cookieParser());
-app.use(cors({ origin: process.env.CLIENT_BASE_URL, credentials: true }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/api/auth", authRoute);
-app.use("/api/users", (req, res) => {
-  res.status(200).json(UserRepo.findAll());
-});
-// Auth for everything after this
-app.use(authExpress);
-app.use("/api/user", userRoute);
-app.use("/api/chat", chatRoute);
-app.use("/api/contact", contactRoute);
-
+// Start the HTTP server
 server.listen(process.env.SERVER_PORT || 4000, () => {
   console.log(`Server is listening on port ${process.env.SERVER_PORT || 4000}`);
 });

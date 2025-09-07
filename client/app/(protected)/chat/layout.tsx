@@ -3,16 +3,14 @@
 import ChatsPanel from "@/components/panel/chats";
 import NewChatButton from "@/components/panel/chats/newChatButton";
 import ContactsPanel from "@/components/panel/contacts";
-import { useAuth } from "@/hooks/useAuth";
 import { useSocket } from "@/hooks/useSocket";
-import { WS } from "@/lib/socket";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
   const [isNewChatOpen, setIsNewChatOpen] = useState(false);
 
   // Initialize socket connection at main layout
-  const socket = useSocket();
+  useSocket();
 
   return (
     <>

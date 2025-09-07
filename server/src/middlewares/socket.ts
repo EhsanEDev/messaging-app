@@ -12,7 +12,7 @@ export default function authSocket(
   next: (err?: Error) => void
 ) {
   const payload = Auth.getUserFromCookie(socket);
-  // console.log(payload);
+  console.log(payload);
 
   if (!payload) {
     return next(new Error("Unauthorized: Invalid or missing token"));

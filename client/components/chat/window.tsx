@@ -1,11 +1,11 @@
 "use client";
 
 import { ChatMetadata, ChatReceiveMsg, Message } from "@/shared/types";
-import { useSocket } from "@/hooks/useSocket";
+// import { useSocket } from "@/hooks/useSocket";
 import ChatComposer from "./composer";
 import ChatThread from "./thread";
 import ChatToolbar from "./toolbar";
-import { WS, socket } from "@/lib/socket";
+// import { WS, socket } from "@/lib/socket";
 
 interface ChatWindowProps {
   chatId: string;
@@ -18,13 +18,13 @@ export default function ChatWindow({
   initialMetadata,
   initialMessages,
 }: ChatWindowProps) {
-  const socketio = useSocket();
+  // const socketio = useSocket();
   // socket.onMessage((message) => {
   //   console.log("New message received:", message);
   // });
-  socket?.on("chat:receive-message", (message: ChatReceiveMsg) => {
-    console.log("New message received:", message);
-  });
+  // socket?.on("chat:receive-message", (message: ChatReceiveMsg) => {
+  //   console.log("New message received:", message);
+  // });
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function ChatWindow({
       <ChatThread initialMessages={initialMessages} />
       <ChatComposer
         chatId={chatId}
-        onSendMessage={socketio.sendMessage}
+        onSendMessage={() => {}}
         // onStartTyping={startTyping}
         // onStopTyping={stopTyping}
       />

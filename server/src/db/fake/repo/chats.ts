@@ -34,7 +34,7 @@ export const ChatRepo = {
       createdAt: new Date().toISOString(),
     };
     chats.push(chat);
-    console.log("New private chat created:", chat);
+    // console.log("New private chat created:", chat);
 
     return chat;
   },
