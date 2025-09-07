@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Message } from "@/constants/types";
+import { Message } from "@/shared/types";
 
 interface IProps {
   message: Message;

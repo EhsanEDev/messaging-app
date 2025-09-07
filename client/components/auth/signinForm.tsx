@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User } from "@/constants/types";
+import { User } from "@/shared/types";
 import { fetcher } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";

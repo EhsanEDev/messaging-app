@@ -1,4 +1,4 @@
-import { Message } from "@/constants/types";
+import { Message } from "@/shared/types";
 import { cn } from "@/lib/utils";
 import BubbleFooter from "./bubble/footer";
 import BubbleHeader from "./bubble/header";

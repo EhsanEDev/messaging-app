@@ -1,4 +1,4 @@
-import type { User } from "../../../constants/types.js";
+import type { User } from "@/shared/types.js";
 
 export const UserList: User[] = [
     {

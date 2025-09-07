@@ -1,7 +1,7 @@
 "use client";
 
 import Loading from "@/components/common/loading";
-import { User } from "@/constants/types";
+import { User } from "@/shared/types";
 import { fetcher } from "@/lib/fetcher";
 import { createContext, useEffect, useState } from "react";
 

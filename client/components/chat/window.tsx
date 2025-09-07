@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatMetadata, ChatReceiveMsg, Message } from "@/constants/types";
+import { ChatMetadata, ChatReceiveMsg, Message } from "@/shared/types";
 import { useSocket } from "@/hooks/useSocket";
 import ChatComposer from "./composer";
 import ChatThread from "./thread";

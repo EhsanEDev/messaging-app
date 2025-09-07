@@ -1,4 +1,4 @@
-import type { ChatMetadata, User } from "../../../constants/types.js";
+import type { ChatMetadata, User } from "@/shared/types.js";
 import { ContactRepo } from "./contacts.js";
 
 let chats: ChatMetadata[] = [];

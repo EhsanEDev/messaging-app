@@ -1,17 +1,13 @@
-import { Contact } from "../constants/types.js";
+import { User, Contact } from "@/shared/types.js";
 import { UserRepo } from "../db/fake/repo/users.js";
 
 const AuthService = {
   me: async (id: string): Promise<Contact> => {
-    const user = UserRepo.findById(id);
+    const user: User | null = UserRepo.findById(id);
     if (!user) {
       throw new Error("Username not found");
     }
-    return {
-      id: user.id,
-      username: user.username,
-      avatarUrl: user.avatarUrl,
-    };
+    return { id: user.id, username: user.username, avatarUrl: user.avatarUrl ?? "" };
   },
 
   signup: async (username: string, password: string) => {

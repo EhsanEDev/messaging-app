@@ -1,4 +1,4 @@
-import { ChatMetadata } from "@/constants/types";
+import { ChatMetadata } from "@/shared/types";
 import { fetcher } from "@/lib/fetcher";
 import { useEffect, useState, useTransition } from "react";
 import Search from "../common/search";

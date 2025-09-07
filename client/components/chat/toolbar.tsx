@@ -1,4 +1,4 @@
-import { ChatMetadata } from "@/constants/types";
+import { ChatMetadata } from "@/shared/types";
 import MoreActions from "./toolbar/actions";
 import ChatAvatar from "./toolbar/avatar";
 import Call from "./toolbar/call";
@@ -16,15 +16,17 @@ const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {
 
   let chatTitle;
   let chatAvatarUrl;
+  let chatInfo;
   if (metaData.type === "group") {
-    // Render group chat item
     chatTitle = metaData.title;
     chatAvatarUrl = metaData.avatarUrl;
+    chatInfo = `${metaData.participants.length} participants`;
   } else {
-    // Render individual chat item
     const participant = metaData.participants?.find((p) => p.id !== user?.id);
-    chatTitle = participant?.username || metaData.title;
-    chatAvatarUrl = participant?.avatarUrl || metaData.avatarUrl;
+    if (!participant) return;
+    chatTitle = participant.username;
+    chatAvatarUrl = participant.avatarUrl;
+    chatInfo = "last seen recently";
   }
   
   return (
@@ -34,11 +36,7 @@ const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {
         <ChatAvatar avatarUrl={chatAvatarUrl} title={chatTitle} />
         <ChatInfo
           title={chatTitle}
-          info={
-            metaData.type === "group"
-              ? `${metaData.participants.length} participants`
-              : "last seen recently"
-          }
+          info={chatInfo}
         />
       </section>
 

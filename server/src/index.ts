@@ -1,14 +1,14 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import http from "http";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+import { UserRepo } from "./db/fake/repo/users.js";
+import authExpress from "./middlewares/authExpress.js";
 import authRoute from "./routes/auth.js";
-import userRoute from "./routes/user.js";
 import chatRoute from "./routes/chat.js";
 import contactRoute from "./routes/contact.js";
-import authExpress from "./middlewares/authExpress.js";
-import { UserRepo } from "./db/fake/repo/users.js";
-import dotenv from "dotenv";
+import userRoute from "./routes/user.js";
 
 dotenv.config();
 

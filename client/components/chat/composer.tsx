@@ -6,7 +6,7 @@ import EmojiPicker from "./composer/emoji";
 import SendText from "./composer/sendText";
 import TextInput from "./composer/text";
 import VoiceInput from "./composer/voice";
-import { ChatSendMsg } from "@/constants/types";
+import { ChatSendMsg } from "@/shared/types";
 
 interface IProps {
   chatId: string;

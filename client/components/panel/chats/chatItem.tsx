@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ChatMetadata } from "@/constants/types";
+import { ChatMetadata } from "@/shared/types";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 
@@ -16,15 +16,17 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
 
   let chatTitle;
   let chatAvatarUrl;
+  let chatInfo;
   if (chat.type === "group") {
-    // Render group chat item
     chatTitle = chat.title;
     chatAvatarUrl = chat.avatarUrl;
+    chatInfo = `${chat.participants.length} participants`;
   } else {
-    // Render individual chat item
-    const participant = chat.participants.find((p) => p.id !== user?.id);
-    chatTitle = participant?.username || chat.title;
-    chatAvatarUrl = participant?.avatarUrl || chat.avatarUrl;
+    const participant = chat.participants?.find((p) => p.id !== user?.id);
+    if (!participant) return;
+    chatTitle = participant.username;
+    chatAvatarUrl = participant.avatarUrl;
+    chatInfo = "last seen recently";
   }
 
   return (

@@ -12,7 +12,7 @@
 // src/lib/socketClient.ts
 "use client";
 
-import { ChatJoin, ChatReceiveMsg, ChatSendMsg } from "@/constants/types";
+import { ChatJoin, ChatReceiveMsg, ChatSendMsg } from "@/shared/types";
 import { io, Socket } from "socket.io-client";
 
 // ---- Socket instance ----

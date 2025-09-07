@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatMetadata, User } from "@/constants/types";
+import { ChatMetadata, User } from "@/shared/types";
 import { useAuth } from "@/hooks/useAuth";
 import { fetcher } from "@/lib/fetcher";
 import { useEffect, useState, useTransition } from "react";

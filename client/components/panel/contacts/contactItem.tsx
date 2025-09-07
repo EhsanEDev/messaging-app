@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { User } from "@/constants/types";
+import { User } from "@/shared/types";
 import Link from "next/link";
 
 interface IProps {

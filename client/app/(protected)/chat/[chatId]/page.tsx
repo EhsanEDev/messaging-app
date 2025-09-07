@@ -1,5 +1,5 @@
 import ChatWindow from "@/components/chat/window";
-import { ChatMetadata, Message } from "@/constants/types";
+import { ChatMetadata, Message } from "@/shared/types";
 import { fetcher } from "@/lib/fetcher";
 import { cookies } from "next/headers";
 

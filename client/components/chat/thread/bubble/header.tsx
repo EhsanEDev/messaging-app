@@ -1,4 +1,4 @@
-import { Message } from "@/constants/types";
+import { Message } from "@/shared/types";
 
 interface IProps {
   message: Message;

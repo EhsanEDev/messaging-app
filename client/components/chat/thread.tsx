@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Message } from "@/constants/types";
+import { Message } from "@/shared/types";
 import { useAuth } from "@/hooks/useAuth";
 import { useRef } from "react";
 import MessageBubble from "./thread/bubble";
@@ -21,7 +21,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -43,7 +43,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -65,7 +65,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -87,7 +87,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -109,7 +109,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -131,7 +131,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -153,7 +153,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -175,7 +175,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -197,7 +197,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -219,7 +219,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -241,7 +241,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -263,7 +263,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },
@@ -285,7 +285,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
       createdAt: String(new Date()),
       content: "Hello",
       sender: {
-        id: "1756280677130",
+        id: "1756280677110",
         username: "Ehsan",
         avatarUrl: "https://i.pravatar.cc/150?img=1",
       },

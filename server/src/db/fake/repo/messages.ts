@@ -1,4 +1,5 @@
-import { Message } from "../../../constants/types.js";
+import { Message } from "@/shared/types.js";
+import { ContactRepo } from "./contacts.js";
 
 let messages: Message[] = [];
 
@@ -8,10 +9,14 @@ export const MessageRepo = {
   },
 
   store(receiverId: string, senderId: string, content: string) {
+    const sender = ContactRepo.findById(senderId);
+    if (!sender) {
+      throw new Error("Sender not found");
+    }
     const message: Message = {
       id: String(messages.length + 1),
       chatId: receiverId,
-      senderId,
+      sender,
       content,
       createdAt: new Date().toISOString(),
     };
