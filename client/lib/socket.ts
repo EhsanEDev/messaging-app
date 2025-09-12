@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatJoin, ChatReceiveMsg, ChatSendMsg } from "@/shared/types";
+import { ChatReceiveMsg, ChatSendMsg, UserIdentifier } from "@/shared/types";
 import { io, Socket } from "socket.io-client";
 
 // ---- Socket instance ----
@@ -28,12 +28,12 @@ export const WS = {
 
   // ---- Emitters ----
 
-  register: (data: ChatJoin) => {
-    socket?.emit("chat:join", data);
+  register: (data: UserIdentifier) => {
+    socket?.emit("user:join", data);
   },
 
   sendMessage: (data: ChatSendMsg, ack: () => void) => {
-    socket?.emit("chat:send-message", data);
+    socket?.emit("message:send", data);
     ack();
   },
 

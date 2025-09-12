@@ -11,9 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { menuItems } from "@/constants/menuList";
 
-interface IProps {}
-
-const sidebarMenu: React.FC<IProps> = () => {
+const sidebarMenu: React.FC = () => {
   return (
     <Sidebar>
       <SidebarHeader />

@@ -9,9 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 
-interface IProps {}
-
-const MoreActions: React.FC<IProps> = () => {
+const MoreActions: React.FC = () => {
   return (
     <DropdownMenu aria-label="More actions">
       <DropdownMenuTrigger className="size-11 rounded-full cursor-pointer focus-visible:outline-3 hover:bg-accent flex justify-center items-center">

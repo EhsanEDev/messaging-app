@@ -63,16 +63,18 @@ export interface ChatReceiveMsg {
   content: string;
   createdAt: string;
 }
-
+export type SocketEvent =
+  | "user:join"
+  | "user:online"
+  | "user:offline"
+  | "message:send"
+  | "message:receive";
 // Events your client can emit
-// export interface ClientToServerEvents {
-//   ["chat:join"]: (data: { userId: string }) => void;
-//   ["chat:send-message"]: (data: {
-//     chatId: string;
-//     content: string;
-//   }) => void;
-//   "chat:create": (data: { participantIds: string[] }) => void;
-// }
+export interface ClientToServerEvents {
+  "user:join": (data: ChatJoin) => void;
+  "chat:send-message": (data: ChatSendMsg) => void;
+  // "chat:create": (data: { participantIds: string[] }) => void;
+}
 
 // Events your client can listen to
 // export interface ServerToClientEvents {

@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { SmileIcon } from "lucide-react";
 
-interface IProps {}
-
-const EmojiPicker: React.FC<IProps> = () => {
+const EmojiPicker: React.FC = () => {
   return (
     <Button
       variant="ghost"

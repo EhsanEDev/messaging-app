@@ -1,9 +1,10 @@
+import { JwtPayload } from "jsonwebtoken";
 import { Socket } from "socket.io";
 import Auth from "../utils/auth.js";
 
 declare module "socket.io" {
   interface Socket {
-    user?: any;
+    user: JwtPayload;
   }
 }
 

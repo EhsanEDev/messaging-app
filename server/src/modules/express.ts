@@ -6,6 +6,8 @@ import authRoute from "../routes/auth.js";
 import chatRoute from "../routes/chat.js";
 import contactRoute from "../routes/contact.js";
 import userRoute from "../routes/user.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 //Create an Express application
 export const app = express();

@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 
-interface IProps {}
-
-const SearchInChat: React.FC<IProps> = () => {
+const SearchInChat: React.FC = () => {
   return (
     <Button
       variant="ghost"

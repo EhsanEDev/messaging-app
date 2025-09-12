@@ -6,9 +6,7 @@ import { SidebarTrigger } from "../ui/sidebar";
 import ChatItem from "./chats/chatItem";
 import Panel from "./panel";
 
-interface IProps {}
-
-const ChatsPanel: React.FC<IProps> = () => {
+const ChatsPanel: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [chatList, setChatList] = useState<ChatMetadata[]>([]);
 

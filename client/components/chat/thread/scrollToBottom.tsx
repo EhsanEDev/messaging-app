@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const ScrollToBottom: React.FC<IProps> = ({ scrollRef }) => {
-  if (!scrollRef) return null;
+  // if (!scrollRef) return null;
 
   const [visible, setVisible] = useState(false);
 

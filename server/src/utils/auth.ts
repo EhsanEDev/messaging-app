@@ -4,7 +4,7 @@ import type { Socket } from "socket.io";
 import type { Request } from "express";
 
 const Auth = {
-  getUserFromCookie(source: Request | Socket): jwt.JwtPayload | string | null {
+  getUserFromCookie(source: Request | Socket): jwt.JwtPayload | null {
     let cookies;
 
     if ("cookies" in source) {
@@ -21,8 +21,9 @@ const Auth = {
     if (!token) return null;
 
     try {
-      return jwt.verify(token, process.env.JWT_SECRET as string);
+      return jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload;
     } catch (err) {
+      console.error("Failed to verify token:", err);
       return null;
     }
   },

@@ -1,7 +1,7 @@
 import { Message } from "@/shared/types.js";
 import { ContactRepo } from "./contacts.js";
 
-let messages: Message[] = [];
+const messages: Message[] = [];
 
 export const MessageRepo = {
   findByChatId(chatId: string) {

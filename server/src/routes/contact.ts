@@ -1,11 +1,8 @@
-import { ContactRepo } from "../db/fake/repo/contacts.js";
 import express, { type Request, type Response } from "express";
+import ContactController from "../controllers/contact.js";
 
 const router = express.Router();
 
-// contact list
-router.get("/list", (req: Request, res: Response) => {
-  res.status(200).json(ContactRepo.findAll());
-});
+router.get("/list", ContactController.list);
 
 export default router;

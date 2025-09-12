@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { PhoneIcon } from "lucide-react";
 
-interface IProps {}
-
-const Call: React.FC<IProps> = () => {
+const Call: React.FC = () => {
   return (
     <Button
       variant="ghost"

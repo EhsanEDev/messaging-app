@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { PaperclipIcon } from "lucide-react";
 
-interface IProps {}
-
-const AttachMenu: React.FC<IProps> = () => {
+const AttachMenu: React.FC = () => {
   return (
     <Button
       variant="ghost"

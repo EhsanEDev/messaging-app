@@ -2,9 +2,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Initialize Modules in order (Express app, HTTP server, Socket server)
-import "./servers/express.js";
-import { server } from "./servers/http.js";
-import "./servers/socket.js";
+import "./modules/express.js";
+import { server } from "./modules/http.js";
+import "./modules/socket.js";
 
 // Start the HTTP server
 server.listen(process.env.SERVER_PORT || 4000, () => {

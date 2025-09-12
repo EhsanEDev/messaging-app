@@ -8,9 +8,7 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface IProps {}
-
-const SigninForm: React.FC<IProps> = () => {
+const SigninForm: React.FC = () => {
   const [error, setError] = useState({ username: "", password: "" });
   const router = useRouter();
 

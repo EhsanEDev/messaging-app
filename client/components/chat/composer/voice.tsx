@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { MicIcon } from "lucide-react";
 
-interface IProps {}
-
-const VoiceInput: React.FC<IProps> = () => {
+const VoiceInput: React.FC = () => {
   return (
     <Button
       variant="ghost"

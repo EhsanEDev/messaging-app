@@ -1,55 +1,36 @@
 import { type Request, type Response } from "express";
 import AuthService from "../services/auth.js";
 import jwt from "jsonwebtoken";
+import { User } from "@/shared/types.js";
 
 const AuthController = {
-  me: async (req: Request, res: Response) => {
-    try {      
-      const user = await AuthService.me(req.user.id);
-      res.status(200).json(user);
-    } catch (error) {
-      res.status(401).json({ message: "User not found" });
-    }
-  },
-
   signup: async (req: Request, res: Response) => {
-    // const { username, password } = req.body;
-    // const result = UserRepo.register(username, password);
-    // if (result.error) {
-    //   return res.status(result.status).json({ message: result.error });
-    // }
-    // res.status(201).json({ message: "User registered successfully" });
+    const { username, password } = req.body;
+
+    try {
+      // Signup the user
+      const newUser = await AuthService.signup(username, password);
+      // Signup was done successfully, then Signin internally
+      const user = await AuthService.signin(newUser.username, newUser.password);
+      // Signed in successfully, Generate JWT token and attach it to response
+      AuthController._attachTokenToResp(user, res);
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(401).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: "Internal server error" });
+      }
+    }
   },
 
   signin: async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
     try {
-      // Sign in the user
+      // Signin the user
       const user = await AuthService.signin(username, password);
-      // Signed in successfully, Generate JWT token
-      const token = jwt.sign(
-        { id: user.id, username: user.username },
-        process.env.JWT_SECRET as string,
-        { expiresIn: "12h" }
-      );
-      res
-        .cookie("authToken", token, {
-          httpOnly: true, // 🔐 can't access via JS (protects from XSS)
-          secure: process.env.NODE_ENV === "production", // 🔒 in production only over HTTPS
-          sameSite: "strict",
-          path: "/",
-          maxAge: 1000 * 60 * 60 * 12, // 12 hours
-        })
-        .status(200)
-        .json({
-          message: "Signed in successfully",
-          user: {
-            id: user.id,
-            username: user.username,
-            avatarUrl: user.avatarUrl,
-          },
-        });
+      // Signed in successfully, Generate JWT token and attach it to response
+      AuthController._attachTokenToResp(user, res);
     } catch (error) {
       if (error instanceof Error) {
         res.status(401).json({ message: error.message });
@@ -66,6 +47,31 @@ const AuthController = {
       sameSite: "strict",
     });
     return res.status(200).json({ message: "Signed out" });
+  },
+
+  _attachTokenToResp: async (user: User, res: Response) => {
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "12h" }
+    );
+    res
+      .cookie("authToken", token, {
+        httpOnly: true, // 🔐 can't access via JS (protects from XSS)
+        secure: process.env.NODE_ENV === "production", // 🔒 in production only over HTTPS
+        sameSite: "strict",
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 12, // 12 hours
+      })
+      .status(200)
+      .json({
+        message: "Signed in successfully",
+        user: {
+          id: user.id,
+          username: user.username,
+          avatarUrl: user.avatarUrl,
+        },
+      });
   },
 };
 

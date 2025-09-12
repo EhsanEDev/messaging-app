@@ -15,9 +15,7 @@ interface SigninResult {
   user?: User;
 }
 
-interface IProps {}
-
-const SigninForm: React.FC<IProps> = () => {
+const SigninForm: React.FC = () => {
   const [error, setError] = useState({ username: "", password: "" });
   const router = useRouter();
 

@@ -9,8 +9,6 @@ export interface Participant extends Contact {
   role: "owner" | "admin" | "member";
 }
 
-
-
 export interface SeenByEntry {
   userId: string;
   seenAt: string; // ISO timestamp
@@ -40,27 +38,41 @@ export interface Message {
   attachments?: Attachment[]; // optional for images/files
 }
 
-
+export type ChatType = "direct" | "group" | "channel";
+export type ChatVisibility = "public" | "private" | "restricted";
 
 interface BaseChatMetaData {
   id: string;
+  type: ChatType;
+  visibility: ChatVisibility;
   participants: Participant[];
   lastMessage: Message | null;
   createdAt: string;
 }
-export interface PrivateChatMetaData extends BaseChatMetaData {
-  type: "private";
+export interface DirectChatMetaData extends BaseChatMetaData {
+  type: "direct";
+  visibility: "private";
 }
 export interface GroupChatMetaData extends BaseChatMetaData {
   type: "group";
   title: string;
   avatarUrl?: string;
 }
-export type ChatMetadata = PrivateChatMetaData | GroupChatMetaData;
+export interface ChannelChatMetaData extends BaseChatMetaData {
+  type: "channel";
+  title: string;
+  avatarUrl?: string;
+}
+export type ChatMetadata = DirectChatMetaData | GroupChatMetaData | ChannelChatMetaData;
 
+// export type SocketEvent =
+//   | "user:join"
+//   | "user:online"
+//   | "user:offline"
+//   | "message:send"
+//   | "message:receive";
 
-
-export interface ChatJoin {
+export interface UserIdentifier {
   userId: string;
 }
 export interface ChatSendMsg {
@@ -73,4 +85,18 @@ export interface ChatReceiveMsg {
   senderId: string;
   content: string;
   createdAt: string;
+}
+// Events which client can emit or server can listen
+export interface ClientToServerEvent {
+  "user:join": (data: UserIdentifier) => void;
+  "message:send": (data: ChatSendMsg) => void;
+  // "chat:create": (data: { participantIds: string[] }) => void;
+}
+// Events which server can emit or client can listen
+export interface ServerToClientEvent {
+  "user:join": (data: UserIdentifier) => void;
+  "user:online": (data: UserIdentifier) => void;
+  "user:offline": (data: UserIdentifier) => void;
+  "message:receive": (data: ChatReceiveMsg) => void;
+  // "chat:create": (data: { participantIds: string[] }) => void;
 }

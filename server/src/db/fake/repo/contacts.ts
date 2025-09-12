@@ -1,7 +1,7 @@
-import type { Contact, User } from "@/shared/types.js";
+import type { Contact } from "@/shared/types.js";
 import { UserList } from "./users.js";
 
-let contacts: Contact[] = UserList.map(({ id, username, avatarUrl }) => ({
+const contacts: Contact[] = UserList.map(({ id, username, avatarUrl }) => ({
   id,
   username,
   avatarUrl: avatarUrl ?? "",

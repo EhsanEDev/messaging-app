@@ -1,6 +1,4 @@
-interface IProps {}
-
-const Loading: React.FC<IProps> = () => {
+const Loading: React.FC = () => {
   return (
     <main className="flex h-screen items-center justify-center flex-col gap-4 animate-pulse">
       <img src="/logo.png" alt="Logo" className="w-24 h-24 " />
