@@ -63,7 +63,10 @@ export interface ChannelChatMetaData extends BaseChatMetaData {
   title: string;
   avatarUrl?: string;
 }
-export type ChatMetadata = DirectChatMetaData | GroupChatMetaData | ChannelChatMetaData;
+export type ChatMetadata =
+  | DirectChatMetaData
+  | GroupChatMetaData
+  | ChannelChatMetaData;
 
 // export type SocketEvent =
 //   | "user:join"
@@ -72,8 +75,12 @@ export type ChatMetadata = DirectChatMetaData | GroupChatMetaData | ChannelChatM
 //   | "message:send"
 //   | "message:receive";
 
-export interface UserIdentifier {
-  userId: string;
+export interface Identifier {
+  id: string;
+}
+export interface ChatCreate {
+  type: ChatType;
+  participantsId: string[];
 }
 export interface ChatSendMsg {
   receiverId: string;
@@ -88,15 +95,15 @@ export interface ChatReceiveMsg {
 }
 // Events which client can emit or server can listen
 export interface ClientToServerEvent {
-  "user:join": (data: UserIdentifier) => void;
+  "user:join": (data: Identifier) => void;
+  "chat:join": (data: Identifier) => void;
   "message:send": (data: ChatSendMsg) => void;
-  // "chat:create": (data: { participantIds: string[] }) => void;
 }
 // Events which server can emit or client can listen
 export interface ServerToClientEvent {
-  "user:join": (data: UserIdentifier) => void;
-  "user:online": (data: UserIdentifier) => void;
-  "user:offline": (data: UserIdentifier) => void;
+  "user:join": (data: Identifier) => void;
+  "user:online": (data: Identifier) => void;
+  "user:offline": (data: Identifier) => void;
   "message:receive": (data: ChatReceiveMsg) => void;
-  // "chat:create": (data: { participantIds: string[] }) => void;
+  "chat:created": (data: ChatMetadata) => void;
 }

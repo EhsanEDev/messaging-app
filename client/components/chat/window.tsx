@@ -18,14 +18,14 @@ export default function ChatWindow({
   initialMetadata,
   initialMessages,
 }: ChatWindowProps) {
-  const socketio = useSocket();
+  const io = useSocket();
 
-  socketio.onMessage((message) => {
+  io.onMessage((message) => {
     console.log("New message received:", message);
   });
-  // socket?.on("chat:receive-message", (message: ChatReceiveMsg) => {
-  //   console.log("New message received:", message);
-  // });
+  io.onChatCreated((chat) => {
+    console.log("New chat created:", chat);
+  });
 
   return (
     <>
@@ -44,7 +44,7 @@ export default function ChatWindow({
       <ChatThread initialMessages={initialMessages} />
       <ChatComposer
         chatId={chatId}
-        onSendMessage={socketio.sendMessage}
+        onSendMessage={io.sendMessage}
         // onStartTyping={startTyping}
         // onStopTyping={stopTyping}
       />

@@ -6,7 +6,7 @@ import { SidebarTrigger } from "../ui/sidebar";
 import ChatItem from "./chats/chatItem";
 import Panel from "./panel";
 
-const ChatsPanel: React.FC = () => {
+const MainPanel: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [chatList, setChatList] = useState<ChatMetadata[]>([]);
 
@@ -33,4 +33,4 @@ const ChatsPanel: React.FC = () => {
   );
 };
 
-export default ChatsPanel;
+export default MainPanel;

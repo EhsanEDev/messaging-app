@@ -1,8 +1,14 @@
-import { ChatMetadata, Contact, Message, Participant } from "@/shared/types.js";
+import type {
+  ChatMetadata,
+  ChatType,
+  Contact,
+  Message,
+  Participant,
+} from "@/shared/types.js";
 import { ChatRepo } from "../db/fake/repo/chats.js";
-import { UserRepo } from "../db/fake/repo/users.js";
 import { ContactRepo } from "../db/fake/repo/contacts.js";
 import { MessageRepo } from "../db/fake/repo/messages.js";
+import { UserRepo } from "../db/fake/repo/users.js";
 
 const ChatService = {
   list: async (id: string): Promise<ChatMetadata[]> => {
@@ -11,11 +17,17 @@ const ChatService = {
 
   create: async (
     ownerId: string,
+    type: ChatType,
     participantsId: string[]
   ): Promise<ChatMetadata> => {
     // Validate input
     if (!Array.isArray(participantsId) || participantsId.length === 0) {
       throw new Error("Bad create chat request");
+    }
+
+    // Validate chat type
+    if (type !== "direct" && type !== "group" && type !== "channel") {
+      throw new Error("Invalid chat type");
     }
 
     // Validate participants
@@ -33,22 +45,30 @@ const ChatService = {
       role: "member",
     }));
 
-    const newChat = ChatRepo.createDirect({
-      visibility: "private",
-      participants: [owner, ...participants],
-    });
-    // const newChat = ChatRepo.createGroup({
-    //   title: `chat ${Date.now()}`,
-    //   visibility: "private",
-    //   participants: [owner, ...participants],
-    // });
-    // const newChat = ChatRepo.createChannel({
-    //   title: `channel ${Date.now()}`,
-    //   visibility: "private",
-    //   participants: [owner, ...participants],
-    // });
+    let newChat;
+    if (type === "direct") {
+      newChat = ChatRepo.createDirect({
+        visibility: "private",
+        participants: [owner, ...participants],
+      });
+    } else if (type === "group") {
+      newChat = ChatRepo.createGroup({
+        title: `chat ${Date.now()}`,
+        visibility: "private",
+        participants: [owner, ...participants],
+      });
+    } else if (type === "channel") {
+      newChat = ChatRepo.createChannel({
+        title: `channel ${Date.now()}`,
+        visibility: "private",
+        participants: [owner, ...participants],
+      });
+    }
 
-    // @TODO emit chat:created to participants
+    // Validate created chat
+    if (newChat === undefined) {
+      throw new Error("Something went wrong");
+    }
 
     return newChat;
   },
@@ -82,7 +102,7 @@ const ChatService = {
     if (messages.length === 0) {
       throw new Error("No message found");
     }
-    
+
     return messages;
   },
 };

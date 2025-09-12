@@ -66,7 +66,7 @@
 //     chatId: string;
 //     content: string;
 //   }) => void;
-//   "chat:create": (data: { participantIds: string[] }) => void;
+//   "chat:create": (data: { participantsId: string[] }) => void;
 // }
 
 // Events your client can listen to

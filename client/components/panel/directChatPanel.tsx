@@ -1,12 +1,12 @@
 "use client";
 
-import { ChatMetadata, User } from "@/shared/types";
+import { ChatCreate, ChatMetadata, User } from "@/shared/types";
 import { useAuth } from "@/hooks/useAuth";
 import { fetcher } from "@/lib/fetcher";
 import { useEffect, useState, useTransition } from "react";
 import Search from "../common/search";
-import BackButton from "./contacts/backButton";
-import ContactItem from "./contacts/contactItem";
+import BackButton from "./directChat/backButton";
+import ContactItem from "./directChat/contactItem";
 import Panel from "./panel";
 import { useRouter } from "next/navigation";
 
@@ -14,7 +14,7 @@ interface IProps {
   onBack: () => void;
 }
 
-const ContactsPanel: React.FC<IProps> = ({ onBack }) => {
+const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
   const [isPending, startTransition] = useTransition();
   const [contactList, setContactList] = useState<User[]>([]);
   const { user } = useAuth();
@@ -32,12 +32,12 @@ const ContactsPanel: React.FC<IProps> = ({ onBack }) => {
     });
   }, [user?.id]);
 
-  const handleItemOnClick = async (id: string) => {
+  const handleItemOnClick = async (chat: ChatCreate) => {
     // Create/Open chat by id
     try {
       const res = await fetcher<ChatMetadata>("/api/chat/create", {
         method: "POST",
-        body: JSON.stringify({ participantIds: [id] }),
+        body: JSON.stringify(chat),
         headers: {
           "Content-Type": "application/json",
         },
@@ -60,11 +60,11 @@ const ContactsPanel: React.FC<IProps> = ({ onBack }) => {
       loading={isPending}
       list={contactList}
       renderItem={(item) => (
-        <ContactItem onClick={() => handleItemOnClick(item.id)} user={item} />
+        <ContactItem onClick={() => handleItemOnClick({ type: "direct", participantsId: [item.id] })} user={item} />
       )}
       emptyMessage="No contacts available"
     />
   );
 };
 
-export default ContactsPanel;
+export default DirectChatPanel;

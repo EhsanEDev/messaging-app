@@ -4,7 +4,6 @@ import type {
   DirectChatMetaData,
   GroupChatMetaData,
 } from "@/shared/types.js";
-import { ContactRepo } from "./contacts.js";
 
 const chats: ChatMetadata[] = [];
 
@@ -54,7 +53,7 @@ export const ChatRepo = {
     chats.push(newChat);
     return newChat;
   },
-  
+
   createChannel(
     metadata: Omit<
       ChannelChatMetaData,

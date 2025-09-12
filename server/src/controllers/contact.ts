@@ -1,5 +1,4 @@
 import { type Request, type Response } from "express";
-import { ContactRepo } from "../db/fake/repo/contacts.js";
 import ContactService from "../services/contact.js";
 
 const ContactController = {

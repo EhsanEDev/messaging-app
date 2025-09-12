@@ -73,7 +73,7 @@ export type SocketEvent =
 export interface ClientToServerEvents {
   "user:join": (data: ChatJoin) => void;
   "chat:send-message": (data: ChatSendMsg) => void;
-  // "chat:create": (data: { participantIds: string[] }) => void;
+  // "chat:create": (data: { participantsId: string[] }) => void;
 }
 
 // Events your client can listen to

@@ -31,17 +31,17 @@ function emitToUser<K extends keyof ServerToClientEvent>(
 // Every connection will have a unique socket ID
 // That each ID represents a specific user session
 io.on("connection", (socket: Socket<ClientToServerEvent>) => {
-  console.log("A user connected");
+  // console.log("A user connected");
 
-  socket.on("user:join", ({ userId }) => {
-    console.log(`(${userId}) joined`);
+  socket.on("user:join", ({ id }) => {
+    console.log(`(${id}) joined`);
     // @TODO Join the user to their rooms
     // get user chat list array from database
     // const chatList = ChatRepo.findUserChats(userId);
     // chatList.forEach((chat) => {
     //   socket.join(`chat:${chat.id}`);
     // });
-    socket.data.userId = userId;
+    socket.data.userId = id;
   });
 
   socket.on("message:send", (data) => {

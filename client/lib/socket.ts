@@ -1,10 +1,10 @@
 "use client";
 
-import { ChatReceiveMsg, ChatSendMsg, UserIdentifier } from "@/shared/types";
+import { ChatMetadata, ChatReceiveMsg, ChatSendMsg, ClientToServerEvent, Identifier, ServerToClientEvent } from "@/shared/types";
 import { io, Socket } from "socket.io-client";
 
 // ---- Socket instance ----
-export let socket: Socket | null = null;
+export let socket: Socket<ServerToClientEvent, ClientToServerEvent> | null = null;
 
 export const WS = {
   // Initialize socket & Make a singleton instance
@@ -28,7 +28,7 @@ export const WS = {
 
   // ---- Emitters ----
 
-  register: (data: UserIdentifier) => {
+  register: (data: Identifier) => {
     socket?.emit("user:join", data);
   },
 
@@ -37,18 +37,18 @@ export const WS = {
     ack();
   },
 
-  // createChat: (participantIds: string[]) => {
-  //   socket?.emit("chat:create", { participantIds });
-  // },
+  JoinChat: (data: Identifier) => {
+    socket?.emit("chat:join", data);
+  },
 
   // ---- Listeners ----
   onMessage: (callback: (msg: ChatReceiveMsg) => void) => {
-    socket?.on("chat:receive-message", callback);
+    socket?.on("message:receive", callback);
   },
 
-  // onChatCreated: (callback: ServerToClientEvents["chat:created"]) => {
-  //   socket?.on("chat:created", callback);
-  // },
+  onChatCreated: (callback: (data: ChatMetadata) => void) => {
+    socket?.on("chat:created", callback);
+  },
 
   // onUserOnline: (callback: ServerToClientEvents["user:online"]) => {
   //   socket?.on("user:online", callback);
