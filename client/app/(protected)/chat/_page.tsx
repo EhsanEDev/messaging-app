@@ -60,7 +60,7 @@
 //     const name = Object.fromEntries(new FormData(e.target as HTMLFormElement))
 //       .username as string;
 //     setUserName(name);
-//     socket.emit(SOCKET_EVENTS.REGISTER_USER, { userId: name });
+//     socket.emit(SOCKET_EVENTS.REGISTER_USER, { id: name });
 //   };
 
 //   return (

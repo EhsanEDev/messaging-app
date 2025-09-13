@@ -47,7 +47,7 @@ export const UserList: User[] = [
 
 export const UserRepo = {
   validate(ids: string[]): boolean {
-    return true;
+    return ids.every((id) => UserList.some((u) => u.id === id));
   },
 
   findAll(): User[] {

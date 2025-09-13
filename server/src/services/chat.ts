@@ -1,4 +1,4 @@
-import type {
+import {
   ChatMetadata,
   ChatType,
   Contact,
@@ -45,7 +45,7 @@ const ChatService = {
       role: "member",
     }));
 
-    let newChat;
+    let newChat: ChatMetadata | undefined;
     if (type === "direct") {
       newChat = ChatRepo.createDirect({
         visibility: "private",

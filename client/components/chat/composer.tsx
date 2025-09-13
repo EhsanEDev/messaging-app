@@ -57,7 +57,7 @@ const ChatComposer: React.FC<IProps> = ({
 
   const handleSendMessage = () => {
     if (textMessage.trim()) {
-      onSendMessage({ receiverId: chatId, content: textMessage }, handleClearInput);
+      onSendMessage({ chatId, content: textMessage }, handleClearInput);
     }
   };
 

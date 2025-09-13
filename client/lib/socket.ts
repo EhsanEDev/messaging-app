@@ -1,12 +1,19 @@
 "use client";
 
-import { ChatMetadata, ChatReceiveMsg, ChatSendMsg, ClientToServerEvent, Identifier, ServerToClientEvent } from "@/shared/types";
+import {
+  ChatMetadata,
+  ChatReceiveMsg,
+  ChatSendMsg,
+  ClientToServerEvent,
+  Identifier,
+  ServerToClientEvent,
+} from "@/shared/types";
 import { io, Socket } from "socket.io-client";
 
 // ---- Socket instance ----
-export let socket: Socket<ServerToClientEvent, ClientToServerEvent> | null = null;
+let socket: Socket<ServerToClientEvent, ClientToServerEvent> | null = null;
 
-export const WS = {
+export const ws = {
   // Initialize socket & Make a singleton instance
   init: () => {
     if (socket) return socket; // prevent duplicate init
@@ -28,7 +35,7 @@ export const WS = {
 
   // ---- Emitters ----
 
-  register: (data: Identifier) => {
+  JoinUser: (data: Identifier) => {
     socket?.emit("user:join", data);
   },
 
@@ -42,19 +49,26 @@ export const WS = {
   },
 
   // ---- Listeners ----
-  onMessage: (callback: (msg: ChatReceiveMsg) => void) => {
-    socket?.on("message:receive", callback);
-  },
+  // onMessage: (callback: (msg: ChatReceiveMsg) => void) => {
+  //   socket?.on("message:receive", callback);
+  // },
 
   onChatCreated: (callback: (data: ChatMetadata) => void) => {
     socket?.on("chat:created", callback);
   },
 
-  // onUserOnline: (callback: ServerToClientEvents["user:online"]) => {
-  //   socket?.on("user:online", callback);
-  // },
+  onUserOnline: (callback: (data: Identifier) => void) => {
+    socket?.on("user:online", callback);
+  },
 
   // onUserOffline: (callback: ServerToClientEvents["user:offline"]) => {
   //   socket?.on("user:offline", callback);
   // },
+
+  // ---- Remove Listeners ----
+  removeListeners: () => {
+    socket?.off("message:receive");
+    socket?.off("chat:created");
+    socket?.off("user:online");
+  },
 };

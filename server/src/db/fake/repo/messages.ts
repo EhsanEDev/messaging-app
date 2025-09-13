@@ -8,14 +8,14 @@ export const MessageRepo = {
     return messages.filter((m) => m.chatId === chatId);
   },
 
-  store(receiverId: string, senderId: string, content: string) {
+  store(chatId: string, senderId: string, content: string) {
     const sender = ContactRepo.findById(senderId);
     if (!sender) {
       throw new Error("Sender not found");
     }
     const message: Message = {
       id: String(messages.length + 1),
-      chatId: receiverId,
+      chatId,
       sender,
       content,
       createdAt: new Date().toISOString(),

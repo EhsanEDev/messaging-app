@@ -1,6 +1,6 @@
+import { ChatCreate } from "@/shared/types.js";
 import { type Request, type Response } from "express";
 import ChatService from "../services/chat.js";
-import { ChatCreate } from "@/shared/types.js";
 import { SocketService } from "../utils/socket.js";
 
 const ChatController = {
@@ -26,9 +26,8 @@ const ChatController = {
         type,
         participantsId
       );
-
       // Notify participants about the new chat
-      SocketService.NotifyChatCreated(newChat);
+      SocketService.notifyChatCreated(newChat);
 
       return res.status(201).json(newChat);
     } catch (error) {

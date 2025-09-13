@@ -7,10 +7,10 @@ import ScrollToBottom from "./thread/scrollToBottom";
 
 interface IProps {
   initialMessages: Array<Message>;
-  // messages: Array<Message>;
+  messages: Array<Message>;
 }
 
-const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
+const ChatThread: React.FC<IProps> = ({ initialMessages, messages }) => {
   const { user } = useAuth();
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -304,14 +304,14 @@ const ChatThread: React.FC<IProps> = ({ initialMessages }) => {
   // ];
   return (
     <main className="relative overflow-y-hidden h-full flex-1">
-      <ScrollArea ref={scrollRef} className="h-full">
-        {/* <ul className="max-w-6xl mx-auto flex flex-col-reverse gap-5 p-5">
-          {fakeMessages.map((msg) => {
+      {/* <ScrollArea ref={scrollRef} className="h-full "> */}
+        <ul className="h-full max-w-6xl mx-auto flex flex-col-reverse gap-5 p-5">
+          {messages.map((msg) => {
             const isOwn = msg.sender.id === user?.id;
             return <MessageBubble key={msg.id} message={msg} isOwn={isOwn} />;
           })}
-        </ul> */}
-      </ScrollArea>
+        </ul>
+      {/* </ScrollArea> */}
       <ScrollToBottom
         scrollRef={scrollRef as React.RefObject<HTMLDivElement>}
       />

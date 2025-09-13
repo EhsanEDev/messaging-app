@@ -83,12 +83,12 @@ export interface ChatCreate {
   participantsId: string[];
 }
 export interface ChatSendMsg {
-  receiverId: string;
+  chatId: string;
   content: string;
 }
 export interface ChatReceiveMsg {
   id: string;
-  receiverId: string;
+  chatId: string;
   senderId: string;
   content: string;
   createdAt: string;
@@ -104,6 +104,6 @@ export interface ServerToClientEvent {
   "user:join": (data: Identifier) => void;
   "user:online": (data: Identifier) => void;
   "user:offline": (data: Identifier) => void;
-  "message:receive": (data: ChatReceiveMsg) => void;
+  "message:receive": (data: Message) => void;
   "chat:created": (data: ChatMetadata) => void;
 }

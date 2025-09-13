@@ -48,12 +48,12 @@
 //   userId: string;
 // }
 // export interface ChatSendMsg {
-//   receiverId: string;
+//   chatId: string;
 //   content: string;
 // }
 // export interface ChatReceiveMsg {
 //   id: string;
-//   receiverId: string;
+//   chatId: string;
 //   senderId: string;
 //   content: string;
 //   createdAt: string;
