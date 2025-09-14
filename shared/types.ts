@@ -86,13 +86,7 @@ export interface ChatSendMsg {
   chatId: string;
   content: string;
 }
-export interface ChatReceiveMsg {
-  id: string;
-  chatId: string;
-  senderId: string;
-  content: string;
-  createdAt: string;
-}
+
 // Events which client can emit or server can listen
 export interface ClientToServerEvent {
   "user:join": (data: Identifier) => void;
