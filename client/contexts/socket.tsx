@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/common/loading";
 import { useAuth } from "@/hooks/useAuth";
 import { WebSocket } from "@/lib/socket";
 import { Message } from "@/shared/types";
@@ -22,31 +23,31 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     // null user
     if (!user) return;
 
-    // initialize on mount
+    // Initialize socket on mounting
     const socket = WebSocket.init();
     WebSocket.JoinUser({ id: user.id });
 
     socket.on("message:receive", (message: Message) => {
       // console.log("New message received: ", message);
-
       setMessages((prev) => [message, ...prev]);
     });
+
     socket.on("chat:created", (chat) => {
       // console.log("New chat created: ", chat);
       WebSocket.JoinChat({ id: chat.id });
     });
 
     // cleanup on unmount
-    return () => {      
+    return () => {
       socket.off("message:receive");
       socket.off("chat:created");
       WebSocket.disconnect();
     };
   }, [user]);
 
-  //   if (!socket) {
-  //     return <Loading />;
-  //   }
+  if (!user) {
+    return <Loading />;
+  }
 
   return (
     <SocketContext.Provider value={{ socket: WebSocket, messages }}>
