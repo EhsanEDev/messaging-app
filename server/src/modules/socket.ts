@@ -14,43 +14,21 @@ const io = SocketService.init(server);
 // Attach socket middleware globally
 io.use(authSocket);
 
-// export function emitChatCreated(chat: ChatMetadata) {
-//   chat.participants.forEach((participant) => {
-//     io.to(`user:${participant.id}`).emit("chat:created", chat);
-//   });
-// }
-
-// function emitEvent<K extends keyof ServerToClientEvent>(
-//   socket: Socket<ClientToServerEvent, ServerToClientEvent>,
-//   event: K,
-//   ...args: Parameters<ServerToClientEvent[K]>
-// ) {
-//   socket.emit(event, ...args);
-// }
-export function emitToUser<K extends keyof ServerToClientEvent>(
-  chatId: string,
-  event: K,
-  ...args: Parameters<ServerToClientEvent[K]>
-) {
-  io.to(`chat:${chatId}`).emit(event, ...args);
-}
 // Handle socket connections
 // Every connection will have a unique socket ID
 // That each ID represents a specific user session
-io.on(
-  "connection",
-  (socket: Socket<ClientToServerEvent, ServerToClientEvent>) => {
+io.on("connection", (socket: Socket<ClientToServerEvent, ServerToClientEvent>) => {
     // console.log("A user connected");
 
     socket.on("chat:join", ({ id }) => {
-      console.log(`User (${socket.data.userId}) joined to chat (${id})`);
+      // console.log(`User (${socket.data.userId}) joined to chat (${id})`);
       socket.join(`chat:${id}`);
     });
 
     socket.on("user:join", ({ id }) => {
-      // console.log(`(${id}) joined`);
+      // Join the user
       socket.join(`user:${id}`);
-      // console.log(`(${id}) Online`);
+      console.log(id, "joined");
 
       // Join the user to their chats
       const chatList = ChatRepo.findByIdInParticipants(id);
@@ -58,23 +36,25 @@ io.on(
         socket.join(`chat:${chat.id}`);
       });
 
+      // Store the userId in the socket
       socket.data.userId = id;
     });
 
     socket.on("message:send", (data) => {
-      console.log("Sending message:", data);
+      // console.log("Sending message:", data);
       const message = MessageRepo.store(
         data.chatId,
         socket.data.userId,
         data.content
       );
-      console.log("New message created:", message);
+      // console.log("New message created:", message);
 
       io.to(`chat:${data.chatId}`).emit("message:receive", message);
     });
 
     socket.on("disconnect", () => {
-      console.log("A user disconnected");
+      // NOTE: The User and their chats are left automatically upon disconnection
+      if (socket.user) console.log(socket.user.id, "leaved");
     });
   }
 );

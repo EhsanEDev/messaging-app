@@ -1,13 +1,9 @@
 "use client";
 
 import PanelWrapper from "@/components/panel/panelWrapper";
-import { useSocket } from "@/hooks/useSocket";
 import { ReactNode } from "react";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
-  // Initialize socket connection at main layout
-  useSocket();
-
   return (
     <>
       {/* Panel */}

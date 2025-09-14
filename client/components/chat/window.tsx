@@ -5,6 +5,7 @@ import { ChatMetadata, Message } from "@/shared/types";
 import ChatComposer from "./composer";
 import ChatThread from "./thread";
 import ChatToolbar from "./toolbar";
+import { useRouter } from "next/navigation";
 
 interface ChatWindowProps {
   chatId: string;
@@ -17,9 +18,10 @@ export default function ChatWindow({
   initialMetadata,
   initialMessages,
 }: ChatWindowProps) {
-  const { ws, messages } = useSocket();
-  console.log(messages);
-  
+  const router = useRouter();
+  const { socket, messages } = useSocket();
+  // console.log(messages);
+
   return (
     <>
       <ChatToolbar
@@ -37,7 +39,7 @@ export default function ChatWindow({
       <ChatThread initialMessages={initialMessages} messages={messages} />
       <ChatComposer
         chatId={chatId}
-        onSendMessage={ws.sendMessage}
+        onSendMessage={socket.sendMessage}
         // onStartTyping={startTyping}
         // onStopTyping={stopTyping}
       />

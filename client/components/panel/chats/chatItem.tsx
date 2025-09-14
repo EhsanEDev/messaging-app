@@ -11,7 +11,7 @@ interface IProps {
 
 const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
   const { user } = useAuth();
-  console.log(user);
+  // console.log(user);
   if (!chat) return null;
 
   let chatTitle;

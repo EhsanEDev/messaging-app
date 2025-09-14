@@ -96,12 +96,12 @@ export interface ChatReceiveMsg {
 // Events which client can emit or server can listen
 export interface ClientToServerEvent {
   "user:join": (data: Identifier) => void;
+  "user:leave": (data: Identifier) => void;
   "chat:join": (data: Identifier) => void;
   "message:send": (data: ChatSendMsg) => void;
 }
 // Events which server can emit or client can listen
 export interface ServerToClientEvent {
-  "user:join": (data: Identifier) => void;
   "user:online": (data: Identifier) => void;
   "user:offline": (data: Identifier) => void;
   "message:receive": (data: Message) => void;

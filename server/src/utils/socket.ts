@@ -18,7 +18,6 @@ export const SocketService = {
     io = new Server<ClientToServerEvent, ServerToClientEvent>(server, {
       cors: { origin: process.env.CLIENT_BASE_URL, credentials: true },
     });
-    console.log("Socket.IO server initialized");
 
     return io;
   },

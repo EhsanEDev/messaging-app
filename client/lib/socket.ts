@@ -1,19 +1,23 @@
 "use client";
 
 import {
-  ChatMetadata,
-  ChatReceiveMsg,
   ChatSendMsg,
   ClientToServerEvent,
   Identifier,
-  ServerToClientEvent,
+  ServerToClientEvent
 } from "@/shared/types";
 import { io, Socket } from "socket.io-client";
+
+declare module "socket.io-client" {
+  interface Socket {
+    user: Identifier | null;
+  }
+}
 
 // ---- Socket instance ----
 let socket: Socket<ServerToClientEvent, ClientToServerEvent> | null = null;
 
-export const ws = {
+export const WebSocket = {
   // Initialize socket & Make a singleton instance
   init: () => {
     if (socket) return socket; // prevent duplicate init
@@ -25,10 +29,13 @@ export const ws = {
     });
 
     socket.connect();
+    socket.user = null;
+    
     return socket;
   },
 
   disconnect: () => {
+    // NOTE: User and chats are left automatically upon disconnection in the server side
     socket?.disconnect();
     socket = null;
   },
@@ -36,16 +43,20 @@ export const ws = {
   // ---- Emitters ----
 
   JoinUser: (data: Identifier) => {
-    socket?.emit("user:join", data);
+    if (!socket) return;
+    socket.emit("user:join", data);
+    socket.user = data; // Store the userId in the socket
   },
 
   sendMessage: (data: ChatSendMsg, ack: () => void) => {
-    socket?.emit("message:send", data);
+    if (!socket || !socket.user) return;
+    socket.emit("message:send", data);
     ack();
   },
 
   JoinChat: (data: Identifier) => {
-    socket?.emit("chat:join", data);
+    if (!socket || !socket.user) return;
+    socket.emit("chat:join", data);
   },
 
   // ---- Listeners ----
@@ -53,22 +64,22 @@ export const ws = {
   //   socket?.on("message:receive", callback);
   // },
 
-  onChatCreated: (callback: (data: ChatMetadata) => void) => {
-    socket?.on("chat:created", callback);
-  },
+  // onChatCreated: (callback: (data: ChatMetadata) => void) => {
+  //   socket?.on("chat:created", callback);
+  // },
 
-  onUserOnline: (callback: (data: Identifier) => void) => {
-    socket?.on("user:online", callback);
-  },
+  // onUserOnline: (callback: (data: Identifier) => void) => {
+  //   socket?.on("user:online", callback);
+  // },
 
   // onUserOffline: (callback: ServerToClientEvents["user:offline"]) => {
   //   socket?.on("user:offline", callback);
   // },
 
   // ---- Remove Listeners ----
-  removeListeners: () => {
-    socket?.off("message:receive");
-    socket?.off("chat:created");
-    socket?.off("user:online");
-  },
+  // removeListeners: () => {
+  //   socket?.off("message:receive");
+  //   socket?.off("chat:created");
+  //   socket?.off("user:online");
+  // },
 };
