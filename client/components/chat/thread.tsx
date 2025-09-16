@@ -307,7 +307,7 @@ const ChatThread: React.FC<IProps> = ({ initialMessages, messages }) => {
       {/* <ScrollArea ref={scrollRef} className="h-full "> */}
         <ul className="h-full max-w-6xl mx-auto flex flex-col-reverse gap-5 p-5">
           {messages.map((msg) => {
-            const isOwn = msg.sender.id === user?.id;
+            const isOwn = msg.sender.id === user.id;
             return <MessageBubble key={msg.id} message={msg} isOwn={isOwn} />;
           })}
         </ul>

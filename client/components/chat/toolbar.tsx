@@ -22,7 +22,7 @@ const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {
     chatAvatarUrl = metaData.avatarUrl;
     chatInfo = `${metaData.participants.length} participants`;
   } else {
-    const participant = metaData.participants?.find((p) => p.id !== user?.id);
+    const participant = metaData.participants?.find((p) => p.id !== user.id);
     if (!participant) return;
     chatTitle = participant.username;
     chatAvatarUrl = participant.avatarUrl;

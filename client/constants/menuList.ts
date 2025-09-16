@@ -1,6 +1,6 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 
-export const menuItems = [
+export const asideProfileItems = [
   {
     title: "Home",
     url: "#",
@@ -26,4 +26,32 @@ export const menuItems = [
     url: "#",
     icon: Settings,
   },
-]
+];
+
+export const asideAppItems = [
+  {
+    title: "Home",
+    url: "#",
+    icon: Home,
+  },
+  {
+    title: "Inbox",
+    url: "#",
+    icon: Inbox,
+  },
+  {
+    title: "Calendar",
+    url: "#",
+    icon: Calendar,
+  },
+  {
+    title: "Search",
+    url: "#",
+    icon: Search,
+  },
+  {
+    title: "Settings",
+    url: "#",
+    icon: Settings,
+  },
+];

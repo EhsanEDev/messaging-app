@@ -22,7 +22,7 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
     chatAvatarUrl = chat.avatarUrl;
     chatInfo = `${chat.participants.length} participants`;
   } else {
-    const participant = chat.participants?.find((p) => p.id !== user?.id);
+    const participant = chat.participants?.find((p) => p.id !== user.id);
     if (!participant) return;
     chatTitle = participant.username;
     chatAvatarUrl = participant.avatarUrl;

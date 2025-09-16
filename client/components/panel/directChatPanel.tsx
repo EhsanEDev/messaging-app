@@ -24,13 +24,13 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
     startTransition(async () => {
       try {
         const res = await fetcher<User[]>("/api/contact/list");
-        const list = res.data.filter((u) => u.id !== user?.id);
+        const list = res.data.filter((u) => u.id !== user.id);
         setContactList(list);
       } catch (error) {
         console.error("Error fetching contacts:", error);
       }
     });
-  }, [user?.id]);
+  }, [user.id]);
 
   const handleItemOnClick = async (chat: ChatCreate) => {
     // Create/Open chat by id

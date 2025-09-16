@@ -6,7 +6,7 @@ import { fetcher } from "@/lib/fetcher";
 import { createContext, useEffect, useState } from "react";
 
 type AuthContextType = {
-  user: User | null;
+  user: User;
   setUser: (user: User | null) => void;
 };
 
