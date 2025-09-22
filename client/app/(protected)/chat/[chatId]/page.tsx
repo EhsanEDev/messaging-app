@@ -23,8 +23,10 @@ const ChatPage: React.FC<IProps> = async ({ params }) => {
     headers: { Cookie: `authToken=${token}` },
     cache: "no-store",
   });
+  console.log(messages);
+  
 
-  // The ChatId not found, so remove it from the url
+  // The ChatId not found, so ignore it and redirect to the chat list
   if (metadata.status === 404) {
     redirect("/chat", RedirectType.replace);
   }

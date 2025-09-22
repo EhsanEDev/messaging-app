@@ -3,21 +3,38 @@ import type {
   ChatMetadata,
   DirectChatMetaData,
   GroupChatMetaData,
+  Participant,
 } from "@/shared/types.js";
 
 const chats: ChatMetadata[] = [];
 
 export const ChatRepo = {
-  findAll() {
+  findAll(): ChatMetadata[] {
     return chats;
   },
 
-  findById(id: string) {
+  findById(id: string): ChatMetadata | null {
     return chats.find((c) => c.id === id) || null;
   },
 
-  findByIdInParticipants(id: string) {
+  findByIdInParticipants(id: string): ChatMetadata[] {
     return chats.filter((c) => c.participants.some((p) => p.id === id));
+  },
+
+  isDirectAlreadyExist(participants: Participant[]): ChatMetadata | undefined {
+    // @TODO needs to optimization
+    return chats.find(
+      (c) =>
+        c.type === "direct" &&
+        c.participants
+          .map((p) => p.id)
+          .sort()
+          .toString() ===
+          participants
+            .map((p) => p.id)
+            .sort()
+            .toString()
+    );
   },
 
   createDirect(

@@ -42,9 +42,7 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
           "Content-Type": "application/json",
         },
       });
-      // Close contacts panel and back to chat list
-      // onBack();
-      // Open the newly created chat
+      // Redirect to the chat
       router.push(`/chat/${res.data.id}`);
     } catch (error) {
       console.error("Error creating chat:", error);
@@ -60,7 +58,12 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
       loading={isPending}
       list={contactList}
       renderItem={(item) => (
-        <ContactItem onClick={() => handleItemOnClick({ type: "direct", participantsId: [item.id] })} user={item} />
+        <ContactItem
+          onClick={() =>
+            handleItemOnClick({ type: "direct", participantsId: [item.id] })
+          }
+          user={item}
+        />
       )}
       emptyMessage="No contacts available"
     />

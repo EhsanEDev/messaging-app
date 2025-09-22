@@ -43,6 +43,8 @@
 //   createdAt: string;
 // }
 
+import { User } from "@/shared/types";
+
 // /** ===== Chat Real-Time State (Dynamic) ===== **/
 // export interface ChatJoin {
 //   userId: string;
@@ -106,3 +108,7 @@
 //   lastSeen?: string; // ISO timestamp
 // }
 // export type UsersStatusMap = Record<string, UserStatus>;
+export interface AuthResult {
+  message: string;
+  user?: User;
+}

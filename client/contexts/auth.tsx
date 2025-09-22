@@ -1,13 +1,14 @@
 "use client";
 
 import Loading from "@/components/common/loading";
+import { AuthService } from "@/services/auth";
 import { User } from "@/shared/types";
-import { fetcher } from "@/lib/fetcher";
+import { useRouter } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: User;
-  setUser: (user: User | null) => void;
+  signout: () => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -15,27 +16,35 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const getCurrentUser = async () => {
       try {
-        const res = await fetcher<User>("/api/user/me");
-        setUser(res.data);
+        const user = await AuthService.me();
+        setUser(user);
       } catch (err) {
-        throw new Error("Failed to fetch user");
+        // Force to signin, cookie is invalid
+        setUser(null);
+        router.push("/signin");
       }
     };
 
-    fetchUser();
+    getCurrentUser();
   }, []);
+
+  const signout = async () => {
+    setUser(null);
+    return await AuthService.signout();
+  };
 
   if (!user) {
     return <Loading />;
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, signout }}>
       {children}
     </AuthContext.Provider>
   );

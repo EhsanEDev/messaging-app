@@ -5,10 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { AuthService } from "@/services/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const SigninForm: React.FC = () => {
+const SignupForm: React.FC = () => {
   const [error, setError] = useState({ username: "", password: "" });
   const router = useRouter();
 
@@ -23,29 +24,24 @@ const SigninForm: React.FC = () => {
     ).password as string;
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await res.json();
-      const msg = data.message;
-
-      if (!res.ok) {
-        if (msg.toLowerCase().includes("username")) {
-          setError({ password: "", username: msg });
-        } else if (msg.toLowerCase().includes("password")) {
-          setError({ password: msg, username: "" });
-        }
-      } else setError({ username: "", password: "" });
-
-      // ✅ Redirect on success
+      await AuthService.signup({ username, password });
+      // setError({ username: "", password: "" });
       router.push("/");
-    } catch (err) {
-      // alert("Login failed");
-      console.error(err);
+    } catch (error) {
+      if (error instanceof Error) {
+        const msg = error.message;
+        if (msg.includes("Username has already been taken")) {
+          setError({ username: msg, password: "" });
+        } else if (msg.includes("Password is too weak")) {
+          setError({ username: "", password: msg });
+        } else if (msg.includes("Username and password are required")) {
+          setError({ username: msg, password: msg });
+        } else {
+          console.error("Something went wrong");
+        }
+      } else {
+        console.error("Something went wrong");
+      }
     }
   };
   // console.log(error);
@@ -59,7 +55,7 @@ const SigninForm: React.FC = () => {
             <div className="flex flex-col items-center text-center gap-2">
               <h1 className="text-2xl font-bold">Create your account</h1>
             </div>
-            <div className="grid gap-3">
+            {/* <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -68,7 +64,7 @@ const SigninForm: React.FC = () => {
                 placeholder="email@example.com"
                 required
               />
-            </div>
+            </div> */}
             <div className="grid gap-3">
               <Label htmlFor="username">Username</Label>
               <Input
@@ -170,4 +166,4 @@ const SigninForm: React.FC = () => {
   );
 };
 
-export default SigninForm;
+export default SignupForm;

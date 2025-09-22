@@ -4,16 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User } from "@/shared/types";
-import { fetcher } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
+import { AuthService } from "@/services/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-interface SigninResult {
-  message: string;
-  user?: User;
-}
 
 const SigninForm: React.FC = () => {
   const [error, setError] = useState({ username: "", password: "" });
@@ -30,15 +24,12 @@ const SigninForm: React.FC = () => {
     ).password as string;
 
     try {
-      const res = await fetcher<SigninResult>("/api/auth/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const msg = res.data.message;
-
-      if (res.status === 401) {
+      await AuthService.signin({ username, password });
+      // setError({ username: "", password: "" });
+      router.push("/");
+    } catch (error) {
+      if (error instanceof Error) {
+        const msg = error.message;
         // message:
         // 1. Username and password are required
         // 2. Incorrect password
@@ -49,23 +40,14 @@ const SigninForm: React.FC = () => {
           setError({ username: "", password: msg });
         } else if (msg.includes("Username and password are required")) {
           setError({ username: msg, password: msg }); // @TODO: This error should improve in the future
+        } else {
+          // Unknown error
+          console.error("Something went wrong");
         }
-        return;
-      } else if (res.status === 200) {
-        // Signed in successfully, clear errors
-        setError({ username: "", password: "" });
       } else {
         // Unknown error
-        throw Error("Something went wrong");
+        console.error("Something went wrong");
       }
-      if (!res.data.user) {
-        // Unexpected response
-        throw Error("Something went wrong");
-      }
-      // setUser(res.data.user); // Store user locally
-      router.push("/"); // Redirect on success
-    } catch (err) {
-      console.error(err);
     }
   };
   // console.log(error);

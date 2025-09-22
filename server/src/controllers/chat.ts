@@ -1,6 +1,6 @@
 import { ChatCreate } from "@/shared/types.js";
 import { type Request, type Response } from "express";
-import ChatService from "../services/chat.js";
+import ChatService, { CreatChatError } from "../services/chat.js";
 import { WebSocket } from "../utils/socket.js";
 
 const ChatController = {
@@ -26,12 +26,15 @@ const ChatController = {
         type,
         participantsId
       );
+
       // Notify participants about the new chat
       WebSocket.notifyChatCreated(newChat);
 
-      return res.status(201).json(newChat);
+      res.status(201).json(newChat);
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof CreatChatError) {
+        res.status(200).json(error.chat);
+      } else if (error instanceof Error) {
         res.status(400).json({ message: error.message });
       } else {
         res.status(500).json({ message: "Internal server error" });

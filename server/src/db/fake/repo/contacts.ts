@@ -1,7 +1,7 @@
-import type { Contact } from "@/shared/types.js";
-import { UserList } from "./users.js";
+import type { Contact, User } from "@/shared/types.js";
+import { Users } from "./users.js";
 
-const contacts: Contact[] = UserList.map(({ id, username, avatarUrl }) => ({
+const contacts: Contact[] = Users.map(({ id, username, avatarUrl }) => ({
   id,
   username,
   avatarUrl: avatarUrl ?? "",
@@ -16,12 +16,8 @@ export const ContactRepo = {
     return contacts.find((u) => u.id === id) || null;
   },
 
-  create(username: string, avatarUrl: string) {
-    const contact = {
-      id: String(Date.now()),
-      username,
-      avatarUrl,
-    };
+  add(user: User) {
+    const contact: Contact = { ...user };
     contacts.push(contact);
     return contact;
   },

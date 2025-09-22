@@ -63,7 +63,7 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
 
           {/* Last message + unread badge */}
           <section className="flex justify-between items-center">
-            <p className="text-sm text-muted-foreground truncate">
+            <p className="text-sm text-muted-foreground mr-2 line-clamp-1">
               {chat.lastMessage?.content}
             </p>
             <Badge className="rounded-full bg-muted-foreground text-white">

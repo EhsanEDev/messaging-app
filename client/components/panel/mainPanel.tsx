@@ -1,6 +1,9 @@
-import { ChatMetadata } from "@/shared/types";
+"use client";
+
+import { useSocket } from "@/hooks/useSocket";
 import { fetcher } from "@/lib/fetcher";
-import { useEffect, useState, useTransition } from "react";
+import { ChatMetadata } from "@/shared/types";
+import { useEffect, useTransition } from "react";
 import Search from "../common/search";
 import { SidebarTrigger } from "../ui/sidebar";
 import ChatItem from "./chats/chatItem";
@@ -8,13 +11,17 @@ import Panel from "./panel";
 
 const MainPanel: React.FC = () => {
   const [isPending, startTransition] = useTransition();
-  const [chatList, setChatList] = useState<ChatMetadata[]>([]);
+  const { chats, setChats } = useSocket();
 
   useEffect(() => {
     startTransition(async () => {
       try {
         const res = await fetcher<ChatMetadata[]>("/api/chat/list");
-        setChatList(res.data);
+        setChats(
+          Object.fromEntries(
+            res.data.map((chat: ChatMetadata) => [chat.id, chat])
+          )
+        );
       } catch (error) {
         console.error("Error fetching chat list:", error);
       }
@@ -26,7 +33,7 @@ const MainPanel: React.FC = () => {
     <Panel
       header={{ btn: <SidebarTrigger />, input: <Search /> }}
       loading={isPending}
-      list={chatList}
+      list={Object.values(chats)}
       renderItem={(item) => <ChatItem chat={item} />}
       emptyMessage="No chats available"
     />

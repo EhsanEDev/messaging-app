@@ -2,10 +2,10 @@
 
 import { useSocket } from "@/hooks/useSocket";
 import { ChatMetadata, Message } from "@/shared/types";
+import { useEffect } from "react";
 import ChatComposer from "./composer";
 import ChatThread from "./thread";
 import ChatToolbar from "./toolbar";
-import { useRouter } from "next/navigation";
 
 interface ChatWindowProps {
   chatId: string;
@@ -18,9 +18,12 @@ export default function ChatWindow({
   initialMetadata,
   initialMessages,
 }: ChatWindowProps) {
-  const router = useRouter();
-  const { socket, messages } = useSocket();
+  const { socket, messages, setMessages } = useSocket();
   // console.log(messages);
+  console.log(messages);
+  useEffect(() => {
+    setMessages({ ...messages, [chatId]: initialMessages });
+  }, [chatId, initialMessages, setMessages]);
 
   return (
     <>
@@ -36,7 +39,7 @@ export default function ChatWindow({
         // }
         // typingUsers={typingUsers}
       />
-      <ChatThread initialMessages={initialMessages} messages={messages} />
+      <ChatThread messages={messages[chatId] || []} />
       <ChatComposer
         chatId={chatId}
         onSendMessage={socket.sendMessage}

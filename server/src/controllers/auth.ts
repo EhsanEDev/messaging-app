@@ -10,10 +10,8 @@ const AuthController = {
     try {
       // Signup the user
       const newUser = await AuthService.signup(username, password);
-      // Signup was done successfully, then Signin internally
-      const user = await AuthService.signin(newUser.username, newUser.password);
-      // Signed in successfully, Generate JWT token and attach it to response
-      AuthController._attachTokenToResp(user, res);
+      // Signed up successfully, Generate JWT token and attach it to response
+      AuthController._attachTokenToResp(newUser, res);
     } catch (error) {
       if (error instanceof Error) {
         res.status(401).json({ message: error.message });

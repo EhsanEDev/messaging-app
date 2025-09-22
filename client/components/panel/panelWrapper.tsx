@@ -1,3 +1,5 @@
+"use client";
+
 import MainPanel from "@/components/panel/mainPanel";
 import NewChatButton from "@/components/panel/chats/newChatButton";
 import DirectChatPanel from "@/components/panel/directChatPanel";

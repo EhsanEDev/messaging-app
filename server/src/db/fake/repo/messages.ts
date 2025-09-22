@@ -5,7 +5,15 @@ const messages: Message[] = [];
 
 export const MessageRepo = {
   findByChatId(chatId: string) {
-    return messages.filter((m) => m.chatId === chatId);
+    return messages.filter((m) => m.chatId === chatId) || [];
+  },
+
+  findLastByChatId(chatId: string): Message | null {
+    const chatMessages = messages.filter((m) => m.chatId === chatId) || [];
+    if (chatMessages.length === 0) {
+      return null;
+    }
+    return chatMessages[chatMessages.length - 1] || null;
   },
 
   store(chatId: string, senderId: string, content: string) {

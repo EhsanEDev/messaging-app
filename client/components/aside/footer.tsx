@@ -7,7 +7,7 @@ const AsideFooter: React.FC<IProps> = () => {
   return (
     <SidebarFooter className="px-4 pb-8">
       <h3 className="text-xs text-muted-foreground">
-        <span className="text-sm font-medium">
+        <span className="text-sm font-semibold">
           {pkg.name.charAt(0).toUpperCase() + pkg.name.slice(1)}{" "}
         </span>
         v{pkg.version}
