@@ -3,6 +3,9 @@ export interface User {
   username: string;
   avatarUrl?: string;
   password: string;
+  createdAt: string;
+  // isOnline: boolean;
+  // lastSeenAt: string;
 }
 export type Contact = Omit<User, "password">;
 export interface Participant extends Contact {
@@ -86,18 +89,23 @@ export interface ChatSendMsg {
   chatId: string;
   content: string;
 }
+// export interface UserOnline extends Identifier {}
+export interface UserStatus extends Identifier {
+  isOnline: boolean;
+  lastSeenAt: string | null;
+}
 
 // Events which client can emit or server can listen
 export interface ClientToServerEvent {
   "user:join": (data: Identifier) => void;
-  "user:leave": (data: Identifier) => void;
+  "user:status": () => void;
   "chat:join": (data: Identifier) => void;
   "message:send": (data: ChatSendMsg) => void;
 }
 // Events which server can emit or client can listen
 export interface ServerToClientEvent {
-  "user:online": (data: Identifier) => void;
-  "user:offline": (data: Identifier) => void;
+  "user:online": (data: UserStatus[]) => void;
+  "user:offline": (data: UserStatus) => void;
   "message:receive": (data: Message) => void;
   "chat:created": (data: ChatMetadata) => void;
 }

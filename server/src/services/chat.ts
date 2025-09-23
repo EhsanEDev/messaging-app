@@ -23,7 +23,7 @@ export class CreatChatError extends Error {
 
 const ChatService = {
   list: async (id: string): Promise<ChatMetadata[]> => {
-    const list = ChatRepo.findByIdInParticipants(id) || [];
+    const list = ChatRepo.findByUser(id) || [];
     if (!list) {
       throw new Error("There are no chats");
     }

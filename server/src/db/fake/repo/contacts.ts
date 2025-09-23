@@ -1,14 +1,10 @@
 import type { Contact, User } from "@/shared/types.js";
 import { Users } from "./users.js";
 
-const contacts: Contact[] = Users.map(({ id, username, avatarUrl }) => ({
-  id,
-  username,
-  avatarUrl: avatarUrl ?? "",
-}));
+const contacts: Contact[] = Users.map((user) => (user as Contact));
 
 export const ContactRepo = {
-  findAll() {
+  getAll() {
     return contacts;
   },
 

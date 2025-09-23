@@ -9,7 +9,7 @@ import type {
 const chats: ChatMetadata[] = [];
 
 export const ChatRepo = {
-  findAll(): ChatMetadata[] {
+  getAll(): ChatMetadata[] {
     return chats;
   },
 
@@ -17,7 +17,7 @@ export const ChatRepo = {
     return chats.find((c) => c.id === id) || null;
   },
 
-  findByIdInParticipants(id: string): ChatMetadata[] {
+  findByUser(id: string): ChatMetadata[] {
     return chats.filter((c) => c.participants.some((p) => p.id === id));
   },
 

@@ -68,7 +68,7 @@ export const WebSocket = {
   /*************************************************************
    * Request to join the user to a chat by provided chat id
    *
-   * @param data - itself user id
+   * @param data - target chat id
    ************************************************************/
   JoinChat: (data: Identifier) => {
     if (!socket || !socket.user) return;
@@ -86,4 +86,9 @@ export const WebSocket = {
     socket.emit("message:send", data);
     ack();
   },
+
+  RequestUserStatus: () => {
+    if (!socket || !socket.user) return;
+    socket.emit("user:status");
+  }
 };

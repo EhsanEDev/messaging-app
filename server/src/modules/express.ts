@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // Public routes
 app.use("/api/auth", authRoute);
 // app.use("/api/users", (req, res) => {
-//   res.status(200).json(UserRepo.findAll());
+//   res.status(200).json(UserRepo.getAll());
 // });
 
 // Authorization for everything after this

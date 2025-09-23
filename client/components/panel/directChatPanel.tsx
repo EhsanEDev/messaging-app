@@ -1,14 +1,15 @@
 "use client";
 
-import { ChatCreate, ChatMetadata, User } from "@/shared/types";
 import { useAuth } from "@/hooks/useAuth";
+import { useSocket } from "@/hooks/useSocket";
 import { fetcher } from "@/lib/fetcher";
+import { ChatCreate, ChatMetadata, User } from "@/shared/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import Search from "../common/search";
 import BackButton from "./directChat/backButton";
 import ContactItem from "./directChat/contactItem";
 import Panel from "./panel";
-import { useRouter } from "next/navigation";
 
 interface IProps {
   onBack: () => void;
@@ -19,6 +20,7 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
   const [contactList, setContactList] = useState<User[]>([]);
   const { user } = useAuth();
   const router = useRouter();
+  const { userStatus } = useSocket();
 
   useEffect(() => {
     startTransition(async () => {
@@ -63,6 +65,7 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
             handleItemOnClick({ type: "direct", participantsId: [item.id] })
           }
           user={item}
+          status={userStatus[item.id]}
         />
       )}
       emptyMessage="No contacts available"

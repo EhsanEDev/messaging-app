@@ -1,21 +1,9 @@
-import { User, Contact } from "@/shared/types.js";
-import { UserRepo } from "../db/fake/repo/users.js";
+import { User } from "@/shared/types.js";
 import bcrypt from "bcrypt";
 import { ContactRepo } from "../db/fake/repo/contacts.js";
+import { UserRepo } from "../db/fake/repo/users.js";
 
 const AuthService = {
-  me: async (id: string): Promise<Contact> => {
-    const user: User | null = UserRepo.findById(id);
-    if (!user) {
-      throw new Error("Username not found");
-    }
-    return {
-      id: user.id,
-      username: user.username,
-      avatarUrl: user.avatarUrl ?? "",
-    };
-  },
-
   signup: async (username: string, password: string): Promise<User> => {
     // Validate input
     if (!username || !password) {

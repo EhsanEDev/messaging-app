@@ -1,14 +1,18 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { User } from "@/shared/types";
-import Link from "next/link";
+import { formatLastSeen } from "@/lib/date-fns";
+import { User, UserStatus } from "@/shared/types";
 
 interface IProps {
   user: User;
+  status: UserStatus | null;
   onClick?: () => void; // handler when item clicked
 }
 
-const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
+const ContactItem: React.FC<IProps> = ({ user, status, onClick }) => {
+  const lastSeen = status?.isOnline
+    ? "Online"
+    : status?.lastSeenAt ? formatLastSeen(new Date(status?.lastSeenAt)) : "last seen recently";
+
   return (
     <li
       onClick={onClick}
@@ -21,9 +25,9 @@ const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
           <AvatarFallback>{user.username?.charAt(0)}</AvatarFallback>
         </Avatar>
         {/* Online badge */}
-        {/* {user.isOnline && ( */}
-        {/* <span className="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 border-2 border-white"></span> */}
-        {/* )} */}
+        {lastSeen === "Online" && (
+          <span className="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 border-2 border-white"></span>
+        )}
       </figure>
 
       {/* Chat info */}
@@ -31,7 +35,7 @@ const ContactItem: React.FC<IProps> = ({ user, onClick }) => {
         {/* Title + date */}
         <header className="flex flex-col">
           <h2 className="font-medium text-base">{user.username}</h2>
-          <p className="text-xs text-muted-foreground">last seen recently</p>
+          <p className="text-xs text-muted-foreground">{lastSeen}</p>
         </header>
       </article>
     </li>

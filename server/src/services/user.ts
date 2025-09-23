@@ -7,11 +7,8 @@ const UserService = {
     if (!user) {
       throw new Error("Username not found");
     }
-    return {
-      id: user.id,
-      username: user.username,
-      avatarUrl: user.avatarUrl ?? "",
-    };
+    const { password, ...contact } = user;
+    return contact;
   },
 };
 

@@ -3,7 +3,7 @@ import { ContactRepo } from "../db/fake/repo/contacts.js";
 
 const ContactService = {
   list: async (): Promise<Contact[]> => {
-    return ContactRepo.findAll();
+    return ContactRepo.getAll();
   },
 };
 

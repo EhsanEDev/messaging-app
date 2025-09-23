@@ -19,6 +19,7 @@ io.on(
   "connection",
   (socket: Socket<ClientToServerEvent, ServerToClientEvent>) => {
     socket.on("user:join", (data) => WebSocket.onUserJoin(socket, data));
+    socket.on("user:status", () => WebSocket.onUserStatus(socket));
     socket.on("chat:join", (data) => WebSocket.onChatJoin(socket, data));
     socket.on("message:send", (data) => WebSocket.onMessageSend(socket, data));
     socket.on("disconnect", () => WebSocket.onDisconnect(socket));
