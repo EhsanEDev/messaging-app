@@ -10,7 +10,7 @@ interface IProps {
 
 const ContactItem: React.FC<IProps> = ({ user, status, onClick }) => {
   const lastSeen = status?.isOnline
-    ? "Online"
+    ? "online"
     : status?.lastSeenAt ? formatLastSeen(new Date(status?.lastSeenAt)) : "last seen recently";
 
   return (
@@ -25,7 +25,7 @@ const ContactItem: React.FC<IProps> = ({ user, status, onClick }) => {
           <AvatarFallback>{user.username?.charAt(0)}</AvatarFallback>
         </Avatar>
         {/* Online badge */}
-        {lastSeen === "Online" && (
+        {lastSeen === "online" && (
           <span className="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 border-2 border-white"></span>
         )}
       </figure>

@@ -11,14 +11,6 @@ export const StatusRepo = {
     return StatusMap[userId] || null;
   },
 
-  add(status: UserStatus) {
-    StatusMap[status.id] = status;
-  },
-
-  remove(userId: string) {
-    delete StatusMap[userId];
-  },
-
   setOnline(userId: string): void {
     StatusMap[userId] = {
       id: userId,
