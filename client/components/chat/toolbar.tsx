@@ -5,6 +5,8 @@ import ChatInfo from "./toolbar/info";
 import SearchInChat from "./toolbar/search";
 import { useAuth } from "@/hooks/useAuth";
 import Avatar from "../common/avatar";
+import { useSocket } from "@/hooks/useSocket";
+import { formatStatus } from "@/lib/user-status";
 
 interface IProps {
   chatId: string;
@@ -13,6 +15,7 @@ interface IProps {
 
 const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {
   const { user } = useAuth();
+  const { userStatus } = useSocket();
 
   let chatTitle;
   let chatAvatarUrl;
@@ -27,6 +30,7 @@ const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {
     chatTitle = participant.username;
     chatAvatarUrl = participant.avatarUrl;
     chatInfo = "last seen recently";
+    chatInfo = formatStatus(userStatus[participant.id]);
   }
   
   return (

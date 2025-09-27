@@ -5,7 +5,7 @@ const VoiceInput: React.FC = () => {
   return (
     <Button
       variant="ghost"
-      className="size-14 rounded-full cursor-pointer bg-background hover:bg-primary group"
+      className="size-11 rounded-full cursor-pointer bg-background hover:bg-primary group"
       aria-label="Send voice message"
     >
       <MicIcon className="size-6 text-muted-foreground group-hover:text-primary-foreground" />

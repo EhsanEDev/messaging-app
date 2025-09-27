@@ -23,7 +23,7 @@ const ChatPage: React.FC<IProps> = async ({ params }) => {
     headers: { Cookie: `authToken=${token}` },
     cache: "no-store",
   });
-  console.log(messages);
+  // console.log(messages);
   
 
   // The ChatId not found, so ignore it and redirect to the chat list
