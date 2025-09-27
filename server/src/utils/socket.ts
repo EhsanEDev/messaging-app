@@ -91,7 +91,7 @@ export const WebSocket = {
   onUserStatus: (socket: Socket<ClientToServerEvent, ServerToClientEvent>) => {
     // Request user status
     const userId = socket.data.userId;
-    console.log(userId, "requested status");
+    // console.log(userId, "requested status");
 
     const chatList = ChatRepo.findByUser(userId);
     if (chatList.length === 0) return;

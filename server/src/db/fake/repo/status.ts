@@ -20,19 +20,19 @@ export const StatusRepo = {
   },
 
   setOnline(userId: string): void {
-    const status = StatusMap[userId];
-    if (status) {
-      status.isOnline = true;
-      status.lastSeenAt = null;
-    }
+    StatusMap[userId] = {
+      id: userId,
+      isOnline: true,
+      lastSeenAt: null,
+    };
   },
 
   setOffline(userId: string): string {
-    const status = StatusMap[userId] = {
+    const status = (StatusMap[userId] = {
       id: userId,
       isOnline: false,
       lastSeenAt: String(new Date()),
-    };
+    });
     return status.lastSeenAt;
   },
 };
