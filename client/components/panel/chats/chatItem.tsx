@@ -1,8 +1,12 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Avatar from "@/components/common/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ChatMetadata } from "@/shared/types";
 import { useAuth } from "@/hooks/useAuth";
+import { useSocket } from "@/hooks/useSocket";
+import { formatStatus, isOnline } from "@/lib/user-status";
+import { cn } from "@/lib/utils";
+import { ChatMetadata } from "@/shared/types";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface IProps {
   chat: ChatMetadata;
@@ -11,11 +15,15 @@ interface IProps {
 
 const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
   const { user } = useAuth();
-  // console.log(user);
+  const pathname = usePathname();
+  const { userStatus } = useSocket();
+
+  // console.log(pathname);
   if (!chat) return null;
 
   let chatTitle;
   let chatAvatarUrl;
+  let chatStatus: string | null = null;
   let chatInfo;
   if (chat.type === "group") {
     chatTitle = chat.title;
@@ -26,32 +34,44 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
     if (!participant) return;
     chatTitle = participant.username;
     chatAvatarUrl = participant.avatarUrl;
+    chatStatus = formatStatus(userStatus[participant.id]);
     chatInfo = "last seen recently";
   }
 
+  const isSelected = pathname.includes(chat.id);
+
   return (
     <Link href={`/chat/${chat.id}`}>
-      <li className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl">
+      <li
+        className={cn(
+          "w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-xl",
+          { "bg-primary hover:bg-primary": isSelected }
+        )}
+      >
         {/* Avatar */}
-        <figure className="shrink-0 relative">
-          <Avatar className="size-14">
-            <AvatarImage src={chatAvatarUrl} alt={chatTitle} />
-            <AvatarFallback>{chatTitle?.charAt(0)}</AvatarFallback>
-          </Avatar>
-          {/* Online badge */}
-          {/* {chat.isOnline && ( */}
-          <span className="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 border-2 border-white"></span>
-          {/* )} */}
-        </figure>
+        <Avatar
+          src={chatAvatarUrl}
+          title={chatTitle}
+          isOnline={isOnline(chatStatus)}
+        />
 
         {/* Chat info */}
         <article className="flex flex-col flex-1 justify-between gap-0.5">
           {/* Title + date */}
           <header className="flex justify-between items-center">
-            <h2 className="font-medium text-base">{chatTitle}</h2>
+            <h2
+              className={cn("font-medium text-base", {
+                "text-primary-foreground": isSelected,
+              })}
+            >
+              {chatTitle}
+            </h2>
             <time
               dateTime={chat.lastMessage?.createdAt.toString()}
-              className="text-xs text-muted-foreground"
+              className={cn("text-xs ", {
+                "text-primary-foreground": isSelected,
+                "text-muted-foreground": !isSelected,
+              })}
             >
               {chat.lastMessage?.createdAt &&
                 new Date(chat.lastMessage.createdAt).toLocaleString("en-US", {
@@ -63,10 +83,18 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
 
           {/* Last message + unread badge */}
           <section className="flex justify-between items-center">
-            <p className="text-sm text-muted-foreground mr-2 line-clamp-1">
+            <p
+              className={cn("text-xs mr-2 line-clamp-1", {
+                "text-primary-foreground": isSelected,
+                "text-muted-foreground": !isSelected,
+              })}
+            >
               {chat.lastMessage?.content}
             </p>
-            <Badge className="rounded-full bg-primary text-primary-foreground">
+            <Badge
+              variant="outline"
+              className="rounded-full bg-muted text-foreground"
+            >
               {/* {chat.unreadCount} */}3
             </Badge>
           </section>

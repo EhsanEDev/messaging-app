@@ -1,35 +1,33 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-type SizeClass = "size-6" | "size-8" | "size-10" | "size-11" | "size-12";
+type SizeClass =
+  | "size-6"
+  | "size-8"
+  | "size-10"
+  | "size-11"
+  | "size-12"
+  | "size-13"
+  | "size-14";
 
 interface IProps {
   src: string | undefined;
-  name: string;
-  size: SizeClass;
+  title: string;
+  size?: SizeClass;
+  isOnline?: boolean;
 }
 
-const UserAvatar: React.FC<IProps> = ({ src, name, size = "size-10" }) => {
+const UserAvatar: React.FC<IProps> = ({ src, title, size = "size-14", isOnline }) => {
   return (
-    <div
-      className={cn(
-        size,
-        "bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square items-center justify-center rounded-full overflow-hidden"
+    <figure className="shrink-0 relative">
+      <Avatar className={size}>
+        <AvatarImage src={src} alt={title} />
+        <AvatarFallback>{title?.charAt(0)}</AvatarFallback>
+      </Avatar>
+      {/* Online badge */}
+      {isOnline && (
+        <span className="absolute bottom-0.5 right-0.5 block size-2.5 rounded-full bg-green-500 border-1 border-muted"></span>
       )}
-      //   className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-10 items-center justify-center rounded-full overflow-hidden"
-    >
-      {!src ? (
-        <span className="text-xl font-medium">{name.charAt(0)}</span>
-      ) : (
-        <Image
-          src={src}
-          alt={name}
-          width={128}
-          height={128}
-          className="object-cover w-full h-full"
-        />
-      )}
-    </div>
+    </figure>
   );
 };
 

@@ -1,5 +1,3 @@
-// "use client";
-
 import PanelWrapper from "@/components/panel/panelWrapper";
 import { ReactNode } from "react";
 

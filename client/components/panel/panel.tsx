@@ -25,7 +25,7 @@ function Panel<T>({
     );
   } else if (list.length) {
     content = (
-      <ul className="p-2">
+      <ul className="p-1">
         {list.map((item, index) => (
           <React.Fragment key={index}>{renderItem(item)}</React.Fragment>
         ))}
@@ -40,7 +40,7 @@ function Panel<T>({
   }
   return (
     <>
-      <header className="h-16 flex items-center px-6 gap-4 border-b-border border-b-1">
+      <header className="h-16 flex items-center px-3 gap-3 border-b-border border-b-1">
         {header.btn}
         {header.input}
       </header>
