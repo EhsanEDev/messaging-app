@@ -1,14 +1,14 @@
 "use client";
 
-import { ChatMetadata, Message } from "@/shared/types";
+import { Chat, Message } from "@/shared/types";
 import { createContext, useCallback, useState } from "react";
 
 interface ChatContextValue {
-  chats: Record<string, ChatMetadata>;
+  chats: Record<string, Chat>;
   messages: Record<string, Message[]>;
   addMessage: (message: Message) => void;
-  setChats: (chats: Record<string, ChatMetadata>) => void;
-  addChat: (chat: ChatMetadata) => void;
+  setChats: (chats: Record<string, Chat>) => void;
+  addChat: (chat: Chat) => void;
   setMessages: (messages: Record<string, Message[]>) => void;
 }
 
@@ -17,7 +17,7 @@ export const ChatContext = createContext<ChatContextValue | undefined>(
 );
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
-  const [chats, setChatState] = useState<Record<string, ChatMetadata>>({});
+  const [chats, setChatState] = useState<Record<string, Chat>>({});
   const [messages, setMessages] = useState<Record<string, Message[]>>({});
 
   const addMessage = useCallback((message: Message) => {
@@ -35,11 +35,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
-  const setChats = useCallback((chats: Record<string, ChatMetadata>) => {
+  const setChats = useCallback((chats: Record<string, Chat>) => {
     setChatState(chats);
   }, []);
 
-  const addChat = useCallback((chat: ChatMetadata) => {
+  const addChat = useCallback((chat: Chat) => {
     setChatState((prev) => ({
       ...prev,
       [chat.id]: chat,

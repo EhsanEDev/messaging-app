@@ -1,5 +1,5 @@
 import {
-  ChatMetadata,
+  Chat,
   ChatType,
   Contact,
   Message,
@@ -13,16 +13,16 @@ import chat from "../routes/chat.js";
 
 // Define a custom Error to return the exist direct chat in the create chat process
 export class CreatChatError extends Error {
-  chat?: ChatMetadata;
+  chat?: Chat;
 
-  constructor(message: string, chat: ChatMetadata) {
+  constructor(message: string, chat: Chat) {
     super(message);
     this.chat = chat;
   }
 }
 
 const ChatService = {
-  list: async (id: string): Promise<ChatMetadata[]> => {
+  list: async (id: string): Promise<Chat[]> => {
     const list = ChatRepo.findByUser(id) || [];
     if (!list) {
       throw new Error("There are no chats");
@@ -40,7 +40,7 @@ const ChatService = {
     ownerId: string,
     type: ChatType,
     participantsId: string[]
-  ): Promise<ChatMetadata> => {
+  ): Promise<Chat> => {
     // Validate input
     if (!Array.isArray(participantsId) || participantsId.length === 0) {
       throw new Error("Bad create chat request");
@@ -75,7 +75,7 @@ const ChatService = {
       throw new CreatChatError("This direct chat already exist", existChat);
     }
 
-    let newChat: ChatMetadata | undefined;
+    let newChat: Chat | undefined;
     if (type === "direct") {
       newChat = ChatRepo.createDirect({
         visibility: "private",
@@ -103,7 +103,7 @@ const ChatService = {
     return newChat;
   },
 
-  metaData: async (id: string | undefined): Promise<ChatMetadata> => {
+  metaData: async (id: string | undefined): Promise<Chat> => {
     // Validate input
     if (!id) {
       throw new Error("Chat ID is required");

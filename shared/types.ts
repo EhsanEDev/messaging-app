@@ -44,7 +44,7 @@ export interface Message {
 export type ChatType = "direct" | "group" | "channel";
 export type ChatVisibility = "public" | "private" | "restricted";
 
-interface BaseChatMetaData {
+interface BaseChat {
   id: string;
   type: ChatType;
   visibility: ChatVisibility;
@@ -52,24 +52,24 @@ interface BaseChatMetaData {
   lastMessage: Message | null;
   createdAt: string;
 }
-export interface DirectChatMetaData extends BaseChatMetaData {
+export interface DirectChat extends BaseChat {
   type: "direct";
   visibility: "private";
 }
-export interface GroupChatMetaData extends BaseChatMetaData {
+export interface GroupChat extends BaseChat {
   type: "group";
   title: string;
   avatarUrl?: string;
 }
-export interface ChannelChatMetaData extends BaseChatMetaData {
+export interface ChannelChat extends BaseChat {
   type: "channel";
   title: string;
   avatarUrl?: string;
 }
-export type ChatMetadata =
-  | DirectChatMetaData
-  | GroupChatMetaData
-  | ChannelChatMetaData;
+export type Chat =
+  | DirectChat
+  | GroupChat
+  | ChannelChat;
 
 // export type SocketEvent =
 //   | "user:join"
@@ -107,5 +107,5 @@ export interface ServerToClientEvent {
   "user:online": (data: UserStatus[]) => void;
   "user:offline": (data: UserStatus) => void;
   "message:receive": (data: Message) => void;
-  "chat:created": (data: ChatMetadata) => void;
+  "chat:created": (data: Chat) => void;
 }

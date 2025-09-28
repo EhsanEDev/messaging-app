@@ -1,6 +1,6 @@
 import ChatWindow from "@/components/chat/window";
 import { fetcher } from "@/lib/fetcher";
-import { ChatMetadata, Message } from "@/shared/types";
+import { Chat, Message } from "@/shared/types";
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 
@@ -13,7 +13,7 @@ const ChatPage: React.FC<IProps> = async ({ params }) => {
   const cookieStore = cookies(); // read incoming request cookies
   const token = (await cookieStore).get("authToken")?.value;
 
-  const metadata = await fetcher<ChatMetadata>(`/api/chat/${chatId}`, {
+  const metadata = await fetcher<Chat>(`/api/chat/${chatId}`, {
     // Current is a server component, so we have to pass cookies manually
     headers: { Cookie: `authToken=${token}` },
     cache: "no-store",

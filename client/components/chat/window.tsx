@@ -1,7 +1,7 @@
 "use client";
 
 import { useSocket } from "@/hooks/useSocket";
-import { ChatMetadata, Message } from "@/shared/types";
+import { Chat, Message } from "@/shared/types";
 import { useEffect } from "react";
 import ChatComposer from "./composer";
 import ChatThread from "./thread";
@@ -9,7 +9,7 @@ import ChatToolbar from "./toolbar";
 
 interface ChatWindowProps {
   chatId: string;
-  initialMetadata: ChatMetadata;
+  initialMetadata: Chat;
   initialMessages: Array<Message>;
 }
 

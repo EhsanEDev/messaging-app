@@ -2,7 +2,7 @@
 
 import { useSocket } from "@/hooks/useSocket";
 import { fetcher } from "@/lib/fetcher";
-import { ChatMetadata } from "@/shared/types";
+import { Chat } from "@/shared/types";
 import { useEffect, useTransition } from "react";
 import Search from "../common/search";
 import { SidebarTrigger } from "../ui/sidebar";
@@ -16,10 +16,10 @@ const MainPanel: React.FC = () => {
   useEffect(() => {
     startTransition(async () => {
       try {
-        const res = await fetcher<ChatMetadata[]>("/api/chat/list");
+        const res = await fetcher<Chat[]>("/api/chat/list");
         setChats(
           Object.fromEntries(
-            res.data.map((chat: ChatMetadata) => [chat.id, chat])
+            res.data.map((chat: Chat) => [chat.id, chat])
           )
         );
       } catch (error) {

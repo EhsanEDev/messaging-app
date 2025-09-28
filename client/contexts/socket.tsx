@@ -4,7 +4,7 @@ import Loading from "@/components/common/loading";
 import { useAuth } from "@/hooks/useAuth";
 import { useChat } from "@/hooks/useChat";
 import { WebSocket } from "@/lib/socket";
-import { ChatMetadata, Message, UserStatus } from "@/shared/types";
+import { Chat, Message, UserStatus } from "@/shared/types";
 import { createContext, useEffect, useState } from "react";
 
 type UserStatusMap = Record<string, UserStatus>;
@@ -13,8 +13,8 @@ type SocketContextType = {
   socket: typeof WebSocket;
   messages: Record<string, Message[]>;
   setMessages: (messages: Record<string, Message[]>) => void;
-  chats: Record<string, ChatMetadata>;
-  setChats: (chats: Record<string, ChatMetadata>) => void;
+  chats: Record<string, Chat>;
+  setChats: (chats: Record<string, Chat>) => void;
   userStatus: UserStatusMap;
 };
 

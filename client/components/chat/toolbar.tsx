@@ -1,4 +1,4 @@
-import { ChatMetadata } from "@/shared/types";
+import { Chat } from "@/shared/types";
 import MoreActions from "./toolbar/actions";
 import Call from "./toolbar/call";
 import ChatInfo from "./toolbar/info";
@@ -10,7 +10,7 @@ import { formatStatus } from "@/lib/user-status";
 
 interface IProps {
   chatId: string;
-  metaData: ChatMetadata;
+  metaData: Chat;
 }
 
 const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {

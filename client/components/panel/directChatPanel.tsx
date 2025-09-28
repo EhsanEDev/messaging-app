@@ -3,7 +3,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useSocket } from "@/hooks/useSocket";
 import { fetcher } from "@/lib/fetcher";
-import { ChatCreate, ChatMetadata, User } from "@/shared/types";
+import { ChatCreate, Chat, User } from "@/shared/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import Search from "../common/search";
@@ -37,7 +37,7 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
   const handleItemOnClick = async (chat: ChatCreate) => {
     // Create/Open chat by id
     try {
-      const res = await fetcher<ChatMetadata>("/api/chat/create", {
+      const res = await fetcher<Chat>("/api/chat/create", {
         method: "POST",
         body: JSON.stringify(chat),
         headers: {

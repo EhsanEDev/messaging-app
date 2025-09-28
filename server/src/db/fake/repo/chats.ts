@@ -1,27 +1,27 @@
 import type {
-  ChannelChatMetaData,
-  ChatMetadata,
-  DirectChatMetaData,
-  GroupChatMetaData,
+  ChannelChat,
+  Chat,
+  DirectChat,
+  GroupChat,
   Participant,
 } from "@/shared/types.js";
 
-const chats: ChatMetadata[] = [];
+const chats: Chat[] = [];
 
 export const ChatRepo = {
-  getAll(): ChatMetadata[] {
+  getAll(): Chat[] {
     return chats;
   },
 
-  findById(id: string): ChatMetadata | null {
+  findById(id: string): Chat | null {
     return chats.find((c) => c.id === id) || null;
   },
 
-  findByUser(id: string): ChatMetadata[] {
+  findByUser(id: string): Chat[] {
     return chats.filter((c) => c.participants.some((p) => p.id === id));
   },
 
-  isDirectAlreadyExist(participants: Participant[]): ChatMetadata | undefined {
+  isDirectAlreadyExist(participants: Participant[]): Chat | undefined {
     // @TODO needs to optimization
     return chats.find(
       (c) =>
@@ -39,11 +39,11 @@ export const ChatRepo = {
 
   createDirect(
     metadata: Omit<
-      DirectChatMetaData,
+      DirectChat,
       "id" | "type" | "createdAt" | "lastMessage"
     >
-  ): ChatMetadata {
-    const newChat: DirectChatMetaData = {
+  ): Chat {
+    const newChat: DirectChat = {
       ...metadata,
       id: String(Date.now()),
       type: "direct",
@@ -56,11 +56,11 @@ export const ChatRepo = {
 
   createGroup(
     metadata: Omit<
-      GroupChatMetaData,
+      GroupChat,
       "id" | "type" | "createdAt" | "lastMessage"
     >
-  ): ChatMetadata {
-    const newChat: GroupChatMetaData = {
+  ): Chat {
+    const newChat: GroupChat = {
       ...metadata,
       id: String(Date.now()),
       type: "group",
@@ -73,11 +73,11 @@ export const ChatRepo = {
 
   createChannel(
     metadata: Omit<
-      ChannelChatMetaData,
+      ChannelChat,
       "id" | "type" | "createdAt" | "lastMessage"
     >
-  ): ChatMetadata {
-    const newChat: ChannelChatMetaData = {
+  ): Chat {
+    const newChat: ChannelChat = {
       ...metadata,
       id: String(Date.now()),
       type: "channel",

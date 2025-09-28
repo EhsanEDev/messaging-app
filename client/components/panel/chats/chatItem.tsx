@@ -4,12 +4,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { useSocket } from "@/hooks/useSocket";
 import { formatStatus, isOnline } from "@/lib/user-status";
 import { cn } from "@/lib/utils";
-import { ChatMetadata } from "@/shared/types";
+import { Chat } from "@/shared/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface IProps {
-  chat: ChatMetadata;
+  chat: Chat;
   onClick?: (id: string) => void; // handler when item clicked
 }
 

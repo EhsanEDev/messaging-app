@@ -1,5 +1,5 @@
 import {
-  ChatMetadata,
+  Chat,
   ChatSendMsg,
   ClientToServerEvent,
   Identifier,
@@ -38,7 +38,7 @@ export const WebSocket = {
    * @param chat - the created and stored chat on database
    * @returns void
    ************************************************************/
-  notifyChatCreated: (chat: ChatMetadata) => {
+  notifyChatCreated: (chat: Chat) => {
     if (io === undefined) return;
     chat.participants.forEach((participant) => {
       io?.to(`user:${participant.id}`).emit("chat:created", chat);
