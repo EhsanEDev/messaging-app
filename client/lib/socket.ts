@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  ChatSendMsg,
+  MessageSend,
   ClientToServerEvent,
   Identifier,
   ServerToClientEvent,
@@ -81,7 +81,7 @@ export const WebSocket = {
    * @param data - contains message content and target chat id
    * @param ack - a callback function to acknowledge message sent to the sender
    ************************************************************/
-  sendMessage: (data: ChatSendMsg, ack: () => void) => {
+  sendMessage: (data: MessageSend, ack: () => void) => {
     if (!socket || !socket.user) return;
     socket.emit("message:send", data);
     ack();

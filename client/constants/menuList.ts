@@ -5,7 +5,7 @@ import {
   LogOut,
   Search,
   Settings,
-  User,
+  User2,
   CreditCard,
   Bell
 } from "lucide-react";
@@ -97,7 +97,7 @@ export const asideUserItems: MenuItem[] = [
     type: "item",
     title: "My Profile",
     url: "#",
-    icon: User,
+    icon: User2,
   },
   {
     type: "item",

@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/useAuth";
-import { Bell, CreditCard, LogOut, Settings, User } from "lucide-react";
+import { Bell, CreditCard, LogOut, Settings, User2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -54,13 +54,11 @@ const UserMenuContent: React.FC<IProps> = () => {
       side={isMobile ? "bottom" : "right"}
       align={isMobile ? "end" : "start"}
     >
-      <Item title="My Profile" icon={User} onClick={handleX} />
+      <Item title="My Profile" icon={User2} onClick={handleX} />
       <Item title="Account Settings" icon={Settings} onClick={handleX} />
       <Item title="Billing" icon={CreditCard} onClick={handleX} />
       <Item title="Notifications" icon={Bell} onClick={handleX} />
-
       <DropdownMenuSeparator />
-
       <Item title="Sign out" icon={LogOut} onClick={handleSignOut} />
     </DropdownMenuContent>
   );

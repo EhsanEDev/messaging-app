@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { AuthProvider } from "./auth";
 import { ChatProvider } from "./chat";
 import { SocketProvider } from "./socket";
+import { StoreProvider } from "./store";
 
 interface IProps {
   children: ReactNode;
@@ -10,13 +11,15 @@ interface IProps {
 
 const AppProvider: React.FC<IProps> = ({ children }) => {
   return (
-    <AuthProvider>
-      <ChatProvider>
-        <SocketProvider>
-          <SidebarProvider>{children}</SidebarProvider>
-        </SocketProvider>
-      </ChatProvider>
-    </AuthProvider>
+    <StoreProvider>
+      <AuthProvider>
+        <ChatProvider>
+          <SocketProvider>
+            <SidebarProvider>{children}</SidebarProvider>
+          </SocketProvider>
+        </ChatProvider>
+      </AuthProvider>
+    </StoreProvider>
   );
 };
 

@@ -22,7 +22,7 @@ export const MessageRepo = {
       throw new Error("Sender not found");
     }
     const message: Message = {
-      id: String(messages.length + 1),
+      id: messages.length + 1,
       chatId,
       sender,
       content,

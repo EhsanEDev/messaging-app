@@ -1,6 +1,6 @@
 import {
   Chat,
-  ChatSendMsg,
+  MessageSend,
   ClientToServerEvent,
   Identifier,
   ServerToClientEvent,
@@ -161,7 +161,7 @@ export const WebSocket = {
    * @param data - contains the message data and the target chat
    * @returns void
    ************************************************************/
-  onMessageSend: (socket: Socket<ClientToServerEvent>, data: ChatSendMsg) => {
+  onMessageSend: (socket: Socket<ClientToServerEvent>, data: MessageSend) => {
     // console.log("Sending message:", data);
     const message = MessageRepo.store(
       data.chatId,

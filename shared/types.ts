@@ -10,6 +10,7 @@ export interface User {
 export type Contact = Omit<User, "password">;
 export interface Participant extends Contact {
   role: "owner" | "admin" | "member";
+  lastSeenMessageId?: number;
 }
 
 export interface SeenByEntry {
@@ -21,7 +22,7 @@ export interface ReactedByEntry extends User {
   reactedAt: string; // ISO timestamp
 }
 export interface Attachment {
-  id: string;
+  id: number;
   type: "image" | "video" | "file" | "audio";
   url: string;
   thumbnailUrl?: string; // optional for images/videos
@@ -29,7 +30,7 @@ export interface Attachment {
   size?: number; // in bytes
 }
 export interface Message {
-  id: string;
+  id: number;
   chatId: string;
   sender: Contact;
   content: string;
@@ -85,9 +86,13 @@ export interface ChatCreate {
   type: ChatType;
   participantsId: string[];
 }
-export interface ChatSendMsg {
+export interface MessageSend {
   chatId: string;
   content: string;
+}
+export interface MessageSeen {
+  chatId: string;
+  msgId: number;
 }
 // export interface UserOnline extends Identifier {}
 export interface UserStatus extends Identifier {
@@ -100,7 +105,8 @@ export interface ClientToServerEvent {
   "user:join": (data: Identifier) => void;
   "user:status": () => void;
   "chat:join": (data: Identifier) => void;
-  "message:send": (data: ChatSendMsg) => void;
+  "message:send": (data: MessageSend) => void;
+  "message:seen": (data: MessageSeen) => void;
 }
 // Events which server can emit or client can listen
 export interface ServerToClientEvent {
@@ -108,4 +114,5 @@ export interface ServerToClientEvent {
   "user:offline": (data: UserStatus) => void;
   "message:receive": (data: Message) => void;
   "chat:created": (data: Chat) => void;
+  "chat:updated": (data: Chat) => void;
 }

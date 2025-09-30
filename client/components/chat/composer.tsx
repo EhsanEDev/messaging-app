@@ -6,13 +6,13 @@ import EmojiPicker from "./composer/emoji";
 import SendText from "./composer/sendText";
 import TextInput from "./composer/text";
 import VoiceInput from "./composer/voice";
-import { ChatSendMsg } from "@/shared/types";
+import { MessageSend } from "@/shared/types";
 
 interface IProps {
   chatId: string;
   // onStartTyping: () => void;
   // onStopTyping: () => void;
-  onSendMessage: (data: ChatSendMsg, ack: () => void) => void;
+  onSendMessage: (data: MessageSend, ack: () => void) => void;
 }
 
 const ChatComposer: React.FC<IProps> = ({

@@ -1,10 +1,13 @@
 "use client";
 
 import Loading from "@/components/common/loading";
+import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { AuthService } from "@/services/auth";
 import { User } from "@/shared/types";
+import { selectUser } from "@/store/selectors/authSelectors";
+import { cleanUser, setUser } from "@/store/slices/authSlice";
 import { useRouter } from "next/navigation";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect } from "react";
 
 type AuthContextType = {
   user: User;
@@ -17,16 +20,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
         const user = await AuthService.me();
-        setUser(user);
+        dispatch(setUser({ user }));
       } catch (err) {
         // Force to signin, cookie is invalid
-        setUser(null);
+        dispatch(cleanUser());
         router.push("/signin");
       }
     };
@@ -35,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const signout = async () => {
-    setUser(null);
+    dispatch(cleanUser());
     return await AuthService.signout();
   };
 
