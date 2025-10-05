@@ -4,13 +4,12 @@ import Loading from "@/components/common/loading";
 import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { AuthService } from "@/services/auth";
 import { User } from "@/shared/types";
-import { selectUser } from "@/store/selectors/authSelectors";
-import { cleanUser, setUser } from "@/store/slices/authSlice";
+import { cleanCurrent, setCurrent } from "@/store/slices/userSlice";
 import { useRouter } from "next/navigation";
 import { createContext, useEffect } from "react";
 
 type AuthContextType = {
-  user: User;
+  currentUser: User;
   signout: () => Promise<void>;
 };
 
@@ -20,17 +19,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const router = useRouter();
-  const user = useAppSelector(selectUser);
+  const currentUser = useAppSelector((state) => state.user.current);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
         const user = await AuthService.me();
-        dispatch(setUser({ user }));
+        dispatch(setCurrent(user));
       } catch (err) {
         // Force to signin, cookie is invalid
-        dispatch(cleanUser());
+        dispatch(cleanCurrent());
         router.push("/signin");
       }
     };
@@ -39,16 +38,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const signout = async () => {
-    dispatch(cleanUser());
+    dispatch(cleanCurrent());
     return await AuthService.signout();
   };
 
-  if (!user) {
+  if (!currentUser) {
     return <Loading />;
   }
 
   return (
-    <AuthContext.Provider value={{ user, signout }}>
+    <AuthContext.Provider value={{ currentUser, signout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,6 +1,5 @@
-import { AuthResult } from "@/constants/types";
 import { fetcher } from "@/lib/fetcher";
-import { User } from "@/shared/types";
+import { AuthResult, User } from "@/shared/types";
 
 export const AuthService = {
   signup: async (data: { username: string; password: string }) => {

@@ -63,7 +63,7 @@ const ChatComposer: React.FC<IProps> = ({
 
   return (
     <footer className="w-full max-w-6xl mx-auto flex gap-2 px-5">
-      <section className="w-full flex justify-center items-center gap-1 bg-background px-4 py-0.75 mb-6 rounded-full">
+      <section className="w-full flex justify-center items-center gap-1 bg-background px-4 py-1.25 mb-6 rounded-full">
         <EmojiPicker />
         <TextInput value={textMessage} onChange={setTextMessage} onSend={handleSendMessage} />
         <AttachMenu />

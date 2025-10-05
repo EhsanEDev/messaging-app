@@ -1,7 +1,7 @@
 import Avatar from "@/components/common/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import { useSocket } from "@/hooks/useSocket";
+import { useAppSelector } from "@/hooks/useStore";
 import { formatStatus, isOnline } from "@/lib/user-status";
 import { cn } from "@/lib/utils";
 import { Chat } from "@/shared/types";
@@ -14,9 +14,9 @@ interface IProps {
 }
 
 const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
-  const { user } = useAuth();
+  const { currentUser } = useAuth();
   const pathname = usePathname();
-  const { userStatus } = useSocket();
+  const contacts = useAppSelector((state) => state.user.contact);
 
   // console.log(pathname);
   if (!chat) return null;
@@ -30,11 +30,11 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
     chatAvatarUrl = chat.avatarUrl;
     chatInfo = `${chat.participants.length} participants`;
   } else {
-    const participant = chat.participants?.find((p) => p.id !== user.id);
+    const participant = chat.participants?.find((p) => p.id !== currentUser.id);
     if (!participant) return;
     chatTitle = participant.username;
     chatAvatarUrl = participant.avatarUrl;
-    chatStatus = formatStatus(userStatus[participant.id]);
+    chatStatus = formatStatus(contacts[participant.id].status);
     chatInfo = "last seen recently";
   }
 

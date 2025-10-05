@@ -1,11 +1,9 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
-import { useSocket } from "@/hooks/useSocket";
+import { useAppSelector } from "@/hooks/useStore";
 import { fetcher } from "@/lib/fetcher";
-import { ChatCreate, Chat, User } from "@/shared/types";
+import { Chat, ChatCreate } from "@/shared/types";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
 import Search from "../common/search";
 import BackButton from "./directChat/backButton";
 import ContactItem from "./directChat/contactItem";
@@ -16,23 +14,8 @@ interface IProps {
 }
 
 const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
-  const [isPending, startTransition] = useTransition();
-  const [contactList, setContactList] = useState<User[]>([]);
-  const { user } = useAuth();
   const router = useRouter();
-  const { userStatus } = useSocket();
-
-  useEffect(() => {
-    startTransition(async () => {
-      try {
-        const res = await fetcher<User[]>("/api/contact/list");
-        const list = res.data.filter((u) => u.id !== user.id);
-        setContactList(list);
-      } catch (error) {
-        console.error("Error fetching contacts:", error);
-      }
-    });
-  }, [user.id]);
+  const contacts = useAppSelector((state) => state.user.contact);
 
   const handleItemOnClick = async (chat: ChatCreate) => {
     // Create/Open chat by id
@@ -57,15 +40,17 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
         btn: <BackButton onClick={onBack} />,
         input: <Search placeholder="Search contacts..." />,
       }}
-      loading={isPending}
-      list={contactList}
+      list={Object.values(contacts)}
       renderItem={(item) => (
         <ContactItem
           onClick={() =>
-            handleItemOnClick({ type: "direct", participantsId: [item.id] })
+            handleItemOnClick({
+              type: "direct",
+              participantsId: [item.meta.id],
+            })
           }
-          user={item}
-          status={userStatus[item.id]}
+          contact={item.meta}
+          status={contacts[item.meta.id].status}
         />
       )}
       emptyMessage="No contacts available"

@@ -1,14 +1,14 @@
 import Avatar from "@/components/common/avatar";
 import { formatStatus, isOnline } from "@/lib/user-status";
-import { User, UserStatus } from "@/shared/types";
+import { Contact, UserStatus } from "@/shared/types";
 
 interface IProps {
-  user: User;
+  contact: Contact;
   status: UserStatus | null;
   onClick?: () => void; // handler when item clicked
 }
 
-const ContactItem: React.FC<IProps> = ({ user, status, onClick }) => {
+const ContactItem: React.FC<IProps> = ({ contact, status, onClick }) => {
   const formattedStatus = formatStatus(status);
 
   return (
@@ -18,8 +18,8 @@ const ContactItem: React.FC<IProps> = ({ user, status, onClick }) => {
     >
       {/* Avatar */}
       <Avatar
-        src={user.avatarUrl}
-        title={user.username}
+        src={contact.avatarUrl}
+        title={contact.username}
         isOnline={isOnline(formattedStatus)}
       />
 
@@ -27,7 +27,7 @@ const ContactItem: React.FC<IProps> = ({ user, status, onClick }) => {
       <article className="flex flex-col flex-1 justify-between gap-0.5">
         {/* Title + date */}
         <header className="flex flex-col">
-          <h2 className="font-medium text-base">{user.username}</h2>
+          <h2 className="font-medium text-base">{contact.username}</h2>
           <p className="text-xs text-muted-foreground">{formattedStatus}</p>
         </header>
       </article>

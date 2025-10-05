@@ -8,7 +8,7 @@ interface IProps {
 const NewChatButton: React.FC<IProps> = ({ onClick }) => {
   return (
     <Button
-      className="absolute bottom-5 right-5 size-14 rounded-full cursor-pointer"
+      className="absolute bottom-5 right-5 size-12 rounded-full cursor-pointer"
       onClick={onClick}
     >
       <PencilIcon className="size-6" />

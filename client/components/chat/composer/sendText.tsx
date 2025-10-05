@@ -9,7 +9,7 @@ const SendText: React.FC<IProps> = ({ onSend }) => {
   return (
     <Button
       variant="ghost"
-      className="size-11 rounded-full cursor-pointer bg-background hover:bg-primary group"
+      className="size-12 rounded-full cursor-pointer bg-background hover:bg-primary group"
       aria-label="Send text message"
       onClick={() => {
         // Handle sending the text message

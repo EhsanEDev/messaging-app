@@ -13,6 +13,7 @@ interface IProps {
 const MessageBubble: React.FC<IProps> = ({ message, isOwn }) => {
   return (
     <li
+      // id={String(message.id)}
       className={cn("relative flex items-end", {
         "flex-row-reverse self-end": isOwn,
         "flex-row self-start": !isOwn,

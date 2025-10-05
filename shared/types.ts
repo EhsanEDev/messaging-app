@@ -67,10 +67,7 @@ export interface ChannelChat extends BaseChat {
   title: string;
   avatarUrl?: string;
 }
-export type Chat =
-  | DirectChat
-  | GroupChat
-  | ChannelChat;
+export type Chat = DirectChat | GroupChat | ChannelChat;
 
 // export type SocketEvent =
 //   | "user:join"
@@ -115,4 +112,9 @@ export interface ServerToClientEvent {
   "message:receive": (data: Message) => void;
   "chat:created": (data: Chat) => void;
   "chat:updated": (data: Chat) => void;
+}
+
+export interface AuthResult {
+  user?: User;
+  message: string;
 }
