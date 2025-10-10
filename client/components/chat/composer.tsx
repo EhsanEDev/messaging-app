@@ -1,7 +1,7 @@
 "use client";
 
-import { MessageSend } from "@/shared/types";
-import { useState } from "react";
+import { Identifier, MessageSend } from "@/shared/types";
+import { useEffect, useState } from "react";
 import AttachMenu from "./composer/attach";
 import EmojiPicker from "./composer/emoji";
 import SendText from "./composer/sendText";
@@ -10,46 +10,39 @@ import VoiceInput from "./composer/voice";
 
 interface IProps {
   chatId: string;
-  // onStartTyping: () => void;
-  // onStopTyping: () => void;
+  onStartTyping: (chat: Identifier) => void;
+  onStopTyping: (chat: Identifier) => void;
   onSendMessage: (data: MessageSend, ack: () => void) => void;
 }
 
 const ChatComposer: React.FC<IProps> = ({
   chatId,
-  // onStartTyping,
-  // onStopTyping,
+  onStartTyping,
+  onStopTyping,
   onSendMessage,
 }) => {
   const [textMessage, setTextMessage] = useState("");
-  // const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
-  // useEffect(() => {
-  //   let timeoutId: NodeJS.Timeout;
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
 
-  //   if (textMessage.trim()) {
-  //     if (!isTyping) {
-  //       setIsTyping(true);
-  //       // onStartTyping();
-  //     }
+    if (!isTyping) {
+      setIsTyping(true);
+      onStartTyping({ id: chatId });
+    }
 
-  //     // Reset timer each time the message changes
-  //     timeoutId = setTimeout(() => {
-  //       setIsTyping(false);
-  //       // onStopTyping();
-  //     }, 1500);
-  //   } else {
-  //     if (isTyping) {
-  //       setIsTyping(false);
-  //       // onStopTyping();
-  //     }
-  //   }
+    // Reset timer each time the message changes
+    timeoutId = setTimeout(() => {
+      setIsTyping(false);
+      onStopTyping({ id: chatId });
+    }, 1000);
 
-  //   // Cleanup to clear the previous timeout
-  //   return () => {
-  //     if (timeoutId) clearTimeout(timeoutId);
-  //   };
-  // }, [textMessage]);
+    // Cleanup to clear the previous timeout
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [textMessage]);
 
   const handleClearInput = () => {
     setTextMessage("");

@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { WebSocket } from "@/lib/socket";
 import { Message } from "@/shared/types";
-import { addChat, addMessage } from "@/store/slices/chatSlice";
+import { addChat, addMessage, updateTyping } from "@/store/slices/chatSlice";
 import { setAppState } from "@/store/slices/uiSlice";
 import { setContactStatus } from "@/store/slices/userSlice";
 import { createContext, useEffect } from "react";
@@ -60,6 +60,10 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
     socket.on("user:offline", (status) => {
       dispatch(setContactStatus(status));
+    });
+
+    socket.on("user:typing", (data) => {
+      dispatch(updateTyping(data));
     });
 
     // cleanup on unmount

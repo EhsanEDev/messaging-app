@@ -69,15 +69,12 @@ export interface ChannelChat extends BaseChat {
 }
 export type Chat = DirectChat | GroupChat | ChannelChat;
 
-// export type SocketEvent =
-//   | "user:join"
-//   | "user:online"
-//   | "user:offline"
-//   | "message:send"
-//   | "message:receive";
-
 export interface Identifier {
   id: string;
+}
+export interface Typing extends Identifier {
+  username: string;
+  isTyping: boolean;
 }
 export interface ChatCreate {
   type: ChatType;
@@ -91,27 +88,34 @@ export interface MessageSeen {
   chatId: string;
   msgId: number;
 }
-// export interface UserOnline extends Identifier {}
 export interface UserStatus extends Identifier {
   isOnline: boolean;
   lastSeenAt: string | null;
 }
+// export interface ChatStatus extends Identifier {
+//   typingUser: Pick<User, "username">;
+//   // unreadCount: number;
+//   // lastSeenMessageId?: number;
+// }
 
 // Events which client can emit or server can listen
 export interface ClientToServerEvent {
-  "user:join": (data: Identifier) => void;
+  "user:join": (user: Identifier) => void;
   "user:status": () => void;
-  "chat:join": (data: Identifier) => void;
-  "message:send": (data: MessageSend) => void;
-  "message:seen": (data: MessageSeen) => void;
+  "chat:join": (chat: Identifier) => void;
+  "typing:start": (chat: Identifier) => void;
+  "typing:stop": (chat: Identifier) => void;
+  "message:send": (msg: MessageSend) => void;
+  "message:seen": (msg: MessageSeen) => void;
 }
 // Events which server can emit or client can listen
 export interface ServerToClientEvent {
   "user:online": (data: UserStatus[]) => void;
   "user:offline": (data: UserStatus) => void;
-  "message:receive": (data: Message) => void;
-  "chat:created": (data: Chat) => void;
-  "chat:updated": (data: Chat) => void;
+  "user:typing": (data: Typing) => void;
+  "message:receive": (msg: Message) => void;
+  "chat:created": (chat: Chat) => void;
+  "chat:updated": (chat: Chat) => void;
 }
 
 export interface AuthResult {

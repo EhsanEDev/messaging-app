@@ -26,7 +26,7 @@ export const WebSocket = {
   init: () => {
     // Prevent duplicate init
     if (socket) return socket;
-    
+
     // Initialize and make a socket instance
     socket = io(process.env.NEXT_PUBLIC_BASE_URL, {
       withCredentials: true,
@@ -43,7 +43,7 @@ export const WebSocket = {
 
   /*************************************************************
    * Disconnects the socket.io from server
-   * 
+   *
    * NOTE: All rooms and chats are left automatically upon
    * disconnection in the server side.
    *
@@ -59,10 +59,10 @@ export const WebSocket = {
    *
    * @param data - itself user id
    ************************************************************/
-  JoinUser: (data: Identifier) => {
+  JoinUser: (userId: Identifier) => {
     if (!socket) return;
-    socket.emit("user:join", data);
-    socket.user = data; // Store the userId in the socket object
+    socket.emit("user:join", userId);
+    socket.user = userId; // Store the userId in the socket object
   },
 
   /*************************************************************
@@ -70,9 +70,9 @@ export const WebSocket = {
    *
    * @param data - target chat id
    ************************************************************/
-  JoinChat: (data: Identifier) => {
+  JoinChat: (chatId: Identifier) => {
     if (!socket || !socket.user) return;
-    socket.emit("chat:join", data);
+    socket.emit("chat:join", chatId);
   },
 
   /*************************************************************
@@ -81,14 +81,38 @@ export const WebSocket = {
    * @param data - contains message content and target chat id
    * @param ack - a callback function to acknowledge message sent to the sender
    ************************************************************/
-  sendMessage: (data: MessageSend, ack: () => void) => {
+  sendMessage: (msg: MessageSend, ack: () => void) => {
     if (!socket || !socket.user) return;
-    socket.emit("message:send", data);
+    socket.emit("message:send", msg);
     ack();
   },
 
+  /*************************************************************
+   *
+   *
+   ************************************************************/
   RequestUserStatus: () => {
     if (!socket || !socket.user) return;
     socket.emit("user:status");
-  }
+  },
+
+  /*************************************************************
+   * Request to start typing in the chat
+   *
+   * @param chatId - the chat id where the user is typing
+   ************************************************************/
+  StartTyping: (chatId: Identifier) => {
+    if (!socket || !socket.user) return;
+    socket.emit("typing:start", chatId);
+  },
+
+  /*************************************************************
+   * Request to stop typing in the chat
+   *
+   * @param chatId - the chat id where the user stopped typing
+   ************************************************************/
+  StopTyping: (chatId: Identifier) => {
+    if (!socket || !socket.user) return;
+    socket.emit("typing:stop", chatId);
+  },
 };

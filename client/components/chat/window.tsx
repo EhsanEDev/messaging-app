@@ -45,8 +45,8 @@ export default function ChatWindow({
       <ChatComposer
         chatId={chatId}
         onSendMessage={socket.sendMessage}
-        // onStartTyping={startTyping}
-        // onStopTyping={stopTyping}
+        onStartTyping={socket.StartTyping}
+        onStopTyping={socket.StopTyping}
       />
     </>
   );

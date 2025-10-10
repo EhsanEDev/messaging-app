@@ -11,6 +11,7 @@ import { Server, Socket } from "socket.io";
 import { ChatRepo } from "../db/fake/repo/chats.js";
 import { MessageRepo } from "../db/fake/repo/messages.js";
 import { StatusRepo } from "../db/fake/repo/status.js";
+import { ContactRepo } from "../db/fake/repo/contacts.js";
 
 // Single instance of the socket.io
 let io: Server<ClientToServerEvent, ServerToClientEvent> | undefined;
@@ -55,22 +56,22 @@ export const WebSocket = {
    ************************************************************/
   onUserJoin: (
     socket: Socket<ClientToServerEvent, ServerToClientEvent>,
-    data: Identifier
+    user: Identifier
   ) => {
     // Join the user
-    socket.join(`user:${data.id}`);
-    console.log(data.id, "joined");
+    socket.join(`user:${user.id}`);
+    console.log(user.id, "joined");
 
     // Set the user as online
-    StatusRepo.setOnline(data.id);
+    StatusRepo.setOnline(user.id);
 
     // Join the user to their chats and emit them its online status
-    const chatList = ChatRepo.findByUser(data.id);
+    const chatList = ChatRepo.findByUser(user.id);
     chatList.forEach((chat) => {
       socket.join(`chat:${chat.id}`);
       socket.broadcast.to(`chat:${chat.id}`).emit("user:online", [
         {
-          id: data.id,
+          id: user.id,
           isOnline: true,
           lastSeenAt: null,
         },
@@ -78,7 +79,7 @@ export const WebSocket = {
     });
 
     // Store the userId in the socket
-    socket.data.userId = data.id;
+    socket.data.userId = user.id;
   },
 
   /*************************************************************
@@ -130,17 +131,17 @@ export const WebSocket = {
    ************************************************************/
   onChatJoin: (
     socket: Socket<ClientToServerEvent, ServerToClientEvent>,
-    data: Identifier
+    chat: Identifier
   ) => {
-    // console.log(`User (${socket.data.userId}) joined to chat (${id})`);
-    socket.join(`chat:${data.id}`);
+    // console.log(`User (${socket.chat.userId}) joined to chat (${id})`);
+    socket.join(`chat:${chat.id}`);
 
-    const chat = ChatRepo.findById(data.id);
-    if (!chat) return;
+    const record = ChatRepo.findById(chat.id);
+    if (!record) return;
     const statusList: UserStatus[] = [];
 
     // Filter contacts of current user and make a list of their status who are online
-    chat.participants.forEach((participant) => {
+    record.participants.forEach((participant) => {
       if (participant.id !== socket.data.userId) {
         const status = StatusRepo.findByUserId(participant.id);
         if (status && status.isOnline) {
@@ -155,22 +156,62 @@ export const WebSocket = {
   },
 
   /*************************************************************
+   * Notifies other participants in the chat that the user is typing.
+   *
+   * @param socket - Specific socket instance only for this user
+   * @param data - the chat id where the user is typing
+   * @returns void
+   ************************************************************/
+  onTypingStart: (socket: Socket<ServerToClientEvent>, chat: Identifier) => {
+    // console.log(`User (${socket.data.userId}) is typing in chat (${chat.id})`);
+    const contact = ContactRepo.findById(socket.data.userId);
+    if (contact) {
+      socket.broadcast.to(`chat:${chat.id}`).emit("user:typing", {
+        id: chat.id,
+        username: contact.username,
+        isTyping: true,
+      });
+    }
+  },
+
+  /*************************************************************
+   * Notifies other participants in the chat that the user stopped typing.
+   *
+   * @param socket - Specific socket instance only for this user
+   * @param data - the chat id where the user stopped typing
+   * @returns void
+   ************************************************************/
+  onTypingStop: (socket: Socket<ServerToClientEvent>, chat: Identifier) => {
+    // console.log(
+    //   `User (${socket.data.userId}) stopped typing in chat (${chat.id})`
+    // );
+    const contact = ContactRepo.findById(socket.data.userId);
+    if (contact) {
+      socket.broadcast.to(`chat:${chat.id}`).emit("user:typing", {
+        id: chat.id,
+        username: contact.username,
+        isTyping: false,
+      });
+    }
+  },
+
+  /*************************************************************
    * Stores sent message by the user and emits it to the target chat
    *
    * @param socket - Specific socket instance only for this user
    * @param data - contains the message data and the target chat
    * @returns void
    ************************************************************/
-  onMessageSend: (socket: Socket<ClientToServerEvent>, data: MessageSend) => {
-    // console.log("Sending message:", data);
+  onMessageSend: (socket: Socket<ClientToServerEvent>, msg: MessageSend) => {
+    // console.log("Sending message:", msg);
     const message = MessageRepo.store(
-      data.chatId,
+      msg.chatId,
       socket.data.userId,
-      data.content
+      msg.content
     );
     // console.log("New message created:", message);
 
-    io?.to(`chat:${data.chatId}`).emit("message:receive", message);
+    io?.to(`chat:${msg.chatId}`).emit("message:receive", message);
   },
 
   /*************************************************************

@@ -15,6 +15,8 @@ interface IProps {
 const ChatToolbar: React.FC<IProps> = ({ metaData }) => {
   const { currentUser } = useAuth();
   const contacts = useAppSelector((state) => state.user.contact);
+  const typingParticipants = useAppSelector((state) => state.chat)[metaData.id]
+    .status.typing;
 
   let chatTitle;
   let chatAvatarUrl;
@@ -32,6 +34,15 @@ const ChatToolbar: React.FC<IProps> = ({ metaData }) => {
     chatAvatarUrl = participant.avatarUrl;
     chatInfo = "last seen recently";
     chatInfo = formatStatus(contacts[participant.id]?.status);
+  }
+
+  // Update chatInfo if someone is typing
+  if (typingParticipants.length > 0) {
+    if (typingParticipants.length === 1) {
+      chatInfo = `is typing...`;
+    } else {
+      chatInfo = `${typingParticipants.join(", ")} are typing...`;
+    }
   }
 
   return (
