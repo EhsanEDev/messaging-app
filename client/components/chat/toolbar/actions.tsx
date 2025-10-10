@@ -11,7 +11,7 @@ import { MoreVertical } from "lucide-react";
 const MoreActions: React.FC = () => {
   return (
     <DropdownMenu aria-label="More actions">
-      <DropdownMenuTrigger className="size-11 rounded-full cursor-pointer focus-visible:outline-3 hover:bg-accent flex justify-center items-center">
+      <DropdownMenuTrigger disabled className="size-11 rounded-full cursor-pointer focus-visible:outline-3 hover:bg-accent flex justify-center items-center">
         <MoreVertical className="size-5 text-muted-foreground" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
