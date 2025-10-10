@@ -48,6 +48,8 @@ const ChatComposer: React.FC<IProps> = ({
 
   const handleClearInput = () => {
     setTextMessage("");
+    setIsTyping(false);
+    onStopTyping({ id: chatId });
   };
 
   const handleSendMessage = () => {
