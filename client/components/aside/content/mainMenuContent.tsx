@@ -13,9 +13,10 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Item from "./mainMenuItem";
+import { Switch } from "@/components/ui/switch";
 
 const MainMenuContent: React.FC = () => {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const dispatch = useAppDispatch();
   const handleSwitchTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -31,7 +32,7 @@ const MainMenuContent: React.FC = () => {
       />
       <Item url="/calls" icon={PhoneIcon} title="Calls" disabled />
       <Item url="/settings" icon={SettingsIcon} title="Settings" disabled />
-      <Item icon={MoonIcon} title="Night Mode" onClick={handleSwitchTheme} />
+      <Item icon={MoonIcon} title="Night Mode" onClick={handleSwitchTheme} postfix={<Switch checked={theme === "dark"} />} />
     </SidebarMenu>
   );
 };

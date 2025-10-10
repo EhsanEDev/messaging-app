@@ -1,4 +1,8 @@
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import {
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 import Link from "next/link";
 
 interface IProps {
@@ -7,6 +11,7 @@ interface IProps {
   title: string;
   onClick?: () => void;
   disabled?: boolean;
+  postfix?: React.ReactNode;
 }
 
 const MainMenuItem: React.FC<IProps> = ({
@@ -15,10 +20,15 @@ const MainMenuItem: React.FC<IProps> = ({
   title,
   onClick,
   disabled = false,
+  postfix,
 }) => {
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton onClick={onClick} disabled={disabled} className="py-5 cursor-pointer">
+      <SidebarMenuButton
+        onClick={onClick}
+        disabled={disabled}
+        className="py-5 cursor-pointer"
+      >
         {url ? (
           <Link href={url} className="flex items-center gap-4 text-sm">
             <span className="text-muted-foreground">
@@ -35,6 +45,7 @@ const MainMenuItem: React.FC<IProps> = ({
           </>
         )}
       </SidebarMenuButton>
+      {postfix && <SidebarMenuBadge className="py-3.5">{postfix}</SidebarMenuBadge>}
     </SidebarMenuItem>
   );
 };

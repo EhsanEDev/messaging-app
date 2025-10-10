@@ -12,12 +12,19 @@ import React from "react";
 interface ItemProps {
   title: string;
   icon: typeof Bell;
+  disabled?: boolean;
   onClick: () => void;
 }
 
-const Item: React.FC<ItemProps> = ({ title, icon, onClick }) => {
+const Item: React.FC<ItemProps> = ({
+  title,
+  icon,
+  onClick,
+  disabled = false,
+}) => {
   return (
     <DropdownMenuItem
+      disabled={disabled}
       className="cursor-pointer flex items-center gap-4 py-2 text-sm"
       onClick={onClick}
     >
@@ -52,10 +59,10 @@ const UserMenuContent: React.FC = () => {
       side={isMobile ? "bottom" : "right"}
       align={isMobile ? "end" : "start"}
     >
-      <Item title="My Profile" icon={User2} onClick={handleX} />
-      <Item title="Account Settings" icon={Settings} onClick={handleX} />
-      <Item title="Billing" icon={CreditCard} onClick={handleX} />
-      <Item title="Notifications" icon={Bell} onClick={handleX} />
+      <Item title="My Profile" icon={User2} onClick={handleX} disabled />
+      <Item title="Account Settings" icon={Settings} onClick={handleX} disabled />
+      <Item title="Billing" icon={CreditCard} onClick={handleX} disabled />
+      <Item title="Notifications" icon={Bell} onClick={handleX} disabled />
       <DropdownMenuSeparator />
       <Item title="Sign out" icon={LogOut} onClick={handleSignOut} />
     </DropdownMenuContent>
