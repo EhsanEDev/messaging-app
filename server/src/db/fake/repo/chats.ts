@@ -5,6 +5,7 @@ import type {
   GroupChat,
   Participant,
 } from "@/shared/types.js";
+import { MessageRepo } from "./messages.js";
 
 const chats: Chat[] = [];
 
@@ -14,7 +15,9 @@ export const ChatRepo = {
   },
 
   findById(id: string): Chat | null {
-    return chats.find((c) => c.id === id) || null;
+    const chat = chats.find((c) => c.id === id);
+    if (chat) chat.lastMessage = MessageRepo.findLastByChatId(chat.id);
+    return chat || null;
   },
 
   findByUser(id: string): Chat[] {
@@ -38,10 +41,7 @@ export const ChatRepo = {
   },
 
   createDirect(
-    metadata: Omit<
-      DirectChat,
-      "id" | "type" | "createdAt" | "lastMessage"
-    >
+    metadata: Omit<DirectChat, "id" | "type" | "createdAt" | "lastMessage">
   ): Chat {
     const newChat: DirectChat = {
       ...metadata,
@@ -55,10 +55,7 @@ export const ChatRepo = {
   },
 
   createGroup(
-    metadata: Omit<
-      GroupChat,
-      "id" | "type" | "createdAt" | "lastMessage"
-    >
+    metadata: Omit<GroupChat, "id" | "type" | "createdAt" | "lastMessage">
   ): Chat {
     const newChat: GroupChat = {
       ...metadata,
@@ -72,10 +69,7 @@ export const ChatRepo = {
   },
 
   createChannel(
-    metadata: Omit<
-      ChannelChat,
-      "id" | "type" | "createdAt" | "lastMessage"
-    >
+    metadata: Omit<ChannelChat, "id" | "type" | "createdAt" | "lastMessage">
   ): Chat {
     const newChat: ChannelChat = {
       ...metadata,

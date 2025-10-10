@@ -27,16 +27,18 @@ const ChatComposer: React.FC<IProps> = ({
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
 
-    if (!isTyping) {
-      setIsTyping(true);
-      onStartTyping({ id: chatId });
-    }
+    if (textMessage.trim()) {
+      if (!isTyping) {
+        setIsTyping(true);
+        onStartTyping({ id: chatId });
+      }
 
-    // Reset timer each time the message changes
-    timeoutId = setTimeout(() => {
-      setIsTyping(false);
-      onStopTyping({ id: chatId });
-    }, 1000);
+      // Reset timer each time the message changes
+      timeoutId = setTimeout(() => {
+        setIsTyping(false);
+        onStopTyping({ id: chatId });
+      }, 1000);
+    }
 
     // Cleanup to clear the previous timeout
     return () => {

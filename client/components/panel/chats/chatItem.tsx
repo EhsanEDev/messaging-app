@@ -17,14 +17,15 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
   const { currentUser } = useAuth();
   const pathname = usePathname();
   const contacts = useAppSelector((state) => state.user.contact);
-
+  const typingParticipants = useAppSelector((state) => state.chat)[chat?.id!]
+    .status.typing;
   // console.log(pathname);
   if (!chat) return null;
 
   let chatTitle;
   let chatAvatarUrl;
   let chatStatus: string | null = null;
-  // let chatInfo;
+  let chatInfo = chat.lastMessage?.content || "";
   if (chat.type === "group") {
     chatTitle = chat.title;
     chatAvatarUrl = chat.avatarUrl;
@@ -36,6 +37,15 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
     chatAvatarUrl = participant.avatarUrl;
     chatStatus = formatStatus(contacts[participant.id].status);
     // chatInfo = "last seen recently";
+  }
+
+    // Update chatInfo if someone is typing
+  if (typingParticipants.length > 0) {
+    if (typingParticipants.length === 1) {
+      chatInfo = `is typing...`;
+    } else {
+      chatInfo = `${typingParticipants.join(", ")} are typing...`;
+    }
   }
 
   const isSelected = pathname.includes(chat.id);
@@ -89,7 +99,7 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
                 "text-muted-foreground": !isSelected,
               })}
             >
-              {chat.lastMessage?.content}
+              {chatInfo}
             </p>
             <Badge
               variant="outline"
