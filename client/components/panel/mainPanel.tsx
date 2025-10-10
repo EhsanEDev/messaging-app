@@ -12,7 +12,7 @@ const MainPanel: React.FC = () => {
     <Panel
       header={{ btn: <SidebarTrigger />, input: <Search /> }}
       list={Object.values(chats)}
-      renderItem={(item) => <ChatItem chat={item.meta || null} />}
+      renderItem={(item) => <ChatItem chat={item.meta} />}
       emptyMessage="No chats available"
     />
   );

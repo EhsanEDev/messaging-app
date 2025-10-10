@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice";
 import chatReducer from "./slices/chatSlice";
-// import statusReducer from "./slices/statusSlice";
+import uiReducer from "./slices/uiSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     chat: chatReducer,
-    // ui: statusReducer,
+    ui: uiReducer,
   },
 });
 

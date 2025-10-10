@@ -1,8 +1,11 @@
 "use client";
+import Loading from "@/components/common/loading";
 import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { fetcher } from "@/lib/fetcher";
-import { Chat, User } from "@/shared/types";
+import { Chat, Contact } from "@/shared/types";
+import { store } from "@/store";
 import { initChats } from "@/store/slices/chatSlice";
+import { setAppState } from "@/store/slices/uiSlice";
 import { initContacts } from "@/store/slices/userSlice";
 import { useEffect } from "react";
 
@@ -10,28 +13,31 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const dispatch = useAppDispatch();
-  const currentUser = useAppSelector((state) => state.user.current);
+  const appState = useAppSelector((state) => state.ui.appState.initState);
+  // const { currentUser } = useAuth();
 
   useEffect(() => {
-    if (!currentUser) return;
-
     const loadInitialData = async () => {
       try {
         const [contactlist, chatList] = await Promise.all([
-          fetcher<User[]>("/api/contact/list"),
+          fetcher<Contact[]>("/api/contact/list"),
           fetcher<Chat[]>("/api/chat/list"),
           // get messages for each chat
         ]);
-
         dispatch(initContacts(contactlist.data));
         dispatch(initChats(chatList.data));
+        dispatch(setAppState("socket-connecting"));
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
     };
 
     loadInitialData();
-  }, [currentUser, dispatch]);
+  }, [dispatch]);
 
-  return <>{children}</>;
+  return appState === "socket-connecting" || appState === "ready" ? (
+    <>{children}</>
+  ) : (
+    <Loading />
+  );
 };

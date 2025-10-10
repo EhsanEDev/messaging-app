@@ -2,10 +2,11 @@
 
 import Loading from "@/components/common/loading";
 import { useAuth } from "@/hooks/useAuth";
-import { useAppDispatch } from "@/hooks/useStore";
+import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { WebSocket } from "@/lib/socket";
 import { Message } from "@/shared/types";
 import { addChat, addMessage } from "@/store/slices/chatSlice";
+import { setAppState } from "@/store/slices/uiSlice";
 import { setContactStatus } from "@/store/slices/userSlice";
 import { createContext, useEffect } from "react";
 
@@ -19,18 +20,26 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { currentUser } = useAuth();
+  // console.log(currentUser);
+
   const dispatch = useAppDispatch();
+  const appState = useAppSelector((state) => state.ui.appState.initState);
 
   useEffect(() => {
-    // null user
-    if (!currentUser) return;
-
     // Initialize socket on mounting
     const socket = WebSocket.init();
     WebSocket.JoinUser({ id: currentUser.id });
 
     // Request user status
     WebSocket.RequestUserStatus();
+
+    socket.on("connect", () => {
+      dispatch(setAppState("ready"));
+    });
+
+    socket.on("disconnect", () => {
+      console.log("socket disconnected");
+    });
 
     socket.on("message:receive", (message: Message) => {
       // console.log("New message received: ", message);
@@ -59,13 +68,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
       socket.off("chat:created");
       WebSocket.disconnect();
     };
-  }, [currentUser]);
+  }, []);
 
-  if (!currentUser) {
-    return <Loading />;
-  }
-
-  return (
+  return appState === "ready" ? (
     <SocketContext.Provider
       value={{
         socket: WebSocket,
@@ -73,5 +78,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     >
       {children}
     </SocketContext.Provider>
+  ) : (
+    <Loading />
   );
 };

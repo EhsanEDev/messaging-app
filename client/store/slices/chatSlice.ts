@@ -1,8 +1,7 @@
 import { Chat, Message } from "@/shared/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: Record<string, { meta: Chat | {}; messages: Message[] }> =
-  {};
+const initialState: Record<string, { meta: Chat; messages: Message[] }> = {};
 
 const chatSlice = createSlice({
   name: "data",
@@ -32,7 +31,7 @@ const chatSlice = createSlice({
     ) => {
       const { chatId, messages } = action.payload;
       if (!state[chatId]) {
-        state[chatId] = { meta: {}, messages: messages };
+        state[chatId] = { meta: {} as Chat, messages: messages };
       } else {
         state[chatId].messages = messages;
       }
@@ -47,10 +46,13 @@ const chatSlice = createSlice({
             lastMessage: message,
           };
         } else {
-          state[message.chatId].meta = { lastMessage: message };
+          state[message.chatId] = {
+            meta: { lastMessage: message } as Chat,
+            messages: [message],
+          };
         }
       } else {
-        state[message.chatId] = { meta: {}, messages: [message] };
+        state[message.chatId] = { meta: {} as Chat, messages: [message] };
       }
     },
   },

@@ -1,9 +1,7 @@
 import { SidebarFooter } from "../ui/sidebar";
 import pkg from "@/package.json";
 
-interface IProps {}
-
-const AsideFooter: React.FC<IProps> = () => {
+const AsideFooter: React.FC = () => {
   return (
     <SidebarFooter className="px-4 pb-8">
       <h3 className="text-xs text-muted-foreground">

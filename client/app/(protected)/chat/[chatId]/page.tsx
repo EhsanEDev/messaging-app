@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 
 interface IProps {
-  params: { chatId: string };
+  params: Promise<{ chatId: string }>;
 }
 
 const ChatPage: React.FC<IProps> = async ({ params }) => {

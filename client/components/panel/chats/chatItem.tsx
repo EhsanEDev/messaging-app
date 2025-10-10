@@ -9,11 +9,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface IProps {
-  chat: Chat;
-  onClick?: (id: string) => void; // handler when item clicked
+  chat: Chat | null;
+  // onClick?: (id: string) => void; // handler when item clicked
 }
 
-const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
+const ChatItem: React.FC<IProps> = ({ chat }) => {
   const { currentUser } = useAuth();
   const pathname = usePathname();
   const contacts = useAppSelector((state) => state.user.contact);
@@ -24,18 +24,18 @@ const ChatItem: React.FC<IProps> = ({ chat, onClick }) => {
   let chatTitle;
   let chatAvatarUrl;
   let chatStatus: string | null = null;
-  let chatInfo;
+  // let chatInfo;
   if (chat.type === "group") {
     chatTitle = chat.title;
     chatAvatarUrl = chat.avatarUrl;
-    chatInfo = `${chat.participants.length} participants`;
+    // chatInfo = `${chat.participants.length} participants`;
   } else {
     const participant = chat.participants?.find((p) => p.id !== currentUser.id);
     if (!participant) return;
     chatTitle = participant.username;
     chatAvatarUrl = participant.avatarUrl;
     chatStatus = formatStatus(contacts[participant.id].status);
-    chatInfo = "last seen recently";
+    // chatInfo = "last seen recently";
   }
 
   const isSelected = pathname.includes(chat.id);

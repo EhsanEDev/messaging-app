@@ -9,9 +9,7 @@ import {
 } from "lucide-react";
 import Item from "./mainMenuItem";
 
-interface IProps {}
-
-const MainMenuContent: React.FC<IProps> = () => {
+const MainMenuContent: React.FC = () => {
   return (
     <SidebarMenu>
       <Item url="/" icon={Users2Icon} title="New Group" />

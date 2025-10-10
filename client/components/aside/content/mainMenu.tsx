@@ -1,9 +1,7 @@
 import { SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar";
 import MainMenuContent from "./mainMenuContent";
 
-interface IProps {}
-
-const MainMenu: React.FC<IProps> = () => {
+const MainMenu: React.FC = () => {
   return (
     <SidebarGroup>
       {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}

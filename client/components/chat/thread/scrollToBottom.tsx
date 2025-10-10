@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDownIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface IProps {
   scrollRef: React.RefObject<HTMLDivElement>;
@@ -10,6 +10,18 @@ const ScrollToBottom: React.FC<IProps> = ({ scrollRef }) => {
   // if (!scrollRef) return null;
 
   const [visible, setVisible] = useState(false);
+
+  const scrollToBottom = useCallback((behavior: "instant" | "smooth") => {
+    const el = scrollRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]"
+    );
+    if (el) {
+      el.scrollTo({
+        behavior,
+        top: el.scrollHeight,
+      });
+    }
+  }, [scrollRef]);
 
   useEffect(() => {
     const el = scrollRef.current?.querySelector(
@@ -25,19 +37,7 @@ const ScrollToBottom: React.FC<IProps> = ({ scrollRef }) => {
     scrollToBottom("instant");
     el.addEventListener("scroll", handleScroll);
     return () => el.removeEventListener("scroll", handleScroll);
-  }, [scrollRef]);
-
-  const scrollToBottom = (behavior: "instant" | "smooth") => {
-    const el = scrollRef.current?.querySelector(
-      "[data-radix-scroll-area-viewport]"
-    );
-    if (el) {
-      el.scrollTo({
-        behavior,
-        top: el.scrollHeight,
-      });
-    }
-  };
+  }, [scrollRef, scrollToBottom]);
 
   if (!visible) return null;
 

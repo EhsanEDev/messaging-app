@@ -1,24 +1,30 @@
 "use client";
 
-import MainPanel from "@/components/panel/mainPanel";
 import NewChatButton from "@/components/panel/chats/newChatButton";
-import DirectChatPanel from "@/components/panel/directChatPanel";
 import CollectiveChatPanel from "@/components/panel/collectiveChatPanel";
-import { ChatType } from "@/shared/types";
-import { useState } from "react";
+import DirectChatPanel from "@/components/panel/directChatPanel";
+import MainPanel from "@/components/panel/mainPanel";
+import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
+import { setPanelState } from "@/store/slices/uiSlice";
 
 const PanelWrapper: React.FC = () => {
-  const [panelState, setPanelState] = useState<ChatType | "main">("main");
+  const dispatch = useAppDispatch();
+  const panelState = useAppSelector((state) => state.ui.panelState);
 
   if (panelState === "direct") {
-    return <DirectChatPanel onBack={() => setPanelState("main")} />;
+    return <DirectChatPanel onBack={() => dispatch(setPanelState("main"))} />;
   } else if (panelState === "group" || panelState === "channel") {
-    return <CollectiveChatPanel type={panelState} onBack={() => setPanelState("main")} />;
+    return (
+      <CollectiveChatPanel
+        // type={panelState}
+        // onBack={() => dispatch(setPanelState("main"))}
+      />
+    );
   } else {
     return (
       <>
         <MainPanel />
-        <NewChatButton onClick={() => setPanelState("direct")} />
+        <NewChatButton onClick={() => dispatch(setPanelState("direct"))} />
       </>
     );
   }

@@ -9,11 +9,10 @@ import ChatInfo from "./toolbar/info";
 import SearchInChat from "./toolbar/search";
 
 interface IProps {
-  chatId: string;
   metaData: Chat;
 }
 
-const ChatToolbar: React.FC<IProps> = ({ chatId, metaData }) => {
+const ChatToolbar: React.FC<IProps> = ({ metaData }) => {
   const { currentUser } = useAuth();
   const contacts = useAppSelector((state) => state.user.contact);
 

@@ -29,9 +29,7 @@ const Item: React.FC<ItemProps> = ({ title, icon, onClick }) => {
   );
 };
 
-interface IProps {}
-
-const UserMenuContent: React.FC<IProps> = () => {
+const UserMenuContent: React.FC = () => {
   const { isMobile } = useSidebar();
   const router = useRouter();
   const { signout } = useAuth();

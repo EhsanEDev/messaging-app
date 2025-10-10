@@ -4,6 +4,7 @@ import Loading from "@/components/common/loading";
 import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { AuthService } from "@/services/auth";
 import { User } from "@/shared/types";
+import { setAppState } from "@/store/slices/uiSlice";
 import { cleanCurrent, setCurrent } from "@/store/slices/userSlice";
 import { useRouter } from "next/navigation";
 import { createContext, useEffect } from "react";
@@ -19,14 +20,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const router = useRouter();
-  const currentUser = useAppSelector((state) => state.user.current);
   const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state) => state.user.current);
+  const appState = useAppSelector((state) => state.ui.appState.initState);
 
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
         const user = await AuthService.me();
         dispatch(setCurrent(user));
+        dispatch(setAppState("data-loading"));
       } catch (err) {
         // Force to signin, cookie is invalid
         dispatch(cleanCurrent());
@@ -34,6 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
 
+    dispatch(setAppState("authenticating"));
     getCurrentUser();
   }, []);
 
@@ -42,13 +46,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return await AuthService.signout();
   };
 
-  if (!currentUser) {
-    return <Loading />;
-  }
-
-  return (
+  return currentUser &&
+    (appState === "data-loading" ||
+      appState === "socket-connecting" ||
+      appState === "ready") ? (
     <AuthContext.Provider value={{ currentUser, signout }}>
       {children}
     </AuthContext.Provider>
+  ) : (
+    <Loading />
   );
 };

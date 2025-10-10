@@ -5,9 +5,7 @@ import { DropdownMenu } from "../../ui/dropdown-menu";
 import UserMenuContent from "./userMenuContent";
 import UserMenuTrigger from "./userMenuTrigger";
 
-interface IProps {}
-
-const UserMenu: React.FC<IProps> = () => {
+const UserMenu: React.FC = () => {
   const { currentUser } = useAuth();
 
   const selectedUser = currentUser; // TEMP: simulate users

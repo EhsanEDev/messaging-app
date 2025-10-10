@@ -1,11 +1,9 @@
-import { ChatType } from "@/shared/types";
+// interface IProps {
+  // type: Omit<ChatType, "direct">;
+  // onBack: () => void;
+// }
 
-interface IProps {
-  type: Omit<ChatType, "direct">;
-  onBack: () => void;
-}
-
-const CollectiveChatPanel: React.FC<IProps> = ({ onBack, type }) => {
+const CollectiveChatPanel: React.FC = () => {
   return (
     <>
       <h2>Group/Channel Chats</h2>

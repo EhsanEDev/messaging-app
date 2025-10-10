@@ -1,6 +1,5 @@
 import { Contact, User, UserStatus } from "@/shared/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { init } from "next/dist/compiled/webpack/webpack";
 
 interface UserState {
   current: null | User;
@@ -24,7 +23,10 @@ const userSlice = createSlice({
     },
     initContacts: (state, action: PayloadAction<Contact[]>) => {
       action.payload.forEach((contact) => {
-        state.contact[contact.id] = { meta: contact, status: {} as UserStatus };
+        state.contact[contact.id] = {
+          meta: contact,
+          status: { id: contact.id, isOnline: false, lastSeenAt: null }, // initialize status
+        };
       });
     },
     setContactMeta: (state, action: PayloadAction<Contact>) => {
@@ -46,6 +48,11 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCurrent, cleanCurrent, initContacts, setContactMeta, setContactStatus } =
-  userSlice.actions;
+export const {
+  setCurrent,
+  cleanCurrent,
+  initContacts,
+  setContactMeta,
+  setContactStatus,
+} = userSlice.actions;
 export default userSlice.reducer;
