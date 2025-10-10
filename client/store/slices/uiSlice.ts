@@ -9,10 +9,7 @@ type AppState =
   | "ready"
   | "error";
 
-type Theme = "light" | "dark";
-
 interface UiSliceType {
-  theme: Theme;
   appState: {
     isInitializedSuccess: boolean;
     initState: AppState;
@@ -22,7 +19,6 @@ interface UiSliceType {
 }
 
 const initialState: UiSliceType = {
-  theme: "light",
   appState: {
     isInitializedSuccess: false,
     initState: "idle",
@@ -35,9 +31,6 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    switchTheme: (state) => {
-      state.theme = state.theme === "light" ? "dark" : "light";
-    },
     setPanelState: (state, action: PayloadAction<ChatType | "main">) => {
       state.panelState = action.payload;
     },
@@ -49,5 +42,5 @@ const uiSlice = createSlice({
   },
 });
 
-export const { setPanelState, setAppState, switchTheme } = uiSlice.actions;
+export const { setPanelState, setAppState } = uiSlice.actions;
 export default uiSlice.reducer;

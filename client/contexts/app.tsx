@@ -1,9 +1,9 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 import { AuthProvider } from "./auth";
+import { DataProvider } from "./data";
 import { SocketProvider } from "./socket";
 import { StoreProvider } from "./store";
-import { DataProvider } from "./data";
 
 interface IProps {
   children: ReactNode;
