@@ -28,7 +28,7 @@ const MessageBubble: React.FC<IProps> = ({ message, isOwn }) => {
         className={cn(
           " rounded-2xl p-2 pt-1 flex flex-col min-w-40 shadow-lg",
           {
-            "rounded-br-none bg-green-50": isOwn,
+            "rounded-br-none bg-card": isOwn, // @TODO background color secondary
             "rounded-bl-none bg-background": !isOwn,
           }
         )}

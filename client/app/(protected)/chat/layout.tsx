@@ -11,7 +11,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
         <PanelWrapper />
       </nav>
       {/* Chat window */}
-      <section className="relative bg-gray-300 w-2/3 flex flex-col h-screen box-border">
+      <section className="relative bg-muted w-2/3 flex flex-col h-screen box-border">
         {children}
       </section>
     </>
