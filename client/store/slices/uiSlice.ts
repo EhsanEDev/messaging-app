@@ -1,14 +1,6 @@
 import { ChatType } from "@/shared/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-enum AppStage {
-  IDLE = "idle",
-  AUTHENTICATING = "authenticating",
-  DATA_LOADING = "data-loading",
-  SOCKET_CONNECTING = "socket-connecting",
-  READY = "ready",
-}
-
 type AppState =
   | "idle"
   | "authenticating"
@@ -46,8 +38,6 @@ const uiSlice = createSlice({
     },
     setAppState: (state, action: PayloadAction<AppState>) => {
       const newState = action.payload;
-      console.log("App state changed:", newState);
-
       state.appState.initState = newState;
       state.appState.isInitializedSuccess = newState === "ready";
     },
