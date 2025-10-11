@@ -53,7 +53,7 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
           status={contacts[item.meta.id].status}
         />
       )}
-      emptyMessage="No contacts available"
+      empty={<p>No contacts available</p>}
     />
   );
 };

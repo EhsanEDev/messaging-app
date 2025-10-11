@@ -4,14 +4,14 @@ interface IProps<T> {
   header: { btn: React.ReactNode; input: React.ReactNode };
   list: Array<T>;
   renderItem: (item: T) => React.ReactNode;
-  emptyMessage?: string;
+  empty?: React.ReactNode;
 }
 // Using render props + generic to create a reusable panel component
 function Panel<T>({
   header,
   list,
   renderItem,
-  emptyMessage = "No items available",
+  empty = <p>No items available</p>,
 }: IProps<T>) {
   let content;
   if (list.length) {
@@ -25,7 +25,7 @@ function Panel<T>({
   } else {
     content = (
       <div className="flex-1 flex justify-center items-center">
-        <p>{emptyMessage}</p>
+        {empty}
       </div>
     );
   }
