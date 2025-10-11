@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/button";
 import { ArrowDownIcon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 

@@ -1,5 +1,5 @@
 import Avatar from "@/components/common/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/shadcn/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { useAppSelector } from "@/hooks/useStore";
 import { formatStatus, isOnline } from "@/lib/user-status";

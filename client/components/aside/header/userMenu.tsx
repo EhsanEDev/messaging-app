@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
-import { DropdownMenu } from "../../ui/dropdown-menu";
+import { DropdownMenu } from "../../shadcn/dropdown-menu";
 import UserMenuContent from "./userMenuContent";
 import UserMenuTrigger from "./userMenuTrigger";
 

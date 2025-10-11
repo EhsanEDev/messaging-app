@@ -1,6 +1,6 @@
 import Avatar from "@/components/common/avatar";
-import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { SidebarMenuButton } from "@/components/ui/sidebar";
+import { DropdownMenuTrigger } from "@/components/shadcn/dropdown-menu";
+import { SidebarMenuButton } from "@/components/shadcn/sidebar";
 import { User } from "@/shared/types";
 import { EllipsisVerticalIcon } from "lucide-react";
 

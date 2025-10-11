@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/hooks/useStore";
 import Search from "../common/search";
-import { SidebarTrigger } from "../ui/sidebar";
+import { SidebarTrigger } from "../shadcn/sidebar";
 import ChatItem from "./chats/chatItem";
 import EmptyChatList from "./chats/empty";
 import Panel from "./panel";

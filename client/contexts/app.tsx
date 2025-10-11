@@ -1,4 +1,4 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/shadcn/sidebar";
 import { ReactNode } from "react";
 import { AuthProvider } from "./auth";
 import { DataProvider } from "./data";

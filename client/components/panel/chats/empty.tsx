@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/button";
 import {
   Empty,
   EmptyContent,
@@ -6,7 +6,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@/components/shadcn/empty";
 import { useAppDispatch } from "@/hooks/useStore";
 import { setPanelState } from "@/store/slices/uiSlice";
 import { MessageSquareOffIcon } from "lucide-react";

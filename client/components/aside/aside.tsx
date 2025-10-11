@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/ui/sidebar";
+import { Sidebar } from "@/components/shadcn/sidebar";
 import AsideContent from "./content";
 import AsideFooter from "./footer";
 import AsideHeader from "./header";

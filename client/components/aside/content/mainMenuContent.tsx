@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarMenu } from "@/components/ui/sidebar";
+import { SidebarMenu } from "@/components/shadcn/sidebar";
 import { useAppDispatch } from "@/hooks/useStore";
 import { setPanelState } from "@/store/slices/uiSlice";
 import {
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Item from "./mainMenuItem";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/components/shadcn/switch";
 
 const MainMenuContent: React.FC = () => {
   const { theme, setTheme } = useTheme();

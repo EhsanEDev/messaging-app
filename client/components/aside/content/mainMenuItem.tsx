@@ -2,7 +2,7 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/components/shadcn/sidebar";
 import Link from "next/link";
 
 interface IProps {

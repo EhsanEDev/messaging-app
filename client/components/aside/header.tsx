@@ -1,4 +1,4 @@
-import { SidebarHeader } from "../ui/sidebar";
+import { SidebarHeader } from "../shadcn/sidebar";
 import UserMenu from "./header/userMenu";
 
 const AsideHeader: React.FC = () => {

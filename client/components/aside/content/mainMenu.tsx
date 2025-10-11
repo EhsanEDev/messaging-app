@@ -1,4 +1,4 @@
-import { SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar";
+import { SidebarGroup, SidebarGroupContent } from "@/components/shadcn/sidebar";
 import MainMenuContent from "./mainMenuContent";
 
 const MainMenu: React.FC = () => {

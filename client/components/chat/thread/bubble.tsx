@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import BubbleFooter from "./bubble/footer";
 import BubbleHeader from "./bubble/header";
 import BubbleCorner from "./corner";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/avatar";
 
 interface IProps {
   isOwn: boolean;

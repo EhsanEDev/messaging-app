@@ -1,4 +1,4 @@
-import { SidebarFooter } from "../ui/sidebar";
+import { SidebarFooter } from "../shadcn/sidebar";
 import pkg from "@/package.json";
 
 const AsideFooter: React.FC = () => {

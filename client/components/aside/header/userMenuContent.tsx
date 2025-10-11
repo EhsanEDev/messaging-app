@@ -2,8 +2,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { useSidebar } from "@/components/ui/sidebar";
+} from "@/components/shadcn/dropdown-menu";
+import { useSidebar } from "@/components/shadcn/sidebar";
 import { useAuth } from "@/hooks/useAuth";
 import { Bell, CreditCard, LogOut, Settings, User2 } from "lucide-react";
 import { useRouter } from "next/navigation";
