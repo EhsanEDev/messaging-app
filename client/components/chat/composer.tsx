@@ -38,6 +38,11 @@ const ChatComposer: React.FC<IProps> = ({
         setIsTyping(false);
         onStopTyping({ id: chatId });
       }, 1500);
+    } else {
+      if (isTyping) {
+        setIsTyping(false);
+        onStopTyping({ id: chatId });
+      }
     }
 
     // Cleanup to clear the previous timeout
