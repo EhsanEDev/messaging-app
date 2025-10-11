@@ -37,7 +37,7 @@ const ChatComposer: React.FC<IProps> = ({
       timeoutId = setTimeout(() => {
         setIsTyping(false);
         onStopTyping({ id: chatId });
-      }, 1000);
+      }, 1500);
     }
 
     // Cleanup to clear the previous timeout
