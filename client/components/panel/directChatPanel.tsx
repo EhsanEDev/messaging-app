@@ -1,20 +1,18 @@
 "use client";
 
-import { useAppSelector } from "@/hooks/useStore";
+import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { fetcher } from "@/lib/fetcher";
 import { Chat, ChatCreate } from "@/shared/types";
+import { setPanelState } from "@/store/slices/uiSlice";
 import { useRouter } from "next/navigation";
 import Search from "../common/search";
 import BackButton from "./directChat/backButton";
 import ContactItem from "./directChat/contactItem";
 import Panel from "./panel";
 
-interface IProps {
-  onBack: () => void;
-}
-
-const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
+const DirectChatPanel: React.FC = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const contacts = useAppSelector((state) => state.user.contact);
 
   const handleItemOnClick = async (chat: ChatCreate) => {
@@ -37,7 +35,7 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
   return (
     <Panel
       header={{
-        btn: <BackButton onClick={onBack} />,
+        btn: <BackButton onClick={() => dispatch(setPanelState("main"))} />,
         input: <Search placeholder="Search contacts..." />,
       }}
       list={Object.values(contacts)}

@@ -1,8 +1,8 @@
+import FloatButton from "@/components/common/floatButton";
 import { Avatar, AvatarFallback } from "@/components/shadcn/avatar";
 import { Input } from "@/components/shadcn/input";
 import { Label } from "@/components/shadcn/label";
-import { CameraIcon } from "lucide-react";
-import NextButton from "./nextButton";
+import { CameraIcon, CheckIcon } from "lucide-react";
 
 interface IProps {
   membersCount: number;
@@ -10,10 +10,9 @@ interface IProps {
 }
 
 const MainForm: React.FC<IProps> = ({ onSubmit, membersCount }) => {
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     const groupName = Object.fromEntries(
       new FormData(e.target as HTMLFormElement)
     ).groupName as string;
@@ -50,7 +49,7 @@ const MainForm: React.FC<IProps> = ({ onSubmit, membersCount }) => {
           ? `${membersCount} member`
           : `${membersCount} members`}
       </p>
-      <NextButton />
+      <FloatButton type="submit" tooltip="Create group" icon={CheckIcon} />
     </form>
   );
 };

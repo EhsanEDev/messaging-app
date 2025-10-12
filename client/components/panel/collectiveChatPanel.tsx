@@ -1,25 +1,29 @@
-import { useAppSelector } from "@/hooks/useStore";
+import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
 import { fetcher } from "@/lib/fetcher";
 import { Chat, ChatCreate, ChatType, Contact } from "@/shared/types";
+import { setPanelState } from "@/store/slices/uiSlice";
+import { ForwardIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import FloatButton from "../common/floatButton";
 import Search from "../common/search";
 import ContactItem from "./collectiveChat/contactItem";
 import MainForm from "./collectiveChat/form";
-import NextButton from "./collectiveChat/nextButton";
 import BackButton from "./directChat/backButton";
 import Panel from "./panel";
 
 interface IProps {
   type: Omit<ChatType, "direct">;
-  onBack: () => void;
 }
 
-const CollectiveChatPanel: React.FC<IProps> = ({ type, onBack }) => {
+const CollectiveChatPanel: React.FC<IProps> = ({ type }) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const contacts = useAppSelector((state) => state.user.contact);
   const [step, setStep] = useState(1);
   const [members, setMembers] = useState<Contact[]>([]);
+
+  const handleBack = () => dispatch(setPanelState("main"));
 
   const handleMembers = (value: boolean, contact: Contact) => {
     setMembers((prev) => {
@@ -47,7 +51,7 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type, onBack }) => {
       });
       // Redirect to the chat
       router.push(`/chat/${res.data.id}`);
-      onBack();
+      handleBack();
     } catch (error) {
       console.error("Error creating chat:", error);
     }
@@ -55,25 +59,23 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type, onBack }) => {
 
   if (step === 1) {
     return (
-      <>
-        <Panel
-          header={{
-            btn: <BackButton onClick={onBack} />,
-            input: <Search placeholder="Search contacts..." />,
-          }}
-          list={Object.values(contacts).map((c) => c.meta)}
-          renderItem={(item) => (
-            <ContactItem
-              onChange={handleMembers}
-              defaultChecked={members.some((c) => c.id === item.id)}
-              contact={item}
-              status={contacts[item.id].status}
-            />
-          )}
-          empty={<p>No contacts available</p>}
-        />
-        <NextButton onClick={() => setStep(2)} />
-      </>
+      <Panel
+        header={{
+          btn: <BackButton onClick={handleBack} />,
+          input: <Search placeholder="Search contacts..." />,
+        }}
+        main={<FloatButton tooltip="Continue to group info" icon={ForwardIcon} onClick={() => setStep(2)} />}
+        list={Object.values(contacts).map((c) => c.meta)}
+        renderItem={(item) => (
+          <ContactItem
+            onChange={handleMembers}
+            defaultChecked={members.some((c) => c.id === item.id)}
+            contact={item}
+            status={contacts[item.id].status}
+          />
+        )}
+        empty={<p>No contacts available</p>}
+      />
     );
   }
   if (step === 2) {
@@ -81,7 +83,7 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type, onBack }) => {
       <Panel
         header={{
           btn: <BackButton onClick={() => setStep(1)} />,
-          input: <></>,
+          input: <p className="ml-2 text-lg font-semibold">Create a group chat</p>,
         }}
         main={
           <MainForm
