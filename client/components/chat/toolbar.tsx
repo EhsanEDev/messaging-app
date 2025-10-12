@@ -7,6 +7,7 @@ import MoreActions from "./toolbar/actions";
 import Call from "./toolbar/call";
 import ChatInfo from "./toolbar/info";
 import SearchInChat from "./toolbar/search";
+import { Users2Icon } from "lucide-react";
 
 interface IProps {
   metaData: Chat;
@@ -49,7 +50,12 @@ const ChatToolbar: React.FC<IProps> = ({ metaData }) => {
     <header className="bg-background w-full h-16 px-5 flex items-center justify-between gap-4 border-b-border border-b-1 z-10">
       {/* Left section */}
       <section className="flex items-center gap-3 flex-1 cursor-pointer">
-        <Avatar src={chatAvatarUrl} title={chatTitle} size="size-11" />
+        <Avatar
+          src={chatAvatarUrl}
+          title={chatTitle}
+          // icon={Users2Icon}
+          size="size-11"
+        />
         <ChatInfo title={chatTitle} info={chatInfo} />
       </section>
 

@@ -5,6 +5,7 @@ import { useAppSelector } from "@/hooks/useStore";
 import { formatStatus, isOnline } from "@/lib/user-status";
 import { cn } from "@/lib/utils";
 import { Chat } from "@/shared/types";
+import { Users2Icon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -63,6 +64,7 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
         <Avatar
           src={chatAvatarUrl}
           title={chatTitle}
+          icon={Users2Icon}
           isOnline={isOnline(chatStatus)}
         />
 

@@ -1,6 +1,6 @@
 import { Button } from "@/components/shadcn/button";
 import { cn } from "@/lib/utils";
-import { ForwardIcon } from "lucide-react";
+import { ForwardIcon, LucideProps } from "lucide-react";
 import React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../shadcn/tooltip";
 
@@ -8,7 +8,7 @@ interface IProps {
   className?: string;
   tooltip?: string;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  icon: typeof ForwardIcon;
+  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
   onClick?: () => void;
 }
 

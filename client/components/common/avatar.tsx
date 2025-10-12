@@ -1,4 +1,10 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/shadcn/avatar";
+import { LucideProps } from "lucide-react";
+import React from "react";
 
 type SizeClass =
   | "size-6"
@@ -12,16 +18,29 @@ type SizeClass =
 interface IProps {
   src: string | undefined;
   title: string;
+  icon?: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
   size?: SizeClass;
   isOnline?: boolean;
 }
 
-const UserAvatar: React.FC<IProps> = ({ src, title, size = "size-14", isOnline }) => {
+const UserAvatar: React.FC<IProps> = ({
+  src,
+  title,
+  icon,
+  size = "size-14",
+  isOnline,
+}) => {
   return (
     <figure className="shrink-0 relative">
       <Avatar className={size}>
         <AvatarImage src={src} alt={title} />
-        <AvatarFallback>{title?.charAt(0)}</AvatarFallback>
+        <AvatarFallback className="font-semibold text-xl text-muted-foreground">
+          {icon
+            ? React.createElement(icon, { className: "size-6" })
+            : title?.charAt(0)}
+        </AvatarFallback>
       </Avatar>
       {/* Online badge */}
       {isOnline && (
