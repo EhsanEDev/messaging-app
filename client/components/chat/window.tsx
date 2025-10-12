@@ -36,7 +36,7 @@ export default function ChatWindow({
         // avatarUrl={initialMetadata.avatarUrl}
         // info={
         //   initialMetadata.type === "group"
-        //     ? `${initialMetadata.participants.length} participants`
+        //     ? `${initialMetadata.members.length} members`
         //     : "last seen recently"
         // }
         // typingUsers={typingUsers}

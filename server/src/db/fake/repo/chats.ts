@@ -3,7 +3,7 @@ import type {
   Chat,
   DirectChat,
   GroupChat,
-  Participant,
+  Member,
 } from "@/shared/types.js";
 import { MessageRepo } from "./messages.js";
 
@@ -21,19 +21,19 @@ export const ChatRepo = {
   },
 
   findByUser(id: string): Chat[] {
-    return chats.filter((c) => c.participants.some((p) => p.id === id));
+    return chats.filter((c) => c.members.some((p) => p.id === id));
   },
 
-  isDirectAlreadyExist(participants: Participant[]): Chat | undefined {
+  isDirectAlreadyExist(members: Member[]): Chat | undefined {
     // @TODO needs to optimization
     return chats.find(
       (c) =>
         c.type === "direct" &&
-        c.participants
+        c.members
           .map((p) => p.id)
           .sort()
           .toString() ===
-          participants
+          members
             .map((p) => p.id)
             .sort()
             .toString()

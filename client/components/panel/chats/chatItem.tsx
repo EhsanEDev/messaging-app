@@ -17,7 +17,7 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
   const { currentUser } = useAuth();
   const pathname = usePathname();
   const contacts = useAppSelector((state) => state.user.contact);
-  const typingParticipants = useAppSelector((state) => state.chat)[chat?.id!]
+  const typingMembers = useAppSelector((state) => state.chat)[chat?.id!]
     .status.typing;
   // console.log(pathname);
   if (!chat) return null;
@@ -29,22 +29,22 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
   if (chat.type === "group") {
     chatTitle = chat.title;
     chatAvatarUrl = chat.avatarUrl;
-    // chatInfo = `${chat.participants.length} participants`;
+    // chatInfo = `${chat.members.length} members`;
   } else {
-    const participant = chat.participants?.find((p) => p.id !== currentUser.id);
-    if (!participant) return;
-    chatTitle = participant.username;
-    chatAvatarUrl = participant.avatarUrl;
-    chatStatus = formatStatus(contacts[participant.id].status);
+    const member = chat.members?.find((p) => p.id !== currentUser.id);
+    if (!member) return;
+    chatTitle = member.username;
+    chatAvatarUrl = member.avatarUrl;
+    chatStatus = formatStatus(contacts[member.id].status);
     // chatInfo = "last seen recently";
   }
 
     // Update chatInfo if someone is typing
-  if (typingParticipants.length > 0) {
-    if (typingParticipants.length === 1) {
+  if (typingMembers.length > 0) {
+    if (typingMembers.length === 1) {
       chatInfo = `is typing...`;
     } else {
-      chatInfo = `${typingParticipants.join(", ")} are typing...`;
+      chatInfo = `${typingMembers.join(", ")} are typing...`;
     }
   }
 

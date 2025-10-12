@@ -46,7 +46,7 @@ const DirectChatPanel: React.FC<IProps> = ({ onBack }) => {
           onClick={() =>
             handleItemOnClick({
               type: "direct",
-              participantsId: [item.meta.id],
+              membersId: [item.meta.id],
             })
           }
           contact={item.meta}

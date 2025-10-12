@@ -1,4 +1,4 @@
-import { Chat, Message, Participant, Typing, UserStatus } from "@/shared/types";
+import { Chat, Message, Member, Typing, UserStatus } from "@/shared/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Record<

@@ -4,11 +4,9 @@ export interface User {
   avatarUrl?: string;
   password: string;
   createdAt: string;
-  // isOnline: boolean;
-  // lastSeenAt: string;
 }
 export type Contact = Omit<User, "password">;
-export interface Participant extends Contact {
+export interface Member extends Contact {
   role: "owner" | "admin" | "member";
   lastSeenMessageId?: number;
 }
@@ -49,7 +47,7 @@ interface BaseChat {
   id: string;
   type: ChatType;
   visibility: ChatVisibility;
-  participants: Participant[];
+  members: Member[];
   lastMessage: Message | null;
   createdAt: string;
 }
@@ -80,7 +78,7 @@ export interface ChatCreate {
   type: ChatType;
   name?: string;
   avatarUrl?: string;
-  participantsId: string[];
+  membersId: string[];
 }
 export interface MessageSend {
   chatId: string;

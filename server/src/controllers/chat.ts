@@ -18,17 +18,17 @@ const ChatController = {
   },
 
   create: async (req: Request, res: Response) => {
-    const { type, name, participantsId }: ChatCreate = req.body;
+    const { type, name, membersId }: ChatCreate = req.body;
 
     try {
       const newChat = await ChatService.create(
         req.user.id,
         type,
         name,
-        participantsId
+        membersId
       );
 
-      // Notify participants about the new chat
+      // Notify members about the new chat
       WebSocket.notifyChatCreated(newChat);
 
       res.status(201).json(newChat);

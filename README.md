@@ -51,7 +51,7 @@ messaging-app/
 * API endpoints for:
 
   * Fetching chat history.
-  * Managing participants.
+  * Managing members.
   * Authentication.
 * Emits and listens for real-time events: `message:new`, `typing:start`, `typing:stop`.
 

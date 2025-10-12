@@ -15,7 +15,7 @@ interface IProps {
 const ChatToolbar: React.FC<IProps> = ({ metaData }) => {
   const { currentUser } = useAuth();
   const contacts = useAppSelector((state) => state.user.contact);
-  const typingParticipants = useAppSelector((state) => state.chat)[metaData.id]
+  const typingMembers = useAppSelector((state) => state.chat)[metaData.id]
     .status.typing;
 
   let chatTitle;
@@ -24,24 +24,24 @@ const ChatToolbar: React.FC<IProps> = ({ metaData }) => {
   if (metaData.type === "group") {
     chatTitle = metaData.title;
     chatAvatarUrl = metaData.avatarUrl;
-    chatInfo = `${metaData.participants.length} participants`;
+    chatInfo = `${metaData.members.length} members`;
   } else {
-    const participant = metaData.participants?.find(
+    const member = metaData.members?.find(
       (p) => p.id !== currentUser.id
     );
-    if (!participant) return;
-    chatTitle = participant.username;
-    chatAvatarUrl = participant.avatarUrl;
+    if (!member) return;
+    chatTitle = member.username;
+    chatAvatarUrl = member.avatarUrl;
     chatInfo = "last seen recently";
-    chatInfo = formatStatus(contacts[participant.id]?.status);
+    chatInfo = formatStatus(contacts[member.id]?.status);
   }
 
   // Update chatInfo if someone is typing
-  if (typingParticipants.length > 0) {
-    if (typingParticipants.length === 1) {
+  if (typingMembers.length > 0) {
+    if (typingMembers.length === 1) {
       chatInfo = `is typing...`;
     } else {
-      chatInfo = `${typingParticipants.join(", ")} are typing...`;
+      chatInfo = `${typingMembers.join(", ")} are typing...`;
     }
   }
 

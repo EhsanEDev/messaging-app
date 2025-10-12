@@ -89,7 +89,7 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type, onBack }) => {
               handleCreate({
                 name,
                 type: type as ChatType,
-                participantsId: members.map((m) => m.id),
+                membersId: members.map((m) => m.id),
               })
             }
             membersCount={members.length}

@@ -34,15 +34,15 @@ export const WebSocket = {
   },
 
   /*************************************************************
-   * Notify the chat created to all participants
+   * Notify the chat created to all members
    *
    * @param chat - the created and stored chat on database
    * @returns void
    ************************************************************/
   notifyChatCreated: (chat: Chat) => {
     if (io === undefined) return;
-    chat.participants.forEach((participant) => {
-      io?.to(`user:${participant.id}`).emit("chat:created", chat);
+    chat.members.forEach((member) => {
+      io?.to(`user:${member.id}`).emit("chat:created", chat);
     });
   },
 
@@ -101,9 +101,9 @@ export const WebSocket = {
 
     // Filter contacts of the current user
     chatList.forEach((chat) => {
-      chat.participants.forEach((participant) => {
-        if (participant.id !== userId) {
-          contacts.add(participant.id);
+      chat.members.forEach((member) => {
+        if (member.id !== userId) {
+          contacts.add(member.id);
         }
       });
     });
@@ -141,9 +141,9 @@ export const WebSocket = {
     const statusList: UserStatus[] = [];
 
     // Filter contacts of current user and make a list of their status who are online
-    record.participants.forEach((participant) => {
-      if (participant.id !== socket.data.userId) {
-        const status = StatusRepo.findByUserId(participant.id);
+    record.members.forEach((member) => {
+      if (member.id !== socket.data.userId) {
+        const status = StatusRepo.findByUserId(member.id);
         if (status && status.isOnline) {
           statusList.push(status);
         }
@@ -156,7 +156,7 @@ export const WebSocket = {
   },
 
   /*************************************************************
-   * Notifies other participants in the chat that the user is typing.
+   * Notifies other members in the chat that the user is typing.
    *
    * @param socket - Specific socket instance only for this user
    * @param data - the chat id where the user is typing
@@ -175,7 +175,7 @@ export const WebSocket = {
   },
 
   /*************************************************************
-   * Notifies other participants in the chat that the user stopped typing.
+   * Notifies other members in the chat that the user stopped typing.
    *
    * @param socket - Specific socket instance only for this user
    * @param data - the chat id where the user stopped typing

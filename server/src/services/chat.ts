@@ -3,7 +3,7 @@ import {
   ChatType,
   Contact,
   Message,
-  Participant,
+  Member,
 } from "@/shared/types.js";
 import { ChatRepo } from "../db/fake/repo/chats.js";
 import { ContactRepo } from "../db/fake/repo/contacts.js";
@@ -40,10 +40,10 @@ const ChatService = {
     ownerId: string,
     type: ChatType,
     name: string | undefined,
-    participantsId: string[]
+    membersId: string[]
   ): Promise<Chat> => {
     // Validate input
-    if (!Array.isArray(participantsId) || participantsId.length === 0) {
+    if (!Array.isArray(membersId) || membersId.length === 0) {
       throw new Error("Bad create chat request");
     }
 
@@ -52,26 +52,26 @@ const ChatService = {
       throw new Error("Invalid chat type");
     }
 
-    // Validate participants
-    if (!UserRepo.validate(participantsId)) {
-      throw new Error("Invalid participant IDs");
+    // Validate members
+    if (!UserRepo.validate(membersId)) {
+      throw new Error("Invalid member IDs");
     }
 
     // Get profile of owner
-    const owner: Participant = {
+    const owner: Member = {
       ...(ContactRepo.findById(ownerId) as Contact),
       role: "owner",
     };
-    // Get profiles of participants except owner
-    const participantsExceptOwner: Participant[] = participantsId.map((id) => ({
+    // Get profiles of members except owner
+    const membersExceptOwner: Member[] = membersId.map((id) => ({
       ...(ContactRepo.findById(id) as Contact),
       role: "member",
     }));
-    // Make all participants array
-    const participants = [owner, ...participantsExceptOwner];
+    // Make all members array
+    const members = [owner, ...membersExceptOwner];
 
     // Check if this direct chat is already exist
-    const existChat = ChatRepo.isDirectAlreadyExist(participants);
+    const existChat = ChatRepo.isDirectAlreadyExist(members);
     if (existChat) {
       throw new CreatChatError("This direct chat already exist", existChat);
     }
@@ -80,7 +80,7 @@ const ChatService = {
     if (type === "direct") {
       newChat = ChatRepo.createDirect({
         visibility: "private",
-        participants,
+        members,
       });
     } else if (type === "group") {
       console.log("Creating group chat:", name);
@@ -88,13 +88,13 @@ const ChatService = {
       newChat = ChatRepo.createGroup({
         title: name || `group ${Date.now()}`,
         visibility: "private",
-        participants,
+        members,
       });
     } else if (type === "channel") {
       newChat = ChatRepo.createChannel({
         title: name || `channel ${Date.now()}`,
         visibility: "private",
-        participants,
+        members,
       });
     }
 
