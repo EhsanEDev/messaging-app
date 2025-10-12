@@ -18,12 +18,13 @@ const ChatController = {
   },
 
   create: async (req: Request, res: Response) => {
-    const { type, participantsId }: ChatCreate = req.body;
+    const { type, name, participantsId }: ChatCreate = req.body;
 
     try {
       const newChat = await ChatService.create(
         req.user.id,
         type,
+        name,
         participantsId
       );
 

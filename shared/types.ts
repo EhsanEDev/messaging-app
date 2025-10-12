@@ -78,6 +78,8 @@ export interface Typing extends Identifier {
 }
 export interface ChatCreate {
   type: ChatType;
+  name?: string;
+  avatarUrl?: string;
   participantsId: string[];
 }
 export interface MessageSend {

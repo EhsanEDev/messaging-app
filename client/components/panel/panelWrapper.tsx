@@ -16,8 +16,8 @@ const PanelWrapper: React.FC = () => {
   } else if (panelState === "group" || panelState === "channel") {
     return (
       <CollectiveChatPanel
-        // type={panelState}
-        // onBack={() => dispatch(setPanelState("main"))}
+        type={panelState}
+        onBack={() => dispatch(setPanelState("main"))}
       />
     );
   } else {

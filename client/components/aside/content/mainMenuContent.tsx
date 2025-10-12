@@ -1,6 +1,7 @@
 "use client";
 
 import { SidebarMenu } from "@/components/shadcn/sidebar";
+import { Switch } from "@/components/shadcn/switch";
 import { useAppDispatch } from "@/hooks/useStore";
 import { setPanelState } from "@/store/slices/uiSlice";
 import {
@@ -13,7 +14,6 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Item from "./mainMenuItem";
-import { Switch } from "@/components/shadcn/switch";
 
 const MainMenuContent: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -21,9 +21,12 @@ const MainMenuContent: React.FC = () => {
   const handleSwitchTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
+  const handleNewGroup = () => {
+    dispatch(setPanelState("group"));
+  };
   return (
     <SidebarMenu>
-      <Item url="/" icon={Users2Icon} title="New Group" disabled />
+      <Item icon={Users2Icon} title="New Group" onClick={handleNewGroup} />
       <Item url="/about" icon={MegaphoneIcon} title="New Channel" disabled />
       <Item
         icon={UserRoundCheckIcon}
@@ -32,7 +35,12 @@ const MainMenuContent: React.FC = () => {
       />
       <Item url="/calls" icon={PhoneIcon} title="Calls" disabled />
       <Item url="/settings" icon={SettingsIcon} title="Settings" disabled />
-      <Item icon={MoonIcon} title="Night Mode" onClick={handleSwitchTheme} postfix={<Switch checked={theme === "dark"} />} />
+      <Item
+        icon={MoonIcon}
+        title="Night Mode"
+        onClick={handleSwitchTheme}
+        postfix={<Switch checked={theme === "dark"} />}
+      />
     </SidebarMenu>
   );
 };

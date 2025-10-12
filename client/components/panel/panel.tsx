@@ -2,6 +2,7 @@ import React from "react";
 
 interface IProps<T> {
   header: { btn: React.ReactNode; input: React.ReactNode };
+  main?: React.ReactNode;
   list: Array<T>;
   renderItem: (item: T) => React.ReactNode;
   empty?: React.ReactNode;
@@ -9,6 +10,7 @@ interface IProps<T> {
 // Using render props + generic to create a reusable panel component
 function Panel<T>({
   header,
+  main,
   list,
   renderItem,
   empty = <p>No items available</p>,
@@ -24,9 +26,7 @@ function Panel<T>({
     );
   } else {
     content = (
-      <div className="flex-1 flex justify-center items-center">
-        {empty}
-      </div>
+      <div className="flex-1 flex justify-center items-center">{empty}</div>
     );
   }
   return (
@@ -35,6 +35,7 @@ function Panel<T>({
         {header.btn}
         {header.input}
       </header>
+      {main && <div className="flex justify-center items-center">{main}</div>}
       {content}
     </>
   );

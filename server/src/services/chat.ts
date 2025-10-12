@@ -39,6 +39,7 @@ const ChatService = {
   create: async (
     ownerId: string,
     type: ChatType,
+    name: string | undefined,
     participantsId: string[]
   ): Promise<Chat> => {
     // Validate input
@@ -82,14 +83,16 @@ const ChatService = {
         participants,
       });
     } else if (type === "group") {
+      console.log("Creating group chat:", name);
+      
       newChat = ChatRepo.createGroup({
-        title: `chat ${Date.now()}`,
+        title: name || `group ${Date.now()}`,
         visibility: "private",
         participants,
       });
     } else if (type === "channel") {
       newChat = ChatRepo.createChannel({
-        title: `channel ${Date.now()}`,
+        title: name || `channel ${Date.now()}`,
         visibility: "private",
         participants,
       });
