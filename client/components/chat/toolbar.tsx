@@ -25,23 +25,23 @@ const ChatToolbar: React.FC<IProps> = ({ metaData }) => {
     chatTitle = metaData.title;
     chatAvatarUrl = metaData.avatarUrl;
     chatInfo = `${metaData.members.length} members`;
+    // Update chatInfo if someone is typing
+    if (typingMembers.length > 0) {
+      if (typingMembers.length === 1) {
+        chatInfo = `${typingMembers[0]} is typing...`;
+      } else {
+        chatInfo = `${typingMembers.join(", ")} are typing...`;
+      }
+    }
   } else {
-    const member = metaData.members?.find(
-      (p) => p.id !== currentUser.id
-    );
+    const member = metaData.members?.find((p) => p.id !== currentUser.id);
     if (!member) return;
     chatTitle = member.username;
     chatAvatarUrl = member.avatarUrl;
-    chatInfo = "last seen recently";
     chatInfo = formatStatus(contacts[member.id]?.status);
-  }
-
-  // Update chatInfo if someone is typing
-  if (typingMembers.length > 0) {
-    if (typingMembers.length === 1) {
+    // Update chatInfo if someone is typing
+    if (typingMembers.length) {
       chatInfo = `is typing...`;
-    } else {
-      chatInfo = `${typingMembers.join(", ")} are typing...`;
     }
   }
 
