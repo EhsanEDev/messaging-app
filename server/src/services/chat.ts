@@ -78,20 +78,20 @@ const ChatService = {
 
     let newChat: Chat | undefined;
     if (type === "Direct") {
-      console.log("Creating direct chat:", name);
+      // console.log("Creating direct chat:", name);
       newChat = ChatRepo.createDirect({
         visibility: "private",
         members,
       });
     } else if (type === "Group") {
-      console.log("Creating group chat:", name);
+      // console.log("Creating group chat:", name);
       newChat = ChatRepo.createGroup({
         title: name || `Group ${Date.now()}`,
         visibility: "private",
         members,
       });
     } else if (type === "Channel") {
-      console.log("Creating channel:", name);
+      // console.log("Creating channel:", name);
       newChat = ChatRepo.createChannel({
         title: name || `Channel ${Date.now()}`,
         visibility: "private",
