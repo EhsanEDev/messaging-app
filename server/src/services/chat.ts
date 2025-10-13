@@ -48,7 +48,7 @@ const ChatService = {
     }
 
     // Validate chat type
-    if (type !== "direct" && type !== "group" && type !== "channel") {
+    if (type !== "Direct" && type !== "Group" && type !== "Channel") {
       throw new Error("Invalid chat type");
     }
 
@@ -60,12 +60,12 @@ const ChatService = {
     // Get profile of owner
     const owner: Member = {
       ...(ContactRepo.findById(ownerId) as Contact),
-      role: "owner",
+      role: "Owner",
     };
     // Get profiles of members except owner
     const membersExceptOwner: Member[] = membersId.map((id) => ({
       ...(ContactRepo.findById(id) as Contact),
-      role: "member",
+      role: "Member",
     }));
     // Make all members array
     const members = [owner, ...membersExceptOwner];
@@ -77,22 +77,23 @@ const ChatService = {
     }
 
     let newChat: Chat | undefined;
-    if (type === "direct") {
+    if (type === "Direct") {
+      console.log("Creating direct chat:", name);
       newChat = ChatRepo.createDirect({
         visibility: "private",
         members,
       });
-    } else if (type === "group") {
+    } else if (type === "Group") {
       console.log("Creating group chat:", name);
-      
       newChat = ChatRepo.createGroup({
-        title: name || `group ${Date.now()}`,
+        title: name || `Group ${Date.now()}`,
         visibility: "private",
         members,
       });
-    } else if (type === "channel") {
+    } else if (type === "Channel") {
+      console.log("Creating channel:", name);
       newChat = ChatRepo.createChannel({
-        title: name || `channel ${Date.now()}`,
+        title: name || `Channel ${Date.now()}`,
         visibility: "private",
         members,
       });

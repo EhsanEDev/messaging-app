@@ -28,7 +28,7 @@ export const ChatRepo = {
     // @TODO needs to optimization
     return chats.find(
       (c) =>
-        c.type === "direct" &&
+        c.type === "Direct" &&
         c.members
           .map((p) => p.id)
           .sort()
@@ -46,7 +46,7 @@ export const ChatRepo = {
     const newChat: DirectChat = {
       ...metadata,
       id: String(Date.now()),
-      type: "direct",
+      type: "Direct",
       lastMessage: null,
       createdAt: new Date().toISOString(),
     };
@@ -60,7 +60,7 @@ export const ChatRepo = {
     const newChat: GroupChat = {
       ...metadata,
       id: String(Date.now()),
-      type: "group",
+      type: "Group",
       lastMessage: null,
       createdAt: new Date().toISOString(),
     };
@@ -74,7 +74,7 @@ export const ChatRepo = {
     const newChat: ChannelChat = {
       ...metadata,
       id: String(Date.now()),
-      type: "channel",
+      type: "Channel",
       lastMessage: null,
       createdAt: new Date().toISOString(),
     };

@@ -1,15 +1,18 @@
 "use client";
 
-import { Identifier, MessageSend } from "@/shared/types";
+import { Chat, ChatType, Identifier, MessageSend } from "@/shared/types";
 import { useEffect, useState } from "react";
 import AttachMenu from "./composer/attach";
 import EmojiPicker from "./composer/emoji";
 import SendText from "./composer/sendText";
 import TextInput from "./composer/text";
 import VoiceInput from "./composer/voice";
+import { useAppSelector } from "@/hooks/useStore";
+import { useAuth } from "@/hooks/useAuth";
 
 interface IProps {
   chatId: string;
+  metaData: Chat;
   onStartTyping: (chat: Identifier) => void;
   onStopTyping: (chat: Identifier) => void;
   onSendMessage: (data: MessageSend, ack: () => void) => void;
@@ -17,12 +20,14 @@ interface IProps {
 
 const ChatComposer: React.FC<IProps> = ({
   chatId,
+  metaData,
   onStartTyping,
   onStopTyping,
   onSendMessage,
 }) => {
   const [textMessage, setTextMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -62,6 +67,16 @@ const ChatComposer: React.FC<IProps> = ({
       onSendMessage({ chatId, content: textMessage }, handleClearInput);
     }
   };
+
+  if (metaData.type === "Channel") {
+    // Get current user's role from id
+    const userRole = metaData.members.find(
+      (member) => member.id === currentUser.id
+    )?.role;
+    if (userRole !== "Owner" && userRole !== "Admin") {
+      return null;
+    }
+  }
 
   return (
     <footer className="w-full max-w-6xl mx-auto flex gap-2 px-5">

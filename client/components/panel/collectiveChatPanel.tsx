@@ -13,7 +13,7 @@ import BackButton from "./directChat/backButton";
 import Panel from "./panel";
 
 interface IProps {
-  type: Omit<ChatType, "direct">;
+  type: Omit<ChatType, "Direct">;
 }
 
 const CollectiveChatPanel: React.FC<IProps> = ({ type }) => {
@@ -23,7 +23,7 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type }) => {
   const [step, setStep] = useState(1);
   const [members, setMembers] = useState<Contact[]>([]);
 
-  const handleBack = () => dispatch(setPanelState("main"));
+  const handleBack = () => dispatch(setPanelState("Main"));
 
   const handleMembers = (value: boolean, contact: Contact) => {
     setMembers((prev) => {
@@ -64,7 +64,13 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type }) => {
           btn: <BackButton onClick={handleBack} />,
           input: <Search placeholder="Search contacts..." />,
         }}
-        main={<FloatButton tooltip="Continue to group info" icon={ForwardIcon} onClick={() => setStep(2)} />}
+        main={
+          <FloatButton
+            tooltip="Continue to group info"
+            icon={ForwardIcon}
+            onClick={() => setStep(2)}
+          />
+        }
         list={Object.values(contacts).map((c) => c.meta)}
         renderItem={(item) => (
           <ContactItem
@@ -83,7 +89,11 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type }) => {
       <Panel
         header={{
           btn: <BackButton onClick={() => setStep(1)} />,
-          input: <p className="ml-2 text-lg font-semibold">Create a group chat</p>,
+          input: (
+            <p className="ml-2 text-lg font-semibold">
+              Create a {type === "Group" ? "group chat" : "channel"}
+            </p>
+          ),
         }}
         main={
           <MainForm
@@ -94,6 +104,7 @@ const CollectiveChatPanel: React.FC<IProps> = ({ type }) => {
                 membersId: members.map((m) => m.id),
               })
             }
+            type={type}
             membersCount={members.length}
           />
         }

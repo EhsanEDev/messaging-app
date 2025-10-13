@@ -7,7 +7,7 @@ export interface User {
 }
 export type Contact = Omit<User, "password">;
 export interface Member extends Contact {
-  role: "owner" | "admin" | "member";
+  role: "Owner" | "Admin" | "Member";
   lastSeenMessageId?: number;
 }
 
@@ -30,7 +30,7 @@ export interface Attachment {
 export interface Message {
   id: number;
   chatId: string;
-  sender: Contact;
+  sender: Member;
   content: string;
   createdAt: string; // ISO timestamp
   updatedAt?: string; // in case of edits
@@ -40,7 +40,7 @@ export interface Message {
   attachments?: Attachment[]; // optional for images/files
 }
 
-export type ChatType = "direct" | "group" | "channel";
+export type ChatType = "Direct" | "Group" | "Channel";
 export type ChatVisibility = "public" | "private" | "restricted";
 
 interface BaseChat {
@@ -52,16 +52,16 @@ interface BaseChat {
   createdAt: string;
 }
 export interface DirectChat extends BaseChat {
-  type: "direct";
+  type: "Direct";
   visibility: "private";
 }
 export interface GroupChat extends BaseChat {
-  type: "group";
+  type: "Group";
   title: string;
   avatarUrl?: string;
 }
 export interface ChannelChat extends BaseChat {
-  type: "channel";
+  type: "Channel";
   title: string;
   avatarUrl?: string;
 }

@@ -30,20 +30,13 @@ export default function ChatWindow({
 
   return (
     <>
-      <ChatToolbar
-        metaData={initialMetadata}
-        // title={initialMetadata.title}
-        // avatarUrl={initialMetadata.avatarUrl}
-        // info={
-        //   initialMetadata.type === "group"
-        //     ? `${initialMetadata.members.length} members`
-        //     : "last seen recently"
-        // }
-        // typingUsers={typingUsers}
-      />
-      <ChatThread chatId={chatId} />
+      <ChatToolbar metaData={initialMetadata} />
+
+      <ChatThread chatId={chatId} metaData={initialMetadata} />
+
       <ChatComposer
         chatId={chatId}
+        metaData={initialMetadata}
         onSendMessage={socket.sendMessage}
         onStartTyping={socket.StartTyping}
         onStopTyping={socket.StopTyping}

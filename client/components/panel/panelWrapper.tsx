@@ -8,9 +8,9 @@ import { useAppSelector } from "@/hooks/useStore";
 const PanelWrapper: React.FC = () => {
   const panelState = useAppSelector((state) => state.ui.panelState);
 
-  if (panelState === "direct") {
+  if (panelState === "Direct") {
     return <DirectChatPanel />;
-  } else if (panelState === "group" || panelState === "channel") {
+  } else if (panelState === "Group" || panelState === "Channel") {
     return <CollectiveChatPanel type={panelState} />;
   } else {
     return <MainPanel />;

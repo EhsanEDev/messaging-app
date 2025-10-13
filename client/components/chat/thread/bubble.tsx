@@ -1,16 +1,21 @@
-import { Message } from "@/shared/types";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/shadcn/avatar";
 import { cn } from "@/lib/utils";
+import { Chat, Message } from "@/shared/types";
 import BubbleFooter from "./bubble/footer";
 import BubbleHeader from "./bubble/header";
 import BubbleCorner from "./corner";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/avatar";
 
 interface IProps {
   isOwn: boolean;
+  metaData: Chat;
   message: Message;
 }
 
-const MessageBubble: React.FC<IProps> = ({ message, isOwn }) => {
+const MessageBubble: React.FC<IProps> = ({ message, isOwn, metaData }) => {
   return (
     <li
       // id={String(message.id)}
@@ -19,9 +24,14 @@ const MessageBubble: React.FC<IProps> = ({ message, isOwn }) => {
         "flex-row self-start": !isOwn,
       })}
     >
-      <Avatar className="size-9">
-        <AvatarImage src={message.sender.avatarUrl} alt={message.sender.username} />
-        <AvatarFallback className="bg-primary text-primary-foreground font-bold">{message.sender.username.charAt(0).toUpperCase()}</AvatarFallback>
+      <Avatar className={cn("size-9", { invisible: metaData.type === "Channel" })}>
+        <AvatarImage
+          src={message.sender.avatarUrl}
+          alt={message.sender.username}
+        />
+        <AvatarFallback className="bg-primary text-primary-foreground font-bold">
+          {message.sender.username.charAt(0).toUpperCase()}
+        </AvatarFallback>
       </Avatar>
       <BubbleCorner isOwn={isOwn} />
       <article
@@ -33,7 +43,7 @@ const MessageBubble: React.FC<IProps> = ({ message, isOwn }) => {
           }
         )}
       >
-        <BubbleHeader message={message} />
+        <BubbleHeader chatType={metaData.type} message={message} />
         <p className="chat-text text-md">{message.content}</p>
         <BubbleFooter message={message} />
       </article>

@@ -35,7 +35,7 @@ const DirectChatPanel: React.FC = () => {
   return (
     <Panel
       header={{
-        btn: <BackButton onClick={() => dispatch(setPanelState("main"))} />,
+        btn: <BackButton onClick={() => dispatch(setPanelState("Main"))} />,
         input: <Search placeholder="Search contacts..." />,
       }}
       list={Object.values(contacts)}
@@ -43,7 +43,7 @@ const DirectChatPanel: React.FC = () => {
         <ContactItem
           onClick={() =>
             handleItemOnClick({
-              type: "direct",
+              type: "Direct",
               membersId: [item.meta.id],
             })
           }

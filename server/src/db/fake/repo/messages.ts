@@ -1,5 +1,6 @@
 import { Message } from "@/shared/types.js";
 import { ContactRepo } from "./contacts.js";
+import { ChatRepo } from "./chats.js";
 
 const messages: Message[] = [];
 
@@ -17,14 +18,20 @@ export const MessageRepo = {
   },
 
   store(chatId: string, senderId: string, content: string) {
-    const sender = ContactRepo.findById(senderId);
-    if (!sender) {
-      throw new Error("Sender not found");
+    // Check if chat exists
+    const chat = ChatRepo.findById(chatId);
+    if (!chat) {
+      throw new Error("Chat not found");
+    }
+    // Get member info from chat
+    const member = chat.members.find((m) => m.id === senderId);
+    if (!member) {
+      throw new Error("Member not found");
     }
     const message: Message = {
       id: messages.length + 1,
       chatId,
-      sender,
+      sender: member,
       content,
       createdAt: new Date().toISOString(),
     };

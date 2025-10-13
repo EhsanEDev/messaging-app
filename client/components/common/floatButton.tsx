@@ -3,13 +3,22 @@ import { cn } from "@/lib/utils";
 import { ForwardIcon, LucideProps } from "lucide-react";
 import React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../shadcn/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuTrigger,
+} from "../shadcn/dropdown-menu";
 
 interface IProps {
   className?: string;
   tooltip?: string;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
   onClick?: () => void;
+  menu?: React.ReactNode;
 }
 
 const FloatButton: React.FC<IProps> = ({
@@ -18,8 +27,9 @@ const FloatButton: React.FC<IProps> = ({
   className,
   icon,
   tooltip,
+  menu,
 }) => {
-  const button = () => (
+  let final: React.ReactNode = (
     <Button
       type={type}
       className={cn(
@@ -33,15 +43,32 @@ const FloatButton: React.FC<IProps> = ({
   );
 
   if (tooltip) {
-    return (
+    final = (
       <Tooltip delayDuration={1000}>
-        <TooltipTrigger asChild>{button()}</TooltipTrigger>
+        <TooltipTrigger asChild>{final}</TooltipTrigger>
         <TooltipContent>{<p>{tooltip}</p>}</TooltipContent>
       </Tooltip>
     );
   }
 
-  return button();
+  if (menu) {
+    final = (
+      <div className="absolute bottom-0 right-0">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div>{final}</div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="absolute bottom-20 right-5"
+          >
+            <DropdownMenuGroup>{menu}</DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    );
+  }
+
+  return final;
 };
 
 export default FloatButton;

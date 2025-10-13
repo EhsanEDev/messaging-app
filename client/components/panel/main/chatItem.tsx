@@ -5,7 +5,6 @@ import { useAppSelector } from "@/hooks/useStore";
 import { formatStatus, isOnline } from "@/lib/user-status";
 import { cn } from "@/lib/utils";
 import { Chat } from "@/shared/types";
-import { Users2Icon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -27,7 +26,8 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
   let chatAvatarUrl;
   let chatStatus: string | null = null;
   let chatInfo = chat.lastMessage?.content || "";
-  if (chat.type === "group") {
+  
+  if (chat.type === "Group") {
     chatTitle = chat.title;
     chatAvatarUrl = chat.avatarUrl;
     // Update chatInfo if someone is typing
@@ -38,6 +38,9 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
         chatInfo = `${typingMembers.join(", ")} are typing...`;
       }
     }
+  } else if (chat.type === "Channel") {
+    chatTitle = chat.title;
+    chatAvatarUrl = chat.avatarUrl;
   } else {
     const member = chat.members?.find((p) => p.id !== currentUser.id);
     if (!member) return;
@@ -64,7 +67,7 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
         <Avatar
           src={chatAvatarUrl}
           title={chatTitle}
-          icon={Users2Icon}
+          // icon={Users2Icon}
           isOnline={isOnline(chatStatus)}
         />
 

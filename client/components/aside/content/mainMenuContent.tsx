@@ -22,7 +22,7 @@ const MainMenuContent: React.FC = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
   const handleNewGroup = () => {
-    dispatch(setPanelState("group"));
+    dispatch(setPanelState("Group"));
   };
   return (
     <SidebarMenu>
@@ -31,7 +31,7 @@ const MainMenuContent: React.FC = () => {
       <Item
         icon={UserRoundCheckIcon}
         title="Contacts"
-        onClick={() => dispatch(setPanelState("direct"))}
+        onClick={() => dispatch(setPanelState("Direct"))}
       />
       <Item url="/calls" icon={PhoneIcon} title="Calls" disabled />
       <Item url="/settings" icon={SettingsIcon} title="Settings" disabled />

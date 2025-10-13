@@ -203,6 +203,17 @@ export const WebSocket = {
    * @returns void
    ************************************************************/
   onMessageSend: (socket: Socket<ClientToServerEvent>, msg: MessageSend) => {
+    // validate that the user has permission to send messages in this chat
+    const chat = ChatRepo.findById(msg.chatId);
+    if (!chat) return; // Chat not found
+
+    const isMember = chat.members.some((member) => member.id === socket.data.userId);
+    if (!isMember) return; // User is not a member of the chat
+
+    // check if the user's role allows broadcasting message in a channel
+    const userRole = chat.members.find((member) => member.id === socket.data.userId)?.role;
+    if (chat.type === "Channel" && userRole === "Member") return; // Only owner and admins can send messages in channels
+
     // console.log("Sending message:", msg);
     const message = MessageRepo.store(
       msg.chatId,

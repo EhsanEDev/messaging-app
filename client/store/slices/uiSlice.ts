@@ -15,7 +15,7 @@ interface UiSliceType {
     initState: AppState;
     error: string | null;
   };
-  panelState: ChatType | "main";
+  panelState: ChatType | "Main";
 }
 
 const initialState: UiSliceType = {
@@ -24,14 +24,14 @@ const initialState: UiSliceType = {
     initState: "idle",
     error: null,
   },
-  panelState: "main",
+  panelState: "Main",
 };
 
 const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    setPanelState: (state, action: PayloadAction<ChatType | "main">) => {
+    setPanelState: (state, action: PayloadAction<ChatType | "Main">) => {
       state.panelState = action.payload;
     },
     setAppState: (state, action: PayloadAction<AppState>) => {
