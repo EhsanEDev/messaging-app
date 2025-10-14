@@ -3,7 +3,7 @@ import MainMenu from "./content/mainMenu";
 
 const AsideContent: React.FC = () => {
   return (
-    <SidebarContent className="px-4">
+    <SidebarContent className="px-2">
       <MainMenu />
     </SidebarContent>
   );

@@ -3,10 +3,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/shadcn/sidebar";
-import Link from "next/link";
 
 interface IProps {
-  url?: string;
   icon: React.ElementType;
   title: string;
   onClick?: () => void;
@@ -15,7 +13,6 @@ interface IProps {
 }
 
 const MainMenuItem: React.FC<IProps> = ({
-  url,
   icon: Icon,
   title,
   onClick,
@@ -27,25 +24,16 @@ const MainMenuItem: React.FC<IProps> = ({
       <SidebarMenuButton
         onClick={onClick}
         disabled={disabled}
-        className="py-5 cursor-pointer"
+        className="py-5 cursor-pointer gap-4"
       >
-        {url ? (
-          <Link href={url} className="flex items-center gap-4 text-sm">
-            <span className="text-muted-foreground">
-              <Icon className="size-5" />
-            </span>
-            <span>{title}</span>
-          </Link>
-        ) : (
-          <>
-            <span className="text-muted-foreground">
-              <Icon className="size-5" />
-            </span>
-            <span>{title}</span>
-          </>
-        )}
+        <span className="text-muted-foreground">
+          <Icon className="size-5" />
+        </span>
+        <span>{title}</span>
       </SidebarMenuButton>
-      {postfix && <SidebarMenuBadge className="py-3.5">{postfix}</SidebarMenuBadge>}
+      {postfix && (
+        <SidebarMenuBadge className="py-3.5">{postfix}</SidebarMenuBadge>
+      )}
     </SidebarMenuItem>
   );
 };

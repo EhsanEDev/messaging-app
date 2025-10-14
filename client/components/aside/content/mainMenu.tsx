@@ -5,7 +5,7 @@ const MainMenu: React.FC = () => {
   return (
     <SidebarGroup>
       {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
-      <SidebarGroupContent>
+      <SidebarGroupContent className="p-0">
         <MainMenuContent />
       </SidebarGroupContent>
     </SidebarGroup>

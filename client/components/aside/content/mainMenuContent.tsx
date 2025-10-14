@@ -5,11 +5,12 @@ import { Switch } from "@/components/shadcn/switch";
 import { useAppDispatch } from "@/hooks/useStore";
 import { setPanelState } from "@/store/slices/uiSlice";
 import {
+  BookmarkIcon,
   MegaphoneIcon,
   MoonIcon,
   PhoneIcon,
   SettingsIcon,
-  UserRoundCheckIcon,
+  User2Icon,
   Users2Icon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -18,23 +19,38 @@ import Item from "./mainMenuItem";
 const MainMenuContent: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const dispatch = useAppDispatch();
+
   const handleSwitchTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+  const handleNewChannel = () => {
+    dispatch(setPanelState("Channel"));
   };
   const handleNewGroup = () => {
     dispatch(setPanelState("Group"));
   };
+  const handleNewDirect = () => {
+    dispatch(setPanelState("Direct"));
+  };
+  const handleSavedMessages = () => {
+    //
+  };
   return (
     <SidebarMenu>
-      <Item icon={Users2Icon} title="New Group" onClick={handleNewGroup} />
-      <Item url="/about" icon={MegaphoneIcon} title="New Channel" disabled />
       <Item
-        icon={UserRoundCheckIcon}
-        title="Contacts"
-        onClick={() => dispatch(setPanelState("Direct"))}
+        icon={MegaphoneIcon}
+        title="New Channel"
+        onClick={handleNewChannel}
       />
-      <Item url="/calls" icon={PhoneIcon} title="Calls" disabled />
-      <Item url="/settings" icon={SettingsIcon} title="Settings" disabled />
+      <Item icon={Users2Icon} title="New Group" onClick={handleNewGroup} />
+      <Item icon={User2Icon} title="New Direct" onClick={handleNewDirect} />
+      <Item
+        icon={BookmarkIcon}
+        title="Saved Messages"
+        onClick={handleSavedMessages}
+      />
+      <Item icon={PhoneIcon} title="Calls" />
+      <Item icon={SettingsIcon} title="Settings" disabled />
       <Item
         icon={MoonIcon}
         title="Night Mode"
