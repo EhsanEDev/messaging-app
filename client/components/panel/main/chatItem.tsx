@@ -5,6 +5,7 @@ import { useAppSelector } from "@/hooks/useStore";
 import { formatStatus, isOnline } from "@/lib/user-status";
 import { cn } from "@/lib/utils";
 import { Chat } from "@/shared/types";
+import { BookmarkIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -26,7 +27,7 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
   let chatAvatarUrl;
   let chatStatus: string | null = null;
   let chatInfo = chat.lastMessage?.content || "";
-  
+
   if (chat.type === "Group") {
     chatTitle = chat.title;
     chatAvatarUrl = chat.avatarUrl;
@@ -42,14 +43,21 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
     chatTitle = chat.title;
     chatAvatarUrl = chat.avatarUrl;
   } else {
-    const member = chat.members?.find((p) => p.id !== currentUser.id);
-    if (!member) return;
-    chatTitle = member.username;
-    chatAvatarUrl = member.avatarUrl;
-    chatStatus = formatStatus(contacts[member.id].status);
-    // Update chatInfo if someone is typing
-    if (typingMembers.length) {
-      chatInfo = `is typing...`;
+    if (chat.members.length < 2) {
+      // Saved Messages
+      chatTitle = "Saved Messages";
+      chatInfo = "Your saved messages will appear here.";
+    } else {
+      // Direct Message
+      const member = chat.members?.find((p) => p.id !== currentUser.id);
+      if (!member) return;
+      chatTitle = member.username;
+      chatAvatarUrl = member.avatarUrl;
+      chatStatus = formatStatus(contacts[member.id].status);
+      // Update chatInfo if someone is typing
+      if (typingMembers.length) {
+        chatInfo = `is typing...`;
+      }
     }
   }
 
@@ -67,7 +75,7 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
         <Avatar
           src={chatAvatarUrl}
           title={chatTitle}
-          // icon={Users2Icon}
+          icon={chat.members.length < 2 ? BookmarkIcon : undefined}
           isOnline={isOnline(chatStatus)}
         />
 

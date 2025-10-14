@@ -15,8 +15,12 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Item from "./mainMenuItem";
+import { Chat, ChatCreate } from "@/shared/types";
+import { fetcher } from "@/lib/fetcher";
+import { useRouter } from "next/navigation";
 
 const MainMenuContent: React.FC = () => {
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const dispatch = useAppDispatch();
 
@@ -32,8 +36,20 @@ const MainMenuContent: React.FC = () => {
   const handleNewDirect = () => {
     dispatch(setPanelState("Direct"));
   };
-  const handleSavedMessages = () => {
-    //
+  const handleSavedMessages = async (chat: ChatCreate) => {
+    // Create/Open chat by id
+    try {
+      const res = await fetcher<Chat>("/api/chat/create", {
+        method: "POST",
+        body: JSON.stringify(chat),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      router.push(`/chat/${res.data.id}`);
+    } catch (error) {
+      console.error("Error creating chat:", error);
+    }
   };
   return (
     <SidebarMenu>
@@ -47,7 +63,7 @@ const MainMenuContent: React.FC = () => {
       <Item
         icon={BookmarkIcon}
         title="Saved Messages"
-        onClick={handleSavedMessages}
+        onClick={() => handleSavedMessages({type: "Direct", membersId: []})}
       />
       <Item icon={PhoneIcon} title="Calls" />
       <Item icon={SettingsIcon} title="Settings" disabled />

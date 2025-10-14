@@ -71,67 +71,6 @@ const ChatController = {
         res.status(500).json({ message: "Internal server error" });
       }
     }
-
-    // const { page = 1, perPage = 10, fromId } = req.query;
-
-    // Simulate fetching messages from a database
-    // res.status(200).json(
-    //   [
-    //     {
-    //       id: "1",
-    //       chatId: "chat1",
-    //       sender: {
-    //         id: "0",
-    //         username: "User 0",
-    //         avatarUrl: `https://i.pravatar.cc/150?img=0`,
-    //       },
-    //       content: "Hello!",
-    //       createdAt: new Date().toISOString(),
-    //     },
-    //     {
-    //       id: "2",
-    //       chatId: "chat1",
-    //       sender: {
-    //         id: "1",
-    //         username: "User 1",
-    //         avatarUrl: `https://i.pravatar.cc/150?img=1`,
-    //       },
-    //       content: "Hi there!",
-    //       createdAt: new Date().toISOString(),
-    //       reactedBy: [
-    //         {
-    //           id: "0",
-    //           username: "User 0",
-    //           avatarUrl: `https://i.pravatar.cc/150?img=0`,
-    //           emoji: "👍",
-    //           reactedAt: new Date().toISOString(),
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       id: "3",
-    //       chatId: "chat1",
-    //       sender: {
-    //         id: "0",
-    //         username: "User 0",
-    //         avatarUrl: `https://i.pravatar.cc/150?img=0`,
-    //       },
-    //       content: "How are you?",
-    //       createdAt: new Date().toISOString(),
-    //     },
-    //     {
-    //       id: "4",
-    //       chatId: "chat1",
-    //       sender: {
-    //         id: "1",
-    //         username: "User 1",
-    //         avatarUrl: `https://i.pravatar.cc/150?img=1`,
-    //       },
-    //       content: "I'm good, thanks!",
-    //       createdAt: new Date().toISOString(),
-    //     },
-    //   ].reverse()
-    // );
   },
 };
 

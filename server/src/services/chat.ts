@@ -43,7 +43,7 @@ const ChatService = {
     membersId: string[]
   ): Promise<Chat> => {
     // Validate input
-    if (!Array.isArray(membersId) || membersId.length === 0) {
+    if (!Array.isArray(membersId) || (type !== "Direct" && membersId.length === 0)) {
       throw new Error("Bad create chat request");
     }
 

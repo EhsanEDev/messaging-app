@@ -35,7 +35,7 @@ const UserAvatar: React.FC<IProps> = ({
   return (
     <figure className="shrink-0 relative">
       <Avatar className={size}>
-        <AvatarImage src={src} alt={title} />
+        <AvatarImage src={src} alt={title} className="bg-muted" />
         <AvatarFallback className="font-semibold text-xl text-muted-foreground">
           {icon
             ? React.createElement(icon, { className: "size-6" })
