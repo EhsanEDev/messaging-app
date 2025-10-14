@@ -1,8 +1,6 @@
 import Avatar from "@/components/common/avatar";
-import { Badge } from "@/components/shadcn/badge";
-import { useAuth } from "@/hooks/useAuth";
-import { useAppSelector } from "@/hooks/useStore";
-import { formatStatus, isOnline } from "@/lib/user-status";
+import { useChatData } from "@/hooks/useChatData";
+
 import { cn } from "@/lib/utils";
 import { Chat } from "@/shared/types";
 import { BookmarkIcon } from "lucide-react";
@@ -15,51 +13,14 @@ interface IProps {
 }
 
 const ChatItem: React.FC<IProps> = ({ chat }) => {
-  const { currentUser } = useAuth();
   const pathname = usePathname();
-  const contacts = useAppSelector((state) => state.user.contact);
-  const typingMembers = useAppSelector((state) => state.chat)[chat?.id!].status
-    .typing;
-  // console.log(pathname);
+
   if (!chat) return null;
 
-  let chatTitle;
-  let chatAvatarUrl;
-  let chatStatus: string | null = null;
-  let chatInfo = chat.lastMessage?.content || "";
-
-  if (chat.type === "Group") {
-    chatTitle = chat.title;
-    chatAvatarUrl = chat.avatarUrl;
-    // Update chatInfo if someone is typing
-    if (typingMembers.length > 0) {
-      if (typingMembers.length === 1) {
-        chatInfo = `${typingMembers[0]} is typing...`;
-      } else {
-        chatInfo = `${typingMembers.join(", ")} are typing...`;
-      }
-    }
-  } else if (chat.type === "Channel") {
-    chatTitle = chat.title;
-    chatAvatarUrl = chat.avatarUrl;
-  } else {
-    if (chat.members.length < 2) {
-      // Saved Messages
-      chatTitle = "Saved Messages";
-      chatInfo = "Your saved messages will appear here.";
-    } else {
-      // Direct Message
-      const member = chat.members?.find((p) => p.id !== currentUser.id);
-      if (!member) return;
-      chatTitle = member.username;
-      chatAvatarUrl = member.avatarUrl;
-      chatStatus = formatStatus(contacts[member.id].status);
-      // Update chatInfo if someone is typing
-      if (typingMembers.length) {
-        chatInfo = `is typing...`;
-      }
-    }
-  }
+  const { chatTitle, chatAvatarUrl, chatInfo, isOnline } = useChatData({
+    mode: "item",
+    chat,
+  });
 
   const isSelected = pathname.includes(chat.id);
 
@@ -76,7 +37,7 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
           src={chatAvatarUrl}
           title={chatTitle}
           icon={chat.members.length < 2 ? BookmarkIcon : undefined}
-          isOnline={isOnline(chatStatus)}
+          isOnline={isOnline}
         />
 
         {/* Chat info */}
@@ -115,12 +76,12 @@ const ChatItem: React.FC<IProps> = ({ chat }) => {
             >
               {chatInfo}
             </p>
-            <Badge
+            {/* <Badge
               variant="outline"
               className="rounded-full bg-muted text-foreground"
             >
-              {/* {chat.unreadCount} */}3
-            </Badge>
+              {chat.unreadCount}
+            </Badge> */}
           </section>
         </article>
       </li>

@@ -9,6 +9,6 @@ export const formatStatus = (status: UserStatus | null) => {
     ? formatLastSeen(new Date(status.lastSeenAt))
     : "last seen recently");
 };
-export const isOnline = (status: string | null): boolean | undefined => {
+export const isOnlineInDirect = (status: string | null): boolean | undefined => {
   return !status ? undefined : status === "online";
 };

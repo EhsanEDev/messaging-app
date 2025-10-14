@@ -1,5 +1,5 @@
 import Avatar from "@/components/common/avatar";
-import { formatStatus, isOnline } from "@/lib/user-status";
+import { formatStatus, isOnlineInDirect } from "@/lib/user-status";
 import { Contact, UserStatus } from "@/shared/types";
 
 interface IProps {
@@ -20,7 +20,7 @@ const ContactItem: React.FC<IProps> = ({ contact, status, onClick }) => {
       <Avatar
         src={contact.avatarUrl}
         title={contact.username}
-        isOnline={isOnline(formattedStatus)}
+        isOnline={isOnlineInDirect(formattedStatus)}
       />
 
       {/* Chat info */}
