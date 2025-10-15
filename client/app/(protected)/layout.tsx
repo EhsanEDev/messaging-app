@@ -6,7 +6,7 @@ export default function ProtectedLayout({ children }: { children: ReactNode }) {
   return (
     <AppProvider>
       <main className="flex flex-row w-full">
-        <Asidebar />
+        {/* <Asidebar /> */}
         {children}
       </main>
     </AppProvider>

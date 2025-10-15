@@ -3,7 +3,7 @@ import AsideContent from "./content";
 import AsideFooter from "./footer";
 import AsideHeader from "./header";
 
-const Asidebar: React.FC = () => {
+const Menu: React.FC = () => {
   return (
     <Sidebar side="left" variant="sidebar" collapsible="offcanvas">
       <AsideHeader />
@@ -13,4 +13,4 @@ const Asidebar: React.FC = () => {
   );
 };
 
-export default Asidebar;
+export default Menu;
