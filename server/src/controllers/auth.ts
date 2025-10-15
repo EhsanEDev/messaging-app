@@ -5,11 +5,11 @@ import { User } from "@/shared/types.js";
 
 const AuthController = {
   signup: async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
 
     try {
       // Signup the user
-      const newUser = await AuthService.signup(username, password);
+      const newUser = await AuthService.signup(username, password, email);
       // Signed up successfully, Generate JWT token and attach it to response
       AuthController._attachTokenToResp(newUser, res);
     } catch (error) {

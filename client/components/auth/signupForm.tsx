@@ -10,32 +10,36 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const SignupForm: React.FC = () => {
-  const [error, setError] = useState({ username: "", password: "" });
+  const [error, setError] = useState({ username: "", password: "", email: "" });
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError({ username: "", password: "" });
-    const username = Object.fromEntries(
+    setError({ username: "", password: "", email: "" });
+
+    const { email, username, password } = Object.fromEntries(
       new FormData(e.target as HTMLFormElement)
-    ).username as string;
-    const password = Object.fromEntries(
-      new FormData(e.target as HTMLFormElement)
-    ).password as string;
+    );
 
     try {
-      await AuthService.signup({ username, password });
+      await AuthService.signup({
+        username: username as string,
+        password: password as string,
+        email: email as string,
+      });
       // setError({ username: "", password: "" });
       router.push("/");
     } catch (error) {
       if (error instanceof Error) {
         const msg = error.message;
         if (msg.includes("Username has already been taken")) {
-          setError({ username: msg, password: "" });
+          setError({ username: msg, password: "", email: "" });
+        } else if (msg.includes("Email is already in use")) {
+          setError({ username: "", password: "", email: msg });
         } else if (msg.includes("Password is too weak")) {
-          setError({ username: "", password: msg });
-        } else if (msg.includes("Username and password are required")) {
-          setError({ username: msg, password: msg });
+          setError({ username: "", password: msg, email: "" });
+        } else if (msg.includes("Username, password, and email are required")) {
+          setError({ username: msg, password: msg, email: msg });
         } else {
           console.error("Something went wrong");
         }
@@ -55,7 +59,7 @@ const SignupForm: React.FC = () => {
             <div className="flex flex-col items-center text-center gap-2">
               <h1 className="text-2xl font-bold">Create your account</h1>
             </div>
-            {/* <div className="grid gap-3">
+            <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -64,7 +68,10 @@ const SignupForm: React.FC = () => {
                 placeholder="email@example.com"
                 required
               />
-            </div> */}
+              {error.email && (
+                <p className="text-sm text-red-500">{error.email}</p>
+              )}
+            </div>
             <div className="grid gap-3">
               <Label htmlFor="username">Username</Label>
               <Input

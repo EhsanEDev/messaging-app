@@ -1,8 +1,9 @@
 export interface User {
   id: string;
   username: string;
-  avatarUrl?: string;
   password: string;
+  email: string;
+  avatarUrl?: string;
   createdAt: string;
 }
 export type Contact = Omit<User, "password">;

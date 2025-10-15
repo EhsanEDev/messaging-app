@@ -4,50 +4,57 @@ export const Users: User[] = [
   {
     id: "ehsan",
     username: "Ehsan",
-    avatarUrl: "https://i.pravatar.cc/150?img=1",
     password: "$2b$10$CRkLoUkaAUJx6u3Vkd8Bbup79aEhCiU60MKta/M8AbKc/.8vDcQAi",
+    email: "xyz@example.com",
+    avatarUrl: "https://i.pravatar.cc/150?img=1",
     createdAt: String(new Date()),
   },
   {
     id: "leo",
     username: "Leo",
-    avatarUrl: "https://i.pravatar.cc/150?img=2",
     password: "$2b$10$CRkLoUkaAUJx6u3Vkd8Bbup79aEhCiU60MKta/M8AbKc/.8vDcQAi",
+    email: "xyz@example.com",
+    avatarUrl: "https://i.pravatar.cc/150?img=2",
     createdAt: String(new Date()),
   },
   {
     id: "chandler",
     username: "Chandler",
-    avatarUrl: "https://i.pravatar.cc/150?img=3",
     password: "$2b$10$CRkLoUkaAUJx6u3Vkd8Bbup79aEhCiU60MKta/M8AbKc/.8vDcQAi",
+    email: "xyz@example.com",
+    avatarUrl: "https://i.pravatar.cc/150?img=3",
     createdAt: String(new Date()),
   },
   {
     id: "clare",
     username: "Clare",
-    avatarUrl: "https://i.pravatar.cc/150?img=4",
     password: "$2b$10$CRkLoUkaAUJx6u3Vkd8Bbup79aEhCiU60MKta/M8AbKc/.8vDcQAi",
+    email: "xyz@example.com",
+    avatarUrl: "https://i.pravatar.cc/150?img=4",
     createdAt: String(new Date()),
   },
   {
     id: "amy",
     username: "Amy",
-    avatarUrl: "https://i.pravatar.cc/150?img=5",
     password: "$2b$10$CRkLoUkaAUJx6u3Vkd8Bbup79aEhCiU60MKta/M8AbKc/.8vDcQAi",
+    email: "xyz@example.com",
+    avatarUrl: "https://i.pravatar.cc/150?img=5",
     createdAt: String(new Date()),
   },
   {
     id: "melanie",
     username: "Melanie",
-    avatarUrl: "https://i.pravatar.cc/150?img=6",
     password: "$2b$10$CRkLoUkaAUJx6u3Vkd8Bbup79aEhCiU60MKta/M8AbKc/.8vDcQAi",
+    email: "xyz@example.com",
+    avatarUrl: "https://i.pravatar.cc/150?img=6",
     createdAt: String(new Date()),
   },
   {
     id: "luis",
     username: "Luis",
-    avatarUrl: "https://i.pravatar.cc/150?img=7",
     password: "$2b$10$CRkLoUkaAUJx6u3Vkd8Bbup79aEhCiU60MKta/M8AbKc/.8vDcQAi",
+    email: "xyz@example.com",
+    avatarUrl: "https://i.pravatar.cc/150?img=7",
     createdAt: String(new Date()),
   },
 ];
@@ -72,12 +79,20 @@ export const UserRepo = {
     );
   },
 
-  add(username: string, password: string): User {
+  findByEmail(email: string): User | null {
+    const normalizedEmail = email.trim().toLowerCase();
+    return (
+      Users.find((u) => u.email.toLowerCase() === normalizedEmail) || null
+    );
+  },
+
+  add(username: string, password: string, email: string): User {
     const newUser: User = {
       id: String(Date.now()),
       username,
       avatarUrl: `https://i.pravatar.cc/150?img=${Users.length + 1}`,
       password,
+      email,
       createdAt: String(new Date()),
     };
     Users.push(newUser);

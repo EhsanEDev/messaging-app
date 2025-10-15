@@ -2,7 +2,7 @@ import { fetcher } from "@/lib/fetcher";
 import { AuthResult, User } from "@/shared/types";
 
 export const AuthService = {
-  signup: async (data: { username: string; password: string }) => {
+  signup: async (data: { username: string; password: string; email: string }) => {
     const res = await fetcher<AuthResult>("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

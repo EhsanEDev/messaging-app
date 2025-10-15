@@ -44,7 +44,7 @@ const MenuHeader: React.FC<IProps> = () => {
               {currentUser.username}
             </span>
             <span className="truncate text-xs text-muted-foreground">
-              {currentUser.id + "@example.com"}
+              {currentUser.email}
             </span>
           </div>
         </DropdownMenuSubTrigger>

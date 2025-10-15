@@ -66,7 +66,7 @@ const MenuContent: React.FC = () => {
           title="Saved Messages"
           onClick={() => handleSavedMessages({ type: "Direct", membersId: [] })}
         />
-        <Item icon={PhoneIcon} title="Calls" />
+        <Item icon={PhoneIcon} title="Calls" disabled />
         <Item icon={SettingsIcon} title="Settings" disabled />
         <Item
           icon={MoonIcon}

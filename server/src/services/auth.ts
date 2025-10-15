@@ -4,17 +4,21 @@ import { ContactRepo } from "../db/fake/repo/contacts.js";
 import { UserRepo } from "../db/fake/repo/users.js";
 
 const AuthService = {
-  signup: async (username: string, password: string): Promise<User> => {
+  signup: async (username: string, password: string, email: string): Promise<User> => {
     // Validate input
-    if (!username || !password) {
-      throw new Error("Username and password are required");
+    if (!username || !password || !email) {
+      throw new Error("Username, password, and email are required");
     }
 
     // Check if user exists
     const user = UserRepo.findByUsername(username);
-
     if (user) {
       throw new Error("Username has already been taken");
+    }
+
+    const emailExists = UserRepo.findByEmail(email);
+    if (emailExists) {
+      throw new Error("Email is already in use");
     }
 
     // if (password.length < 6) {
@@ -25,7 +29,7 @@ const AuthService = {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Add the user to repo and return it
-    const newUser = UserRepo.add(username, hashedPassword);
+    const newUser = UserRepo.add(username, hashedPassword, email);
     ContactRepo.add(newUser);
     return newUser;
   },
