@@ -60,7 +60,7 @@ export const WebSocket = {
   ) => {
     // Join the user
     socket.join(`user:${user.id}`);
-    console.log(user.id, "joined");
+    // console.log(user.id, "joined");
 
     // Set the user as online
     StatusRepo.setOnline(user.id);
@@ -236,7 +236,7 @@ export const WebSocket = {
   onDisconnect: (socket: Socket<ClientToServerEvent>) => {
     // NOTE: The User and their chats are left automatically upon disconnection
     if (socket.user) {
-      console.log(socket.user.id, "leaved");
+      // console.log(socket.user.id, "leaved");
       // Set the user as offline
       const lastSeenAt = StatusRepo.setOffline(socket.user.id);
 

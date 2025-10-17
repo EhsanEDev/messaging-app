@@ -25,7 +25,7 @@ export const AuthService = {
   },
 
   signin: async (data: {
-    username: string;
+    email: string;
     password: string;
   }): Promise<User> => {
     const res = await fetcher<AuthResult>("/api/auth/signin", {

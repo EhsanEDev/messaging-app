@@ -22,11 +22,11 @@ const AuthController = {
   },
 
   signin: async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
       // Signin the user
-      const user = await AuthService.signin(username, password);
+      const user = await AuthService.signin(email, password);
       // Signed in successfully, Generate JWT token and attach it to response
       AuthController._attachTokenToResp(user, res);
     } catch (error) {

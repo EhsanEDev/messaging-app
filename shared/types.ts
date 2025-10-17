@@ -3,6 +3,7 @@ export interface User {
   username: string;
   password: string;
   email: string;
+  isVerified: boolean;
   avatarUrl?: string;
   createdAt: string;
 }
@@ -10,6 +11,11 @@ export type Contact = Omit<User, "password">;
 export interface Member extends Contact {
   role: "Owner" | "Admin" | "Member";
   lastSeenMessageId?: number;
+}
+export interface EmailOTP {
+  email: string;
+  code: string;
+  expiresAt: string;
 }
 
 export interface SeenByEntry {

@@ -10,36 +10,36 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const SigninForm: React.FC = () => {
-  const [error, setError] = useState({ username: "", password: "" });
+  const [error, setError] = useState({ email: "", password: "" });
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError({ username: "", password: "" });
-    const username = Object.fromEntries(
+    setError({ email: "", password: "" });
+    const email = Object.fromEntries(
       new FormData(e.target as HTMLFormElement)
-    ).username as string;
+    ).email as string;
     const password = Object.fromEntries(
       new FormData(e.target as HTMLFormElement)
     ).password as string;
 
     try {
-      await AuthService.signin({ username, password });
-      // setError({ username: "", password: "" });
+      await AuthService.signin({ email, password });
+      // setError({ email: "", password: "" });
       router.push("/");
     } catch (error) {
       if (error instanceof Error) {
         const msg = error.message;
         // message:
-        // 1. Username and password are required
+        // 1. Email and password are required
         // 2. Incorrect password
-        // 3. Username not found
-        if (msg.includes("Username not found")) {
-          setError({ username: msg, password: "" });
+        // 3. Email not found
+        if (msg.includes("User not found")) {
+          setError({ email: msg, password: "" });
         } else if (msg.includes("Incorrect password")) {
-          setError({ username: "", password: msg });
-        } else if (msg.includes("Username and password are required")) {
-          setError({ username: msg, password: msg }); // @TODO: This error should improve in the future
+          setError({ email: "", password: msg });
+        } else if (msg.includes("Email and password are required")) {
+          setError({ email: msg, password: msg }); // @TODO: This error should improve in the future
         } else {
           // Unknown error
           console.error("Something went wrong");
@@ -64,7 +64,7 @@ const SigninForm: React.FC = () => {
                 Enter your email below to login to your account
               </p> */}
           </div>
-          {/* <div className="grid gap-3">
+          <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -73,8 +73,11 @@ const SigninForm: React.FC = () => {
                 placeholder="email@example.com"
                 required
               />
-            </div> */}
-          <div className="grid gap-3">
+            </div>
+          {error.email && (
+            <p className="text-xs text-red-500">{error.email}</p>
+          )}
+          {/* <div className="grid gap-3">
             <Label htmlFor="username">Username</Label>
             <Input
               id="username"
@@ -87,7 +90,7 @@ const SigninForm: React.FC = () => {
             {error.username && (
               <p className="text-xs text-red-500">{error.username}</p>
             )}
-          </div>
+          </div> */}
           <div className="grid gap-3">
             <div className="flex items-center">
               <Label htmlFor="password">Password</Label>
