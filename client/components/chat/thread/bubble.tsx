@@ -36,7 +36,7 @@ const MessageBubble: React.FC<IProps> = ({ message, isOwn, metaData }) => {
       <BubbleCorner isOwn={isOwn} />
       <article
         className={cn(
-          " rounded-2xl p-2 pt-1 flex flex-col min-w-40 shadow-lg",
+          " rounded-2xl p-2 pt-1 flex flex-col min-w-40 shadow-xl",
           {
             "rounded-br-none bg-secondary": isOwn,
             "rounded-bl-none bg-background": !isOwn,
