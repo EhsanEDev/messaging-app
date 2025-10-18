@@ -5,7 +5,7 @@ interface IProps {
 }
 
 const BubbleCorner: React.FC<IProps> = ({ isOwn }) => {
-  const fillColor = isOwn ? "var(--color-card)" : "var(--background)"; // @TODO background color secondary
+  const fillColor = isOwn ? "var(--color-secondary)" : "var(--background)";
   return (
     <svg
       className={cn("self-end", {
