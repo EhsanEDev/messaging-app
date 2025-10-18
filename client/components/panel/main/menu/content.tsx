@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import Item from "./item";
+import Item from "../../../common/dropDownItem";
 
 const MenuContent: React.FC = () => {
   const router = useRouter();
@@ -55,20 +55,33 @@ const MenuContent: React.FC = () => {
     <>
       <DropdownMenuGroup className="min-w-64">
         <Item
+          className="px-4"
           icon={MegaphoneIcon}
           title="New Channel"
           onClick={handleNewChannel}
         />
-        <Item icon={Users2Icon} title="New Group" onClick={handleNewGroup} />
-        <Item icon={User2Icon} title="New Direct" onClick={handleNewDirect} />
         <Item
+          className="px-4"
+          icon={Users2Icon}
+          title="New Group"
+          onClick={handleNewGroup}
+        />
+        <Item
+          className="px-4"
+          icon={User2Icon}
+          title="New Direct"
+          onClick={handleNewDirect}
+        />
+        <Item
+          className="px-4"
           icon={BookmarkIcon}
           title="Saved Messages"
           onClick={() => handleSavedMessages({ type: "Direct", membersId: [] })}
         />
-        <Item icon={PhoneIcon} title="Calls" disabled />
-        <Item icon={SettingsIcon} title="Settings" disabled />
+        <Item className="px-4" icon={PhoneIcon} title="Calls" disabled />
+        <Item className="px-4" icon={SettingsIcon} title="Settings" disabled />
         <Item
+          className="px-4"
           icon={MoonIcon}
           title="Night Mode"
           onClick={handleSwitchTheme}

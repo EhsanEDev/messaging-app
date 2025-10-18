@@ -2,6 +2,8 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
 } from "@/components/shadcn/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { ClassNameValue } from "tailwind-merge";
 
 interface IProps {
   icon: React.ElementType;
@@ -10,22 +12,24 @@ interface IProps {
   onClick?: () => void;
   disabled?: boolean;
   stayOpen?: boolean;
+  className?: ClassNameValue;
 }
 
-const MainMenuItem: React.FC<IProps> = ({
+const DropDownItem: React.FC<IProps> = ({
   icon: Icon,
   title,
   postfix,
   onClick,
   disabled = false,
   stayOpen = false,
+  className,
 }) => {
   return (
     <DropdownMenuItem
       onClick={onClick}
       disabled={disabled}
-      className="cursor-pointer gap-4 py-2 px-5"
-      onSelect={stayOpen ? (e) => e.preventDefault() : undefined }
+      className={cn("cursor-pointer gap-4 py-2.5", className)}
+      onSelect={stayOpen ? (e) => e.preventDefault() : undefined}
     >
       <Icon className="size-5" />
       <span>{title}</span>
@@ -36,4 +40,4 @@ const MainMenuItem: React.FC<IProps> = ({
   );
 };
 
-export default MainMenuItem;
+export default DropDownItem;

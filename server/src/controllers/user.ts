@@ -7,7 +7,6 @@ const UserController = {
       const user = await UserService.me(req.user.id);
       res.status(200).json(user);
     } catch (error) {
-      console.error("Failed to get user:", error);
       res.status(401).json({ message: "User not found" });
     }
   },

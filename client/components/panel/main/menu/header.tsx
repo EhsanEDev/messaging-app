@@ -9,7 +9,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { Bell, CreditCard, LogOut, Settings, UserRoundPen } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Item from "./item";
+import Item from "@/components/common/dropDownItem";
 
 interface IProps {}
 
@@ -51,31 +51,40 @@ const MenuHeader: React.FC<IProps> = () => {
         <DropdownMenuPortal>
           <DropdownMenuSubContent>
             <Item
+              className="px-4"
               title="My Profile"
               icon={UserRoundPen}
               onClick={handleX}
               disabled
             />
             <Item
+              className="px-4"
               title="Account Settings"
               icon={Settings}
               onClick={handleX}
               disabled
             />
             <Item
+              className="px-4"
               title="Billing"
               icon={CreditCard}
               onClick={handleX}
               disabled
             />
             <Item
+              className="px-4"
               title="Notifications"
               icon={Bell}
               onClick={handleX}
               disabled
             />
             <DropdownMenuSeparator />
-            <Item title="Sign out" icon={LogOut} onClick={handleSignOut} />
+            <Item
+              className="px-4"
+              title="Sign out"
+              icon={LogOut}
+              onClick={handleSignOut}
+            />
           </DropdownMenuSubContent>
         </DropdownMenuPortal>
       </DropdownMenuSub>
