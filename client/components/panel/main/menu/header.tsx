@@ -7,7 +7,7 @@ import {
   DropdownMenuSubTrigger,
 } from "@/components/shadcn/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import { Bell, CreditCard, LogOut, Settings, User2 } from "lucide-react";
+import { Bell, CreditCard, LogOut, Settings, UserRoundPen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Item from "./item";
 
@@ -50,7 +50,12 @@ const MenuHeader: React.FC<IProps> = () => {
         </DropdownMenuSubTrigger>
         <DropdownMenuPortal>
           <DropdownMenuSubContent>
-            <Item title="My Profile" icon={User2} onClick={handleX} disabled />
+            <Item
+              title="My Profile"
+              icon={UserRoundPen}
+              onClick={handleX}
+              disabled
+            />
             <Item
               title="Account Settings"
               icon={Settings}
