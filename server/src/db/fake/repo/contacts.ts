@@ -1,6 +1,7 @@
 import type { Contact, User } from "@/shared/types.js";
 import { Users } from "./users.js";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const contacts: Contact[] = Users.map(({ password, ...contact }) => contact);
 
 export const ContactRepo = {
@@ -16,6 +17,7 @@ export const ContactRepo = {
     return contacts.find((u) => u.id === id) || null;
   },
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   add({ password, ...rest }: User) {
     const contact: Contact = { ...rest };
     contacts.push(contact);

@@ -7,6 +7,7 @@ const UserService = {
     if (!user) {
       throw new Error("Username not found");
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...contact } = user;
     return contact;
   },

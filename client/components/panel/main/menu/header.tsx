@@ -11,9 +11,7 @@ import { Bell, CreditCard, LogOut, Settings, UserRoundPen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Item from "@/components/common/dropDownItem";
 
-interface IProps {}
-
-const MenuHeader: React.FC<IProps> = () => {
+const MenuHeader: React.FC = () => {
   const router = useRouter();
   const { currentUser } = useAuth();
   const { signout } = useAuth();

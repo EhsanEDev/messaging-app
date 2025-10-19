@@ -3,12 +3,11 @@ import bcrypt from "bcrypt";
 import { ContactRepo } from "../db/fake/repo/contacts.js";
 import { OTPRepo } from "../db/fake/repo/otp.js";
 import { UserRepo } from "../db/fake/repo/users.js";
-import { sendOTP } from "../utils/resend.js";
 
 const AuthService = {
   signup: async (
     username: string,
-    password: string,
+    password: string
     // email: string
   ): Promise<User> => {
     // Validate input

@@ -1,10 +1,9 @@
 "use client";
 
 import { Button } from "@/components/shadcn/button";
-import { Card, CardContent } from "@/components/shadcn/card";
+import { Card } from "@/components/shadcn/card";
 import { Input } from "@/components/shadcn/input";
 import { Label } from "@/components/shadcn/label";
-import { cn } from "@/lib/utils";
 import { AuthService } from "@/services/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

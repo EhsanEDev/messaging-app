@@ -1,5 +1,4 @@
 import { Message } from "@/shared/types.js";
-import { ContactRepo } from "./contacts.js";
 import { ChatRepo } from "./chats.js";
 
 const messages: Message[] = [];

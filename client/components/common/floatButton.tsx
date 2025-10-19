@@ -1,14 +1,14 @@
 import { Button } from "@/components/shadcn/button";
 import { cn } from "@/lib/utils";
-import { ForwardIcon, LucideProps } from "lucide-react";
+import { LucideProps } from "lucide-react";
 import React from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../shadcn/tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuTrigger,
 } from "../shadcn/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../shadcn/tooltip";
 
 interface IProps {
   className?: string;
@@ -58,9 +58,7 @@ const FloatButton: React.FC<IProps> = ({
           <DropdownMenuTrigger asChild>
             <div>{final}</div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="absolute bottom-20 right-5"
-          >
+          <DropdownMenuContent className="absolute bottom-20 right-5">
             <DropdownMenuGroup>{menu}</DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>

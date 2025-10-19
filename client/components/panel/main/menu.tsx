@@ -10,9 +10,7 @@ import React from "react";
 import MenuContent from "./menu/content";
 import MenuHeader from "./menu/header";
 
-interface IProps {}
-
-const Menu: React.FC<IProps> = () => {
+const Menu: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

@@ -8,14 +8,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface IProps {
-  chat: Chat | null;
+  chat: Chat;
   // onClick?: (id: string) => void; // handler when item clicked
 }
 
 const ChatItem: React.FC<IProps> = ({ chat }) => {
   const pathname = usePathname();
 
-  if (!chat) return null;
+  // if (!chat) return null;
 
   const { chatTitle, chatAvatarUrl, chatInfo, isOnline } = useChatData({
     mode: "item",

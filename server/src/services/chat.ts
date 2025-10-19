@@ -1,15 +1,8 @@
-import {
-  Chat,
-  ChatType,
-  Contact,
-  Message,
-  Member,
-} from "@/shared/types.js";
+import { Chat, ChatType, Contact, Member, Message } from "@/shared/types.js";
 import { ChatRepo } from "../db/fake/repo/chats.js";
 import { ContactRepo } from "../db/fake/repo/contacts.js";
 import { MessageRepo } from "../db/fake/repo/messages.js";
 import { UserRepo } from "../db/fake/repo/users.js";
-import chat from "../routes/chat.js";
 
 // Define a custom Error to return the exist direct chat in the create chat process
 export class CreatChatError extends Error {
@@ -43,7 +36,10 @@ const ChatService = {
     membersId: string[]
   ): Promise<Chat> => {
     // Validate input
-    if (!Array.isArray(membersId) || (type !== "Direct" && membersId.length === 0)) {
+    if (
+      !Array.isArray(membersId) ||
+      (type !== "Direct" && membersId.length === 0)
+    ) {
       throw new Error("Bad create chat request");
     }
 

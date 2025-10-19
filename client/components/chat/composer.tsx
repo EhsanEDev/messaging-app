@@ -1,14 +1,13 @@
 "use client";
 
-import { Chat, ChatType, Identifier, MessageSend } from "@/shared/types";
+import { useAuth } from "@/hooks/useAuth";
+import { Chat, Identifier, MessageSend } from "@/shared/types";
 import { useEffect, useState } from "react";
 import AttachMenu from "./composer/attach";
 import EmojiPicker from "./composer/emoji";
 import SendText from "./composer/sendText";
 import TextInput from "./composer/text";
 import VoiceInput from "./composer/voice";
-import { useAppSelector } from "@/hooks/useStore";
-import { useAuth } from "@/hooks/useAuth";
 
 interface IProps {
   chatId: string;
@@ -54,7 +53,7 @@ const ChatComposer: React.FC<IProps> = ({
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [textMessage]);
+  }, [textMessage, chatId, isTyping, onStartTyping, onStopTyping]);
 
   const handleClearInput = () => {
     setTextMessage("");
