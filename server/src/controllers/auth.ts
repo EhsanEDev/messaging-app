@@ -5,11 +5,13 @@ import { User } from "@/shared/types.js";
 
 const AuthController = {
   signup: async (req: Request, res: Response) => {
-    const { username, password, email } = req.body;
+    // const { username, password, email } = req.body;
+    const { username, password } = req.body;
 
     try {
       // Signup the user
-      const newUser = await AuthService.signup(username, password, email);
+      // const newUser = await AuthService.signup(username, password, email);
+      const newUser = await AuthService.signup(username, password);
       // Signed up successfully, Generate JWT token and attach it to response
       AuthController._attachTokenToResp(newUser, res);
     } catch (error) {
@@ -22,11 +24,13 @@ const AuthController = {
   },
 
   signin: async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    // const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
       // Signin the user
-      const user = await AuthService.signin(email, password);
+      // const user = await AuthService.signin(email, password);
+      const user = await AuthService.signin(username, password);
       // Signed in successfully, Generate JWT token and attach it to response
       AuthController._attachTokenToResp(user, res);
     } catch (error) {

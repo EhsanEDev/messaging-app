@@ -9,11 +9,14 @@ const AuthService = {
   signup: async (
     username: string,
     password: string,
-    email: string
+    // email: string
   ): Promise<User> => {
     // Validate input
-    if (!username || !password || !email) {
-      throw new Error("Username, password, and email are required");
+    // if (!username || !password || !email) {
+    //   throw new Error("Username, password, and email are required");
+    // }
+    if (!username || !password) {
+      throw new Error("Username and password are required");
     }
 
     // Check if user exists
@@ -22,10 +25,10 @@ const AuthService = {
       throw new Error("Username has already been taken");
     }
 
-    const emailExists = UserRepo.findByEmail(email);
-    if (emailExists) {
-      throw new Error("Email is already in use");
-    }
+    // const emailExists = UserRepo.findByEmail(email);
+    // if (emailExists) {
+    //   throw new Error("Email is already in use");
+    // }
 
     // if (password.length < 6) {
     //   throw new Error("Password is too weak");
@@ -39,7 +42,8 @@ const AuthService = {
       username.charAt(0).toUpperCase() + username.slice(1);
 
     // Add the user to repo and return it
-    const newUser = UserRepo.add(capitalizedUsername, hashedPassword, email);
+    // const newUser = UserRepo.add(capitalizedUsername, hashedPassword, email);
+    const newUser = UserRepo.add(capitalizedUsername, hashedPassword);
     ContactRepo.add(newUser);
 
     // Send an OTP code to the email
@@ -79,14 +83,18 @@ const AuthService = {
     return user;
   },
 
-  signin: async (email: string, password: string): Promise<User> => {
+  signin: async (username: string, password: string): Promise<User> => {
     // Validate input
-    if (!email || !password) {
-      throw new Error("Email and password are required");
+    // if (!email || !password) {
+    //   throw new Error("Email and password are required");
+    // }
+    if (!username || !password) {
+      throw new Error("Username and password are required");
     }
 
     // Check if user exists
-    const user = UserRepo.findByEmail(email);
+    // const user = UserRepo.findByEmail(email);
+    const user = UserRepo.findByUsername(username);
     if (!user) {
       throw new Error("User not found");
     }

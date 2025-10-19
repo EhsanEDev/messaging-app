@@ -97,13 +97,26 @@ export const UserRepo = {
     return Users.find((u) => u.email.toLowerCase() === normalizedEmail) || null;
   },
 
-  add(username: string, password: string, email: string): User {
+  // add(username: string, password: string, email: string): User {
+  //   const newUser: User = {
+  //     id: String(Date.now()),
+  //     username,
+  //     avatarUrl: `https://i.pravatar.cc/150?img=${Users.length + 1}`,
+  //     password,
+  //     email,
+  //     isVerified: false,
+  //     createdAt: String(new Date()),
+  //   };
+  //   Users.push(newUser);
+  //   return newUser;
+  // },
+  add(username: string, password: string): User {
     const newUser: User = {
       id: String(Date.now()),
       username,
       avatarUrl: `https://i.pravatar.cc/150?img=${Users.length + 1}`,
       password,
-      email,
+      email: "email@example.com",
       isVerified: false,
       createdAt: String(new Date()),
     };

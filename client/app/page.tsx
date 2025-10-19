@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/chat");
-    }, 3000); // 3 seconds
+    }, 2000); // 2 seconds
 
     return () => clearTimeout(timer);
   }, [router]);

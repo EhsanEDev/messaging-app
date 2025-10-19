@@ -2,7 +2,7 @@ import { fetcher } from "@/lib/fetcher";
 import { AuthResult, User } from "@/shared/types";
 
 export const AuthService = {
-  signup: async (data: { username: string; password: string; email: string }) => {
+  signup: async (data: { username: string; password: string; }) => {
     const res = await fetcher<AuthResult>("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ export const AuthService = {
   },
 
   signin: async (data: {
-    email: string;
+    username: string;
     password: string;
   }): Promise<User> => {
     const res = await fetcher<AuthResult>("/api/auth/signin", {
