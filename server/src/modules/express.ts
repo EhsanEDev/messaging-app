@@ -7,6 +7,7 @@ import chatRoute from "../routes/chat.js";
 import contactRoute from "../routes/contact.js";
 import userRoute from "../routes/user.js";
 import dotenv from "dotenv";
+import { UserRepo } from "../db/fake/repo/users.js";
 dotenv.config();
 
 //Create an Express application
@@ -20,9 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Public routes
 app.use("/api/auth", authRoute);
-// app.use("/api/users", (req, res) => {
-//   res.status(200).json(UserRepo.getAll());
-// });
+app.use("/api/hi", (req, res) => {
+  res.status(200).send("Hello dear client, this is messaging app's server");
+});
 
 // Authorization for everything after this
 app.use(authExpress);
