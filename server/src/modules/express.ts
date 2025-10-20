@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // Public routes
 app.use("/api/auth", authRoute);
 app.use("/api/hi", (req, res) => {
+  console.log("requested 'hi' api endpoint");
   const origin = req.headers.origin;
   res.status(200).send(`<h2>${origin}</h2><p>Hello dear client, this is messaging app's server</p>`);
 });
