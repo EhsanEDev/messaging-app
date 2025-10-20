@@ -1,13 +1,12 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import authExpress from "../middlewares/express.js";
 import authRoute from "../routes/auth.js";
 import chatRoute from "../routes/chat.js";
 import contactRoute from "../routes/contact.js";
 import userRoute from "../routes/user.js";
-import dotenv from "dotenv";
-import { UserRepo } from "../db/fake/repo/users.js";
 dotenv.config();
 
 //Create an Express application
