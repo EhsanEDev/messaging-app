@@ -21,7 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 // Public routes
 app.use("/api/auth", authRoute);
 app.use("/api/hi", (req, res) => {
-  res.status(200).send("Hello dear client, this is messaging app's server");
+  const origin = req.headers.origin;
+  res.status(200).send(`<h2>${origin}</h2><p>Hello dear client, this is messaging app's server</p>`);
 });
 
 // Authorization for everything after this
