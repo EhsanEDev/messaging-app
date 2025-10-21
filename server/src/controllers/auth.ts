@@ -61,7 +61,7 @@ const AuthController = {
       .cookie("authToken", token, {
         httpOnly: true, // 🔐 can't access via JS (protects from XSS)
         secure: process.env.NODE_ENV === "production", // 🔒 in production only over HTTPS
-        sameSite: "strict",
+        sameSite: process.env.NODE_ENV === "production" ? "lax" : "strict",
         path: "/",
         maxAge: 1000 * 60 * 60 * 12, // 12 hours
       })
