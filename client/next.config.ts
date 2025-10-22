@@ -1,4 +1,7 @@
 import type { NextConfig } from "next";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -14,7 +17,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://messaging-app-lrys.onrender.com/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/:path*`,
       },
     ];
   },
