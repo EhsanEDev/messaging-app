@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  rewrites: async () => {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://messaging-app-lrys.onrender.com/api/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
