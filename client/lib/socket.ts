@@ -28,7 +28,7 @@ export const WebSocket = {
     if (socket) return socket;
 
     // Initialize and make a socket instance
-    socket = io("/api", {
+    socket = io("/", {
       withCredentials: true,
       autoConnect: false,
       transports: ["websocket"],

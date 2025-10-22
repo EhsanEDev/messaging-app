@@ -35,6 +35,9 @@ const uiSlice = createSlice({
       state.panelState = action.payload;
     },
     setAppState: (state, action: PayloadAction<AppState>) => {
+      if (state.appState.initState === "ready") {
+        return;
+      }
       const newState = action.payload;
       state.appState.initState = newState;
       state.appState.isInitializedSuccess = newState === "ready";

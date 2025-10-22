@@ -26,17 +26,18 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   const appState = useAppSelector((state) => state.ui.appState.initState);
 
   useEffect(() => {
+    
     // Initialize socket on mounting
     const socket = WebSocket.init();
     WebSocket.JoinUser({ id: currentUser.id });
-
+    
     // Request user status
     WebSocket.RequestUserStatus();
-
-    socket.on("connect", () => {
+    
+    // socket.on("connect", () => {
       dispatch(setAppState("ready"));
-    });
-
+    // });
+    
     socket.on("disconnect", () => {
       console.log("socket disconnected");
     });
