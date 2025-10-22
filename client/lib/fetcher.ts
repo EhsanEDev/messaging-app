@@ -1,11 +1,11 @@
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function fetcher<T>(
   path: string,
   options: RequestInit = {}
 ): Promise<{ data: T; status: number }> {
   try {
-    const response = await fetch(`${BASE_URL}${path}`, {
+    const response = await fetch(path, {
       credentials: "include",
       ...options,
     });
