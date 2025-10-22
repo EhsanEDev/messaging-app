@@ -28,7 +28,7 @@ export const WebSocket = {
     if (socket) return socket;
 
     // Initialize and make a socket instance
-    socket = io(process.env.NEXT_PUBLIC_BASE_URL, {
+    socket = io("/api", {
       withCredentials: true,
       autoConnect: false,
       transports: ["websocket"],
