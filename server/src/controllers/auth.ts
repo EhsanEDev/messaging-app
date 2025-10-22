@@ -59,11 +59,20 @@ const AuthController = {
     );
     res
       .cookie("authToken", token, {
-        httpOnly: true, // 🔐 can't access via JS (protects from XSS)
-        secure: process.env.NODE_ENV === "production", // 🔒 in production only over HTTPS
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         path: "/",
         maxAge: 1000 * 60 * 60 * 12, // 12 hours
+        domain: "messaging-app-demo.vercel.app",
+      })
+      .cookie("authToken", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 12, // 12 hours
+        domain: "messaging-app-lrys.onrender.com",
       })
       .status(200)
       .json({
